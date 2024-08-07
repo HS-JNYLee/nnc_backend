@@ -25,9 +25,16 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @EnableMethodSecurity
 public class SecurityConfiguration {
 
-    private static final String[] WHITE_LIST_URL = {"/api/v1/auth/**",
+    private static final String[] WHITE_LIST_URL = {
+            "/api/v1/auth/**",
             "/api/v1/demo/**",
             };
+
+    private static final String[] UNAUTHORIZED_WHITE_LIST_URL = {
+            "/swagger-ui/**",    // Swagger UI 경로 추가
+            "/v3/api-docs/**",   // OpenAPI 문서 경로 추가
+            "/swagger-ui.html"   // Swagger UI 경로 추가
+    };
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final JwtExceptionFilter jwtExceptionFilter;
 //    private final AuthenticationProvider authenticationProvider;  // ApplicationConfig 에서 AuthenticationProvider 재정의
@@ -35,7 +42,10 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable)
+                // 개발용 배포시 지울 것!
+                .csrf(csrf -> csrf.ignoringRequestMatchers(UNAUTHORIZED_WHITE_LIST_URL))
+                // 배포용 개발시 주석 처리
+                /*.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(WHITE_LIST_URL)
                                 .permitAll()
@@ -46,7 +56,7 @@ public class SecurityConfiguration {
                         .requestMatchers(DELETE, "/api/v1/management/**").hasAnyAuthority(ADMIN_DELETE.name(), MANAGER_DELETE.name())
                         .anyRequest()
                         .authenticated()
-                )
+                )*/
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
 //                .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
