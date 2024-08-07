@@ -1,6 +1,6 @@
 services:
   mariadb:
-    container_name: "mariadb"
+    container_name: "maria_db"
     image: mariadb:10
     restart: always
     ports:
@@ -14,13 +14,17 @@ services:
       MARIADB_PASSWORD: abcd1234
       MARIADB_ROOT_PASSWORD: 1111
 
-  nnc-backend:
-    build: "."
+  application:
+    container_name: docker-compose-test
+    restart: on-failure
+    build:
+      context: ./
+      dockerfile: Dockerfile
     ports:
-      - 8080:8080
-    restart: always
-    volumes:
-      - ./src/main/resources/application.yml:/app/config/application.yml
-    command: ["java", "-jar", "/app/your-app.jar", "--spring.config.location=file:/app/config/application.yml"]
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://maria_db:3306/nncdb?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: "nnc"
+      SPRING_DATASOURCE_PASSWORD: "abcd1234"
     depends_on:
       - mariadb
