@@ -23,7 +23,7 @@ services:
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://maria_db:3306/nncdb?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_URL: jdbc:mariadb://maria_db:3306/nncdb
       SPRING_DATASOURCE_USERNAME: "nnc"
       SPRING_DATASOURCE_PASSWORD: "abcd1234"
     depends_on:
