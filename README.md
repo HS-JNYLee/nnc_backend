@@ -35,11 +35,18 @@ docker compose down
 docker compose up --build
 ~~~
 
-5. Docker Container 확인
+5. Docker Container 및 Swagger 정상 작동 여부 확인
 
-* 아래와 같은 화면이 나오면 끝
+* 아래 Command를 쳤을 때 같은 화면이 나와야 한다.
+
+~~~command
+docker ps -a
+~~~
 
  ![image](https://github.com/user-attachments/assets/9d84f6a4-7c2c-418b-9290-01d72b55f5c6)
+
+*  ip:8080/swagger-ui/index.html로 접속했을 때 다음과 같이 접속되어야 한다.
+  
  ![image](https://github.com/user-attachments/assets/2c5779ae-7fe0-416f-93c2-5835b7c310dc)
 
 
