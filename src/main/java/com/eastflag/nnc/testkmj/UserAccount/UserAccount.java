@@ -16,7 +16,6 @@ import java.sql.Timestamp;
 @Table(name = "user_account")
 public class UserAccount {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
 
     @Column(unique = true, nullable = false)
