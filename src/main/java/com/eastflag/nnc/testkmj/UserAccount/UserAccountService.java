@@ -1,6 +1,7 @@
 package com.eastflag.nnc.testkmj.UserAccount;
 
 import com.eastflag.nnc.testkmj.User.CreateUserRequest;
+import com.eastflag.nnc.testkmj.User.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -9,9 +10,9 @@ import org.springframework.stereotype.Service;
 public class UserAccountService {
     private final UserAccountRepository userAccountRepository;
 
-    public void createUserAccount(int userId, CreateUserRequest request){
+    public void createUserAccount(User user, CreateUserRequest request){
         var userAccount = UserAccount.builder()
-                .userId(userId)
+                .user(user)
                 .email(request.getEmail())
                 .password(request.getPassword())
                 //.passwordSalt() // 모름

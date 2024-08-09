@@ -1,5 +1,6 @@
 package com.eastflag.nnc.testkmj.UserSetting;
 
+import com.eastflag.nnc.testkmj.User.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -8,9 +9,9 @@ import org.springframework.stereotype.Service;
 public class UserSettingService {
     private final UserSettingRepository userSettingRepository;
 
-    public void createUserSetting(int userId) {
+    public void createUserSetting(User user) {
         var userSetting = UserSetting.builder()
-                .userId(userId)
+                .user(user)
                 .build();
         userSettingRepository.save(userSetting);
     }

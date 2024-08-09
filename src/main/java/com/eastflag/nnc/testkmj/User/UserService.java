@@ -25,7 +25,7 @@ public class UserService {
                 .build();
         userRepository.save(user);
 
-        userAccountService.createUserAccount(user.getUserId(),request);
-        userSettingService.createUserSetting(user.getUserId());
+        userAccountService.createUserAccount(user,request);
+        userSettingService.createUserSetting(user);
     }
 }
