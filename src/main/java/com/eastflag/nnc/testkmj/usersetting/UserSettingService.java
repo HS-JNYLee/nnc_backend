@@ -16,4 +16,9 @@ public class UserSettingService {
 
         return userSetting;
     }
+
+
+    public void deleteUserSetting(int userSettingId) {
+        userSettingRepository.deleteById(userSettingId);
+    }
 }

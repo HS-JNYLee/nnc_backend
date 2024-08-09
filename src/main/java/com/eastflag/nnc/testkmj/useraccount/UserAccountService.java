@@ -25,4 +25,8 @@ public class UserAccountService {
 
         return userAccount;
     }
+
+    public void deleteUserAccount(int userAccountId) {
+        userAccountRepository.deleteById(userAccountId);
+    }
 }

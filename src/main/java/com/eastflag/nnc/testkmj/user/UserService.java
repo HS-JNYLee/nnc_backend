@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.Optional;
+
 /**
  * 유저 관리 Service 클래스
  */
@@ -47,6 +49,18 @@ public class UserService {
     }
 
     public void deleteUser(DeleteUserRequest request) {
+        User user = userRepository
+                .findById(request.getUserId())
+                .orElseThrow(() -> new RuntimeException(request.getUserId() + "를 찾을 수 없음."));
 
+        if(user.getUserAccount().getEmail() != request.getEmail()) {
+            new RuntimeException(request.getEmail() + "와" + request.getEmail() + "가 일치하지 않음.");
+        } else if(user.getUserAccount().getPassword() != request.getPassword()){
+            new RuntimeException(request.getPassword() + "와" + request.getPassword() + "가 일치하지 않음.");
+        } else {
+            userSettingService.deleteUserSetting(user.getUserSetting().getUserSettingId());
+            userAccountService.deleteUserAccount(user.getUserAccount().getUserAccountId());
+            userRepository.deleteById(user.getUserId());
+        }
     }
 }
