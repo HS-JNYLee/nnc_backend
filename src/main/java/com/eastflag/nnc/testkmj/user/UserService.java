@@ -1,16 +1,14 @@
 package com.eastflag.nnc.testkmj.user;
 
+import com.eastflag.nnc.testkmj.Request.CreateUserRequest;
+import com.eastflag.nnc.testkmj.Request.DeleteUserRequest;
+import com.eastflag.nnc.testkmj.Request.UpdateUserRequest;
 import com.eastflag.nnc.testkmj.useraccount.UserAccount;
 import com.eastflag.nnc.testkmj.useraccount.UserAccountService;
 import com.eastflag.nnc.testkmj.usersetting.UserSetting;
 import com.eastflag.nnc.testkmj.usersetting.UserSettingService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import java.util.Optional;
 
 /**
  * 유저 관리 Service 클래스
@@ -33,10 +31,14 @@ public class UserService {
     public void createUser(CreateUserRequest request) {
         // request 정보들 각 userAccount, userSetting으로 분기.
         UserAccount userAccount = userAccountService.createUserAccount(request);
-        UserSetting userSetting = userSettingService.createUserSetting();
+        UserSetting userSetting = null;
 
         RoleId roleId;
-        if(request.getCaregiverId() == null) roleId = RoleId.CAREGIVER; else roleId = RoleId.CARETAKER;
+        if(request.getCaregiverId() != null) roleId = RoleId.CARETAKER;
+        else {
+            userSetting = userSettingService.createUserSetting();
+            roleId = RoleId.CAREGIVER;
+        }
         var user = User.builder()
                 .name(request.getName())
                 .telNum(request.getTelNum())
@@ -63,4 +65,10 @@ public class UserService {
             userRepository.deleteById(user.getUserId());
         }
     }
+
+    public void updateUser(UpdateUserRequest request) {
+
+    }
+
+
 }

@@ -1,6 +1,5 @@
 package com.eastflag.nnc.testkmj.usersetting;
 
-import com.eastflag.nnc.testkmj.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +15,6 @@ public class UserSettingService {
 
         return userSetting;
     }
-
 
     public void deleteUserSetting(int userSettingId) {
         userSettingRepository.deleteById(userSettingId);

@@ -1,4 +1,4 @@
-package com.eastflag.nnc.testkmj.user;
+package com.eastflag.nnc.testkmj.Request;
 
 import lombok.Builder;
 import lombok.Getter;

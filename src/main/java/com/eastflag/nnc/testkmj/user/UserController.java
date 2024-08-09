@@ -1,19 +1,17 @@
 package com.eastflag.nnc.testkmj.user;
 
-import com.eastflag.nnc.testkmj.useraccount.UserAccountService;
+import com.eastflag.nnc.testkmj.Request.CreateUserRequest;
+import com.eastflag.nnc.testkmj.Request.DeleteUserRequest;
+import com.eastflag.nnc.testkmj.Request.UpdateUserRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-    private final UserAccountService userAccountService;
 
     /**
      * 유저를 생성하는 API
@@ -21,7 +19,7 @@ public class UserController {
      * @param request 생성할 유저의 정보
      * @return
      */
-    @PatchMapping
+    @PostMapping("/createUser")
     public ResponseEntity<?> createUser(
         @RequestBody CreateUserRequest request
     ) {
@@ -29,11 +27,19 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @PatchMapping
+    @DeleteMapping("/deleteUser")
     public ResponseEntity<?> deleteUser(
-            @RequestBody DeleteUserRequest request
+        @RequestBody DeleteUserRequest request
     ) {
         userService.deleteUser(request);
         return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("updateUser")
+    public ResponseEntity<?> updateUser(
+        @RequestBody UpdateUserRequest request
+    ) {
+      userService.updateUser(request);
+      return ResponseEntity.ok().build();
     }
 }

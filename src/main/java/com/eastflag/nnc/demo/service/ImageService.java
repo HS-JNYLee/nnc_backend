@@ -9,8 +9,6 @@ import com.eastflag.nnc.user.ChangePasswordRequest;
 import com.eastflag.nnc.user.User;
 import com.eastflag.nnc.user.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;

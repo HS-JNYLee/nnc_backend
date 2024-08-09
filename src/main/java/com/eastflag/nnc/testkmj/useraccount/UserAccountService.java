@@ -1,7 +1,6 @@
 package com.eastflag.nnc.testkmj.useraccount;
 
-import com.eastflag.nnc.testkmj.user.CreateUserRequest;
-import com.eastflag.nnc.testkmj.user.User;
+import com.eastflag.nnc.testkmj.Request.CreateUserRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
