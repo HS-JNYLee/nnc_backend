@@ -1,5 +1,6 @@
 package com.eastflag.nnc.testkmj.UserSetting;
 
+import com.eastflag.nnc.testkmj.User.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +15,9 @@ import lombok.NoArgsConstructor;
 @Table(name = "user_account")
 public class UserSetting {
     @Id
-    private int userId;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(nullable = false)
     private Boolean voiceGuide = true;

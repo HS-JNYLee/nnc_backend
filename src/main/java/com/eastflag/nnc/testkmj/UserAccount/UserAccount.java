@@ -1,5 +1,6 @@
 package com.eastflag.nnc.testkmj.UserAccount;
 
+import com.eastflag.nnc.testkmj.User.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,7 +17,9 @@ import java.sql.Timestamp;
 @Table(name = "user_account")
 public class UserAccount {
     @Id
-    private int userId;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(unique = true, nullable = false)
     private String email;
