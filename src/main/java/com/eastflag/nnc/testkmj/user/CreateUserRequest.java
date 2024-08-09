@@ -1,11 +1,10 @@
-package com.eastflag.nnc.testkmj.User;
+package com.eastflag.nnc.testkmj.user;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Timestamp;
-
 
 /**
  * email (이메일): user_account.email

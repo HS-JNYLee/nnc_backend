@@ -1,4 +1,4 @@
-package com.eastflag.nnc.testkmj.UserSetting;
+package com.eastflag.nnc.testkmj.usersetting;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

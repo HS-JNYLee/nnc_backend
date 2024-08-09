@@ -1,4 +1,4 @@
-package com.eastflag.nnc.testkmj.User;
+package com.eastflag.nnc.testkmj.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     private final UserService userService;
 
+    /**
+     * 유저를 생성하는 API
+     *
+     * @param request 생성할 유저의 정보
+     * @return
+     */
     @PatchMapping
     public ResponseEntity<?> createUser(
         @RequestBody CreateUserRequest request

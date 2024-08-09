@@ -1,6 +1,6 @@
-package com.eastflag.nnc.testkmj.UserAccount;
+package com.eastflag.nnc.testkmj.useraccount;
 
-import com.eastflag.nnc.testkmj.User.User;
+import com.eastflag.nnc.testkmj.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
