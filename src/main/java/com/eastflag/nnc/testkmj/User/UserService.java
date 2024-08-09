@@ -1,5 +1,7 @@
 package com.eastflag.nnc.testkmj.User;
 
+import com.eastflag.nnc.testkmj.UserAccount.UserAccountService;
+import com.eastflag.nnc.testkmj.UserSetting.UserSettingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,8 +12,8 @@ public class UserService {
     //private final PasswordEncoder passwordEncoder;
 
     private final UserRepository userRepository;
-    //private final UserAccountService userAccountService; // 미완
-    //private final UserSettingService userSettingService; // 미완
+    private final UserAccountService userAccountService; // 미완
+    private final UserSettingService userSettingService; // 미완
 
     public void createUser(CreateUserRequest request) {
         // user_account에 관한 속성
