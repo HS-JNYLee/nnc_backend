@@ -16,14 +16,6 @@ public class UserService {
     private final UserSettingService userSettingService; // 미완
 
     public void createUser(CreateUserRequest request) {
-        // user_account에 관한 속성
-        var email = request.getEmail();
-        var password = request.getPassword();
-        var address = request.getAddress();
-        var detailAddress = request.getDetailAddress();
-        var createdAt = request.getCreatedAt();
-        var updatedAt = request.getUpdatedAt();
-
         RoleId roleId;
         if(request.getCaregiverId() == null) roleId = RoleId.CAREGIVER; else roleId = RoleId.CARETAKER;
         var user = User.builder()
@@ -34,6 +26,6 @@ public class UserService {
         userRepository.save(user);
 
         userAccountService.createUserAccount(user.getUserId(),request);
-        userSettingService.createUserSetting(user.getUserId(),request);
+        userSettingService.createUserSetting(user.getUserId());
     }
 }

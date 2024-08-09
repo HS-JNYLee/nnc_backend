@@ -40,5 +40,5 @@ public class UserAccount {
     @Column(nullable = false)
     private String address;
 
-    private String detail_address;
+    private String detailAddress;
 }
