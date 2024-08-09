@@ -1,4 +1,4 @@
-package com.eastflag.nnc.testkmj;
+package com.eastflag.nnc.testkmj.User;
 
 public enum RoleId {
     ADMIN,

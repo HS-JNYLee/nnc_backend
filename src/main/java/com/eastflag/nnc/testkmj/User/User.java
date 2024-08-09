@@ -1,6 +1,5 @@
 package com.eastflag.nnc.testkmj.User;
 
-import com.eastflag.nnc.testkmj.RoleId;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,12 +15,12 @@ import lombok.NoArgsConstructor;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int user_id;
+    private int userId;
 
     private String name;
 
     @Column(unique = true, nullable = false)
-    private String tel_num;
+    private String telNum;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
