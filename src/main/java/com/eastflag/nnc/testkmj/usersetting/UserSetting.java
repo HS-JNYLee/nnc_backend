@@ -1,6 +1,5 @@
 package com.eastflag.nnc.testkmj.usersetting;
 
-import com.eastflag.nnc.testkmj.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,12 +11,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "user_account")
+@Table(name = "user_setting")
 public class UserSetting {
     @Id
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int userSettingId;
 
     @Column(nullable = false)
     private Boolean voiceGuide = true;

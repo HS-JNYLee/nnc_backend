@@ -7,6 +7,8 @@ import lombok.Setter;
 import java.sql.Timestamp;
 
 /**
+ * 생성할 유저(계정)의 정보
+ *
  * email (이메일): user_account.email
  * password (비밀번호): user_account.password
  * name (이름): user.name

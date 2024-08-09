@@ -1,5 +1,6 @@
 package com.eastflag.nnc.testkmj.user;
 
+import com.eastflag.nnc.testkmj.useraccount.UserAccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final UserAccountService userAccountService;
 
     /**
      * 유저를 생성하는 API
@@ -24,6 +26,14 @@ public class UserController {
         @RequestBody CreateUserRequest request
     ) {
         userService.createUser(request);
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping
+    public ResponseEntity<?> deleteUser(
+            @RequestBody DeleteUserRequest request
+    ) {
+        userService.deleteUser(request);
         return ResponseEntity.ok().build();
     }
 }

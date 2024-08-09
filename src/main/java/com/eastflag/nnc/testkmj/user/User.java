@@ -1,5 +1,7 @@
 package com.eastflag.nnc.testkmj.user;
 
+import com.eastflag.nnc.testkmj.useraccount.UserAccount;
+import com.eastflag.nnc.testkmj.usersetting.UserSetting;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,4 +33,12 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private RoleId roleId;
+
+    @OneToOne
+    @JoinColumn(name = "user_setting_id")
+    private UserSetting userSetting;
+
+    @OneToOne
+    @JoinColumn(name = "user_account_id")
+    private UserAccount userAccount;
 }

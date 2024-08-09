@@ -1,9 +1,14 @@
 package com.eastflag.nnc.testkmj.user;
 
+import com.eastflag.nnc.testkmj.useraccount.UserAccount;
 import com.eastflag.nnc.testkmj.useraccount.UserAccountService;
+import com.eastflag.nnc.testkmj.usersetting.UserSetting;
 import com.eastflag.nnc.testkmj.usersetting.UserSettingService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  * 유저 관리 Service 클래스
@@ -24,17 +29,24 @@ public class UserService {
      * @param request UserController.createUser API에서 가져온 유저 생성 정보
      */
     public void createUser(CreateUserRequest request) {
+        // request 정보들 각 userAccount, userSetting으로 분기.
+        UserAccount userAccount = userAccountService.createUserAccount(request);
+        UserSetting userSetting = userSettingService.createUserSetting();
+
         RoleId roleId;
         if(request.getCaregiverId() == null) roleId = RoleId.CAREGIVER; else roleId = RoleId.CARETAKER;
         var user = User.builder()
                 .name(request.getName())
                 .telNum(request.getTelNum())
                 .roleId(roleId)
+                .userAccount(userAccount)
+                .userSetting(userSetting)
                 .build();
-        userRepository.save(user);
 
-        // request에 남아있는 정보들 각 userAccount, userSetting으로 분기.
-        userAccountService.createUserAccount(user,request);
-        userSettingService.createUserSetting(user);
+        userRepository.save(user);
+    }
+
+    public void deleteUser(DeleteUserRequest request) {
+
     }
 }

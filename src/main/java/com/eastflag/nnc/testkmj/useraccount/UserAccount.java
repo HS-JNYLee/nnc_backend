@@ -17,9 +17,8 @@ import java.sql.Timestamp;
 @Table(name = "user_account")
 public class UserAccount {
     @Id
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int userAccountId;
 
     @Column(unique = true, nullable = false)
     private String email;

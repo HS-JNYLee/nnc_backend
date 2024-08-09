@@ -10,9 +10,8 @@ import org.springframework.stereotype.Service;
 public class UserAccountService {
     private final UserAccountRepository userAccountRepository;
 
-    public void createUserAccount(User user, CreateUserRequest request){
+    public UserAccount createUserAccount(CreateUserRequest request){
         var userAccount = UserAccount.builder()
-                .user(user)
                 .email(request.getEmail())
                 .password(request.getPassword())
                 //.passwordSalt() // 모름
@@ -23,5 +22,7 @@ public class UserAccountService {
                 .detailAddress(request.getDetailAddress())
                 .build();
         userAccountRepository.save(userAccount);
+
+        return userAccount;
     }
 }

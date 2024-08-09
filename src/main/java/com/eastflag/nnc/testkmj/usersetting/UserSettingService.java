@@ -9,10 +9,11 @@ import org.springframework.stereotype.Service;
 public class UserSettingService {
     private final UserSettingRepository userSettingRepository;
 
-    public void createUserSetting(User user) {
+    public UserSetting createUserSetting() {
         var userSetting = UserSetting.builder()
-                .user(user)
                 .build();
         userSettingRepository.save(userSetting);
+
+        return userSetting;
     }
 }
