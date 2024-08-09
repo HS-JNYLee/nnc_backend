@@ -1,32 +1,29 @@
 package com.eastflag.nnc.testkmj.User;
 
 import com.eastflag.nnc.testkmj.RoleId;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.UUID;
-
+@Data
+@Builder
+@NoArgsConstructor // 만들 필요가 있나 의문
+@AllArgsConstructor
+@Entity
+@Table(name = "user")
 public class User {
-    private final UUID user_id;
-    private final String name;
-    private final String tel_num;
-    private final RoleId roleId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int user_id;
 
-    public User(UUID userId, String name, String telNum, RoleId roleId) {
-        user_id = userId;
-        this.name = name;
-        tel_num = telNum;
-        this.roleId = roleId;
-    }
+    private String name;
 
-    public UUID getUserId() {
-        return user_id;
-    }
-    public String getName() {
-        return name;
-    }
-    public String getTelNum() {
-        return tel_num;
-    }
-    public RoleId getRoleId() {
-        return roleId;
-    }
+    @Column(unique = true, nullable = false)
+    private String tel_num;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private RoleId roleId;
 }
