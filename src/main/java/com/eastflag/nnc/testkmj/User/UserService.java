@@ -31,6 +31,7 @@ public class UserService {
                 .telNum(request.getTelNum())
                 .roleId(roleId)
                 .build();
+        userRepository.save(user);
 
         userAccountService.createUserAccount(user.getUserId(),request);
         userSettingService.createUserSetting(user.getUserId(),request);
