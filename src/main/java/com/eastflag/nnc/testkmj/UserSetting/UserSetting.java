@@ -1,40 +1,34 @@
 package com.eastflag.nnc.testkmj.UserSetting;
 
-import java.util.UUID;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "user_account")
 public class UserSetting {
-    private final UUID userId;
-    private final Boolean voiceGuide;
-    private final Boolean alertRoute;
-    private final Boolean alertDanger;
-    private final Boolean lowBus;
-    private final Boolean elevatorFirst;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int userId;
 
-    public UserSetting(UUID userId, Boolean voiceGuide, Boolean alertRoute, Boolean alertDanger, Boolean lowBus, Boolean elevatorFirst) {
-        this.userId = userId;
-        this.voiceGuide = voiceGuide;
-        this.alertRoute = alertRoute;
-        this.alertDanger = alertDanger;
-        this.lowBus = lowBus;
-        this.elevatorFirst = elevatorFirst;
-    }
+    @Column(nullable = false)
+    private Boolean voiceGuide = true;
 
-    public UUID getUserId() {
-        return userId;
-    }
-    public Boolean getVoiceGuide() {
-        return voiceGuide;
-    }
-    public Boolean getAlertRoute() {
-        return alertRoute;
-    }
-    public Boolean getAlertDanger() {
-        return alertDanger;
-    }
-    public Boolean getLowBus() {
-        return lowBus;
-    }
-    public Boolean getElevatorFirst() {
-        return elevatorFirst;
-    }
+    @Column(nullable = false)
+    private Boolean alertRoute = true;
+
+    @Column(nullable = false)
+    private Boolean alertDanger = true;
+
+    @Column(nullable = false)
+    private Boolean lowBus = false;
+
+    @Column(nullable = false)
+    private Boolean elevatorFirst = false;
 }

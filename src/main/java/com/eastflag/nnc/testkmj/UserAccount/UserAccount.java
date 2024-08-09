@@ -1,46 +1,44 @@
 package com.eastflag.nnc.testkmj.UserAccount;
 
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.sql.Timestamp;
-import java.util.UUID;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "user_account")
 public class UserAccount {
-    private final UUID userId;
-    private final String email;
-    private final String password;
-    private final String passwordSalt;
-    private final String hashAlgorithmId;
-    private final Timestamp createdAt;
-    private final Timestamp updatedAt;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int userId;
 
-    public UserAccount(UUID userId, String email, String password, String passwordSalt, String hashAlgorithmId, Timestamp createdAt, Timestamp updatedAt) {
-        this.userId = userId;
-        this.email = email;
-        this.password = password;
-        this.passwordSalt = passwordSalt;
-        this.hashAlgorithmId = hashAlgorithmId;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
+    @Column(unique = true, nullable = false)
+    private String email;
 
-    public UUID getUserId() {
-        return userId;
-    }
-    public String getEmail() {
-        return email;
-    }
-    public String getPassword() {
-        return password;
-    }
-    public String getPasswordSalt() {
-        return passwordSalt;
-    }
-    public String getHashAlgorithmId() {
-        return hashAlgorithmId;
-    }
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
-    public Timestamp getUpdatedAt() {
-        return updatedAt;
-    }
+    @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
+    private String passwordSalt;
+
+    @Column(nullable = false)
+    private String hashAlgorithmId;
+
+    @Column(nullable = false)
+    private Timestamp createdAt;
+
+    @Column(nullable = false)
+    private Timestamp updatedAt;
+
+    @Column(nullable = false)
+    private String address;
+
+    private String detail_address;
 }

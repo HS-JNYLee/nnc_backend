@@ -29,5 +29,8 @@ public class UserService {
                 .telNum(request.getTelNum())
                 .roleId(roleId)
                 .build();
+
+        userAccountService.createUserAccount(user.getUserId(),request);
+        userSettingService.createUserSetting(user.getUserId(),request);
     }
 }

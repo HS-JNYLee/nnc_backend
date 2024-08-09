@@ -1,7 +1,5 @@
 package com.eastflag.nnc.testkmj.User;
 
-import com.eastflag.nnc.testkmj.UserAccount.UserAccountService;
-import com.eastflag.nnc.testkmj.UserSetting.UserSettingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;

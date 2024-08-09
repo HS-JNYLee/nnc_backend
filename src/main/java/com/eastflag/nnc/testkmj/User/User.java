@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@NoArgsConstructor // 만들 필요가 있나 의문
+@NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "user")
