@@ -14,15 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-    private final UserAccountService userAccountService;
-    private final UserSettingService userSettingService;
 
-    /*@PatchMapping
+    @PatchMapping
     public ResponseEntity<?> createUser(
-        @RequestBody CreateUserRequest request,
-        Principal connectedUser
+        @RequestBody CreateUserRequest request
     ) {
-        userService.createUser(request, connectedUser);
+        userService.createUser(request);
         return ResponseEntity.ok().build();
-    }*/
+    }
 }
