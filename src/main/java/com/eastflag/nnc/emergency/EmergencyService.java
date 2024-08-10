@@ -36,8 +36,8 @@ public class EmergencyService {
                 .build();
     }
 
-    public CommonResponse deleteEmergency(Emergency emergency) {
-        emergencyRepository.delete(emergency);
+    public CommonResponse deleteEmergency(int emergencyId) {
+        Emergency emergency = emergencyRepository.deleteByEmergencyId(emergencyId);
         return CommonResponse.builder()
                 .code(200)
                 .message(ResponseMessage.SUCCESS)

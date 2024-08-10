@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 @Log4j2
 @RestController
 @RequestMapping("/api/v1/emergency")
@@ -34,12 +35,12 @@ public class EmergencyController {
 
     /**
      * 긴급전화 삭제
-     * @param emergency
+     * @param emergencyId
      * @return
      */
-    @DeleteMapping()
-    public ResponseEntity<CommonResponse> deleteEmergency(@RequestBody Emergency emergency) {
-        return ResponseEntity.ok(emergencyService.deleteEmergency(emergency));
+    @DeleteMapping("/{emergency_id}")
+    public ResponseEntity<CommonResponse> deleteEmergency(@PathVariable("emergency_id") Integer emergencyId) {
+        return ResponseEntity.ok(emergencyService.deleteEmergency(emergencyId));
     }
 
     /**

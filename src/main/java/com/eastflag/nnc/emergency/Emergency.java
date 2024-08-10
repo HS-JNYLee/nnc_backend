@@ -1,5 +1,6 @@
 package com.eastflag.nnc.emergency;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -22,6 +23,7 @@ public class Emergency {
     private Integer emergencyId;
 
     @Column(name = "user_id", nullable = false)
+    @Schema(defaultValue = "1")
     private Integer userId = 0;
 
     @Column(name = "delete_yn", nullable = false, length = 1)
