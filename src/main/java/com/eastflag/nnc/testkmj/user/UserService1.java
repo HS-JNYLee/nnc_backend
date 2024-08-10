@@ -19,8 +19,8 @@ public class UserService1 {
     //private final PasswordEncoder passwordEncoder;
 
     private final UserRepository1 userRepository;
-    private final UserAccountService userAccountService; // 미완
-    private final UserSettingService userSettingService; // 미완
+    private final UserAccountService userAccountService;
+    private final UserSettingService userSettingService;
 
     /**
      * 유저 Entity를 생성하는 함수
