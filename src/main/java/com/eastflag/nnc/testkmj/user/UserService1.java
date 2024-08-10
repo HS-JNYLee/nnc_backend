@@ -26,6 +26,7 @@ public class UserService1 {
      * 유저 Entity를 DataBase에 생성하는 함수
      *
      * @param request UserController1.createUser API에서 가져온 유저 생성 정보
+     * @return 생성된 유저 Entity
      */
     public User1 createUser(CreateUserRequest request) {
         // request 정보들 각 userAccount, userSetting으로 분기
@@ -102,7 +103,7 @@ public class UserService1 {
      * 특정 Entity 데이터를 반환하는 함수
      *
      * @param userId 반환받을 User1의 user_id
-     * @return user_id에 맞는 User Entity
+     * @return user_id에 맞는 User1 Entity
      */
     public User1 getUser(int userId) {
         var user = userRepository

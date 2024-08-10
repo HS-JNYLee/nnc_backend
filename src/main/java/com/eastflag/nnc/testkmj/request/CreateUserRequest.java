@@ -16,8 +16,8 @@ import java.sql.Timestamp;
  * address (주소): user_account.address
  * detailAddress (상세 주소): user_account.detail_address
  * caregiverId (보호자 인증하기 후 반환된 Id 값): relation.caregiver_id
- * createdAt (생성시간): user_account.created_at
- * updatedAt (업데이트 시간) ※ 생성시간과 동일: user_account.updated_at
+ * createdAt (생성 시간): user_account.created_at
+ * updatedAt (변경 시간) ※ 생성시간과 동일: user_account.updated_at
  */
 @Getter
 @Setter

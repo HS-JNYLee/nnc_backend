@@ -15,7 +15,7 @@ import java.sql.Timestamp;
  * email (이메일): user_account.email
  * password (비밀번호): user_account.password
  * passwordSalt (솔트된 비밀번호): user_account.password_salt
- * hashAlgorithmId (해싱): user_account.hash_algorithm_id
+ * hashAlgorithmId (해싱 알고리즘): user_account.hash_algorithm_id
  * updateAt (변경 요청 시간): user_account.updated_at
  * address (주소): user_account.address
  * detailAddress (세부주소): user_account.detail_address
