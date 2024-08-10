@@ -1,7 +1,7 @@
 spring:
   # 원격 서버용
   datasource:
-    url: jdbc:mariadb://mariadb:3308/nncdb
+    url: jdbc:mariadb://mariadb:3306/nncdb
     username: nnc
     password: abcd1234
     driver-class-name: org.mariadb.jdbc.Driver
@@ -42,7 +42,7 @@ springdoc:
     display-request-duration: true
     defaultModelsExpandDepth: 2
     defaultModelExpandDepth: 2
-    path: /swagger-ui/index.html
+    path: /index.html
   api-docs:
     path: /api-docs
   show-actuator: true
