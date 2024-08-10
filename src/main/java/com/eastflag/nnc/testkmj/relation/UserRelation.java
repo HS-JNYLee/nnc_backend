@@ -24,11 +24,11 @@ public class UserRelation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int relationId;
 
-    @Id
+    @Column(unique = true, nullable = false)
     @JoinColumn(name = "user_id")
     private int caretakerId;
 
-    @Id
+    @Column(unique = true, nullable = false)
     @JoinColumn(name = "user_id")
     private int caregiverId;
 
