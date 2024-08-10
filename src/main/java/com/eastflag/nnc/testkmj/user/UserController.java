@@ -30,14 +30,20 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/deleteUser")
+    @DeleteMapping("/deleteUser/{userId}")
     public ResponseEntity<?> deleteUser(
-        @RequestBody DeleteUserRequest request
+        @RequestBody @PathVariable int userId
     ) {
-        userService.deleteUser(request);
+        userService.deleteUser(userId);
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * user와 userAccount 정보를 업데이트 한다.
+     *
+     * @param request update 할 user, user_account 정보
+     * @return
+     */
     @PatchMapping("/updateUser")
     public ResponseEntity<?> updateUser(
         @RequestBody UpdateUserRequest request
@@ -46,7 +52,12 @@ public class UserController {
       return ResponseEntity.ok().build();
     }
 
-    // userSetting을 접근 하기 위해 userService를 접근하는게 맞나 의문
+    /**
+     * userSetting 정보를 업데이트 한다.
+     *
+     * @param request update 할 userSetting 정보
+     * @return
+     */
     @PatchMapping("/updateUserSetting")
     public ResponseEntity<?> updateUserSetting(
         @RequestBody UpdateUserSettingRequest request
@@ -54,4 +65,6 @@ public class UserController {
         userSettingService.updateUserSetting(request);
         return ResponseEntity.ok().build();
     }
+
+
 }

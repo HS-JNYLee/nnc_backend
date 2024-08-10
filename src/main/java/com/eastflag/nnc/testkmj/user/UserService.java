@@ -53,38 +53,43 @@ public class UserService {
         return user;
     }
 
-    public void deleteUser(DeleteUserRequest request) {
+    public void deleteUser(int userId) {
+        var user = userRepository
+                .findById(userId)
+                .orElseThrow(() -> new RuntimeException(userId + "를 찾을 수 없음."));
+
+        userSettingService.deleteUserSetting(userId);
+        userAccountService.deleteUserAccount(userId);
+        userRepository.deleteById(user.getUserId());
+    }
+
+    public User updateUser(UpdateUserRequest request) {
+//        var beforeUser = userRepository
+//                .findById(request.getUserId())
+//                .orElseThrow(() -> new RuntimeException(request.getUserId() + "를 찾을 수 없음."));
+//
+//        UserAccount userAccount = userAccountService.updateUserAccount(request);
+//        beforeUser.setUserAccount(userAccount);
+//
+//        var user = User.builder()
+//                .userId(beforeUser.getUserId())
+//                .name(request.getName() != null ? request.getName() : beforeUser.getName())
+//                .telNum(request.getTelNum() != null ? request.getTelNum() : beforeUser.getTelNum())
+//                .roleId(beforeUser.getRoleId())
+//                .userAccount(userAccount)
+//                .userSetting(beforeUser.getUserSetting())
+//                .build();
+
         var user = userRepository
                 .findById(request.getUserId())
                 .orElseThrow(() -> new RuntimeException(request.getUserId() + "를 찾을 수 없음."));
 
-        if(user.getUserAccount().getEmail() != request.getEmail()) {
-            new RuntimeException(request.getEmail() + "와" + request.getEmail() + "가 일치하지 않음.");
-        } else if(user.getUserAccount().getPassword() != request.getPassword()){
-            new RuntimeException(request.getPassword() + "와" + request.getPassword() + "가 일치하지 않음.");
-        } else {
-            userSettingService.deleteUserSetting(user.getUserSetting().getUserSettingId());
-            userAccountService.deleteUserAccount(user.getUserAccount().getUserAccountId());
-            userRepository.deleteById(user.getUserId());
-        }
-    }
-
-    public User updateUser(UpdateUserRequest request) {
-        var beforeUser = userRepository
-                .findById(request.getUserId())
-                .orElseThrow(() -> new RuntimeException(request.getUserId() + "를 찾을 수 없음."));
+        if(request.getName() != null) user.setName(request.getName());
+        if(request.getTelNum() != null) user.setTelNum(request.getTelNum());
 
         UserAccount userAccount = userAccountService.updateUserAccount(request);
-        beforeUser.setUserAccount(userAccount);
+        user.setUserAccount(userAccount);
 
-        var user = User.builder()
-                .userId(beforeUser.getUserId())
-                .name(request.getName() != null ? request.getName() : beforeUser.getName())
-                .telNum(request.getTelNum() != null ? request.getTelNum() : beforeUser.getTelNum())
-                .roleId(beforeUser.getRoleId())
-                .userAccount(userAccount)
-                .userSetting(beforeUser.getUserSetting())
-                .build();
         userRepository.save(user);
 
         return user;
