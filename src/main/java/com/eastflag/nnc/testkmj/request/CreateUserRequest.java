@@ -11,8 +11,8 @@ import java.sql.Timestamp;
  *
  * email (이메일): user_account.email
  * password (비밀번호): user_account.password
- * name (이름): user.name
- * telNum (전화번호): user.tel_num
+ * name (이름): user1.name
+ * telNum (전화번호): user1.tel_num
  * address (주소): user_account.address
  * detailAddress (상세 주소): user_account.detail_address
  * caregiverId (보호자 인증하기 후 반환된 Id 값): relation.caregiver_id

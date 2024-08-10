@@ -11,27 +11,29 @@ import org.springframework.stereotype.Service;
 
 /**
  * 유저 관리 Service 클래스
+ *
+ * UserAccountService, UserSettingService와 종속 관계이다.
+ * ※ 두 Service에서는 접근하지 말 것.
  */
 @Service
 @RequiredArgsConstructor
 public class UserService1 {
-    // 해싱을 위한 것이라고 추정
-    //private final PasswordEncoder passwordEncoder;
-
     private final UserRepository1 userRepository;
     private final UserAccountService userAccountService;
     private final UserSettingService userSettingService;
 
     /**
-     * 유저 Entity를 생성하는 함수
+     * 유저 Entity를 DataBase에 생성하는 함수
      *
-     * @param request UserController.createUser API에서 가져온 유저 생성 정보
+     * @param request UserController1.createUser API에서 가져온 유저 생성 정보
      */
     public User1 createUser(CreateUserRequest request) {
-        // request 정보들 각 userAccount, userSetting으로 분기.
+        // request 정보들 각 userAccount, userSetting으로 분기
+        // 생성에 userAccountId와 userSettingId가 필요하기 때문
         UserAccount userAccount = userAccountService.createUserAccount(request);
         UserSetting userSetting = userSettingService.createUserSetting();
 
+        // Relation 관계는 CareTaker 생성 시 생성
         Role1 role;
         if(request.getCaregiverEmail() == null) role = Role1.CAREGIVER;
         else {
@@ -52,26 +54,41 @@ public class UserService1 {
         return user;
     }
 
+    /**
+     * 유저 Entity를 DataBase에 삭제하는 함수
+     *
+     * @param userId 삭제할 Entity ID
+     */
     public void deleteUser(int userId) {
         var user = userRepository
                 .findById(userId)
                 .orElseThrow(() -> new RuntimeException(userId + "를 찾을 수 없음."));
 
+        // 종속관계 제거를 위한 userAccount, userSetting 분기
         var userSettingId = getUserSettingId(userId);
         var userAccountId = getUserAccountId(userId);
         userRepository.deleteById(user.getUserId());
         userSettingService.deleteUserSetting(userSettingId);
+
         userAccountService.deleteUserAccount(userAccountId);
     }
 
+    /**
+     * 특정 Entity 데이터를 변경하는 함수
+     *
+     * @param request UserController1.updateUser에서 가져온 정보
+     * @return 변경된 User1 Entity
+     */
     public User1 updateUser(UpdateUserRequest request) {
         var user = userRepository
                 .findById(request.getUserId())
                 .orElseThrow(() -> new RuntimeException(request.getUserId() + "를 찾을 수 없음."));
 
+        // null이 아닌 값만 setter로 수정한다.
         if(request.getName() != null) user.setName(request.getName());
         if(request.getTelNum() != null) user.setTelNum(request.getTelNum());
 
+        // user_account Table에 관한 request는 분기하여 update한다.
         var userAccountId = getUserAccountId(request.getUserId());
         UserAccount userAccount = userAccountService.updateUserAccount(userAccountId, request);
         user.setUserAccount(userAccount);
@@ -81,6 +98,25 @@ public class UserService1 {
         return user;
     }
 
+    /**
+     * 특정 Entity 데이터를 반환하는 함수
+     *
+     * @param userId 반환받을 User1의 user_id
+     * @return user_id에 맞는 User Entity
+     */
+    public User1 getUser(int userId) {
+        var user = userRepository
+                .findById(userId)
+                .orElseThrow(() -> new RuntimeException(userId + "를 찾을 수 없음."));
+        return user;
+    }
+
+    /**
+     * user1.userId를 통해 user_account_id를 조회하는 함수
+     *
+     * @param userId 조회할 user_id
+     * @return user_id에 대응하는 user_account_id
+     */
     public int getUserAccountId(int userId) {
         var user = userRepository
                 .findById(userId)
@@ -88,17 +124,16 @@ public class UserService1 {
         return user.getUserAccount().getUserAccountId();
     }
 
+    /**
+     * user1.userId를 통해 user_setting_id를 조회하는 함수
+     *
+     * @param userId 조회할 user_id
+     * @return user_id에 대응하는 user_setting_id
+     */
     public int getUserSettingId(int userId) {
         var user = userRepository
                 .findById(userId)
                 .orElseThrow(() -> new RuntimeException(userId + "를 찾을 수 없음."));
         return user.getUserSetting().getUserSettingId();
-    }
-
-    public User1 getUser(int userId) {
-        var user = userRepository
-                .findById(userId)
-                .orElseThrow(() -> new RuntimeException(userId + "를 찾을 수 없음."));
-        return user;
     }
 }
