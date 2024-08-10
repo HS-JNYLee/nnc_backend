@@ -1,7 +1,6 @@
 package com.eastflag.nnc.testkmj.usersetting;
 
 import com.eastflag.nnc.testkmj.request.UpdateUserSettingRequest;
-import com.eastflag.nnc.testkmj.user.UserService1;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +11,12 @@ public class UserSettingService {
 
     public UserSetting createUserSetting() {
         var userSetting = UserSetting.builder()
+                .voiceGuide(true)
+                .alertRoute(true)
+                .alertDanger(true)
+                .alertDanger(false)
+                .lowBus(false)
+                .elevatorFirst(false)
                 .build();
         userSettingRepository.save(userSetting);
 

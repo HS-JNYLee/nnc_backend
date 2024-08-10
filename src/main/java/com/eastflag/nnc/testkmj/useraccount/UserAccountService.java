@@ -2,7 +2,6 @@ package com.eastflag.nnc.testkmj.useraccount;
 
 import com.eastflag.nnc.testkmj.request.CreateUserRequest;
 import com.eastflag.nnc.testkmj.request.UpdateUserRequest;
-import com.eastflag.nnc.testkmj.user.UserService1;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +14,8 @@ public class UserAccountService {
         var userAccount = UserAccount.builder()
                 .email(request.getEmail())
                 .password(request.getPassword())
-                //.passwordSalt() // 모름
-                //.hashAlgorithmId() // 모름
+                .passwordSalt("temp") // 모름
+                .hashAlgorithmId("temp") // 모름
                 .createdAt(request.getCreatedAt())
                 .updatedAt(request.getUpdatedAt())
                 .address(request.getAddress())

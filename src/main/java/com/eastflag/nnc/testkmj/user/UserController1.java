@@ -25,11 +25,11 @@ public class UserController1 {
      * @return
      */
     @PostMapping("/createUser")
-    public ResponseEntity<?> createUser(
+    public CommonResponse createUser(
             @RequestBody CreateUserRequest request
     ) {
         userService.createUser(request);
-        return ResponseEntity.ok().build();
+        return CommonResponse.builder().code(200).message(request.getName()+"(name) 생성 성공").build();
     }
 
     /**
@@ -39,11 +39,11 @@ public class UserController1 {
      * @return
      */
     @DeleteMapping("/deleteUser/{userId}")
-    public ResponseEntity<?> deleteUser(
+    public CommonResponse deleteUser(
             @PathVariable int userId
     ) {
         userService.deleteUser(userId);
-        return ResponseEntity.ok().build();
+        return CommonResponse.builder().code(200).message(userId + ": 객제 전달 성공").build();
     }
 
     /**
@@ -53,11 +53,11 @@ public class UserController1 {
      * @return
      */
     @PatchMapping("/updateUser")
-    public ResponseEntity<?> updateUser(
+    public CommonResponse updateUser(
             @RequestBody UpdateUserRequest request
     ) {
         userService.updateUser(request);
-        return ResponseEntity.ok().build();
+        return CommonResponse.builder().code(200).message(request.getUserId() + ": 객제 전달 성공").build();
     }
 
     /**
@@ -67,12 +67,12 @@ public class UserController1 {
      * @return
      */
     @PatchMapping("/updateUserSetting")
-    public ResponseEntity<?> updateUserSetting(
+    public CommonResponse updateUserSetting(
             @RequestBody UpdateUserSettingRequest request
     ){
         var userSettingId = userService.getUserSettingId(request.getUserId());
         userSettingService.updateUserSetting(userSettingId, request);
-        return ResponseEntity.ok().build();
+        return CommonResponse.builder().code(200).message(request.getUserId() + ": 객제 전달 성공").build();
     }
 
     /**
@@ -82,33 +82,33 @@ public class UserController1 {
      * @return
      */
     @GetMapping("/getUser/{userId}")
-    public CommonResponse.CommonResponseBuilder<Object> getUser(
+    public CommonResponse getUser(
             @PathVariable int userId
     ){
         var user = userService.getUser(userId);
-        return CommonResponse.builder().code(200).message(userId + ": 객제 전달 성공").data(user);
+        return CommonResponse.builder().code(200).message(userId + ": 객제 전달 성공").data(user).build();
     }
 
     @GetMapping("/getUser/{userId}/{field}")
-    public CommonResponse.CommonResponseBuilder<Object> getUserField(
+    public CommonResponse getUserField(
             @PathVariable int userId, @PathVariable UserField field
     ){
         var user = userService.getUser(userId);
         switch(field){
             case NAME -> {
-                return CommonResponse.builder().code(200).message(userId+"(name) 전달 성공").data(user.getName());
+                return CommonResponse.builder().code(200).message(userId+"(name) 전달 성공").data(user.getName()).build();
             }
             case TEL_NUM -> {
-                return CommonResponse.builder().code(200).message(userId+"(tel_num) 전달 성공").data(user.getTelNum());
+                return CommonResponse.builder().code(200).message(userId+"(tel_num) 전달 성공").data(user.getTelNum()).build();
             }
             case ROLE_ID -> {
-                return CommonResponse.builder().code(200).message(userId+"(role_id) 전달 성공").data(user.getRole());
+                return CommonResponse.builder().code(200).message(userId+"(role_id) 전달 성공").data(user.getRole()).build();
             }
             case USER_SETTING -> {
-                return CommonResponse.builder().code(200).message(userId+"(user_setting) 전달 성공").data(user.getUserSetting());
+                return CommonResponse.builder().code(200).message(userId+"(user_setting) 전달 성공").data(user.getUserSetting()).build();
             }
             case USER_ACCOUNT -> {
-                return CommonResponse.builder().code(200).message(userId+"(user_account) 전달 성공").data(user.getUserAccount());
+                return CommonResponse.builder().code(200).message(userId+"(user_account) 전달 성공").data(user.getUserAccount()).build();
             }
             default -> {
                 // TODO: 에러코드 삽입할 것
@@ -124,12 +124,12 @@ public class UserController1 {
      * @return
      */
     @GetMapping("/getUserAccount/{userId}")
-    public CommonResponse.CommonResponseBuilder<Object> getUserAccount(
+    public CommonResponse getUserAccount(
             @PathVariable int userId
     ){
         var userAccountId = userService.getUserAccountId(userId);
         var userAccount = userAccountService.getUserAccount(userAccountId);
-        return CommonResponse.builder().code(200).message(userId + ": 객제 전달 성공").data(userAccount);
+        return CommonResponse.builder().code(200).message(userId + ": 객제 전달 성공").data(userAccount).build();
     }
 
     /**
@@ -139,11 +139,11 @@ public class UserController1 {
      * @return
      */
     @GetMapping("/getUserSetting/{userId}")
-    public CommonResponse.CommonResponseBuilder<Object> getUserSetting(
+    public CommonResponse getUserSetting(
             @PathVariable int userId
     ){
         var userSettingId = userService.getUserSettingId(userId);
         var userSetting = userSettingService.getUserSetting(userSettingId);
-        return CommonResponse.builder().code(200).message(userId + ": 객제 전달 성공").data(userSetting);
+        return CommonResponse.builder().code(200).message(userId + ": 객제 전달 성공").data(userSetting).build();
     }
 }

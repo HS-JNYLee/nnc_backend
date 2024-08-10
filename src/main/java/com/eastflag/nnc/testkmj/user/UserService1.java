@@ -30,14 +30,12 @@ public class UserService1 {
     public User1 createUser(CreateUserRequest request) {
         // request 정보들 각 userAccount, userSetting으로 분기.
         UserAccount userAccount = userAccountService.createUserAccount(request);
-        UserSetting userSetting = null;
+        UserSetting userSetting = userSettingService.createUserSetting();
 
         Role roleId;
         if(request.getCaregiverId() != null) roleId = Role.CARETAKER;
-        else {
-            userSetting = userSettingService.createUserSetting();
-            roleId = Role.CAREGIVER;
-        }
+        else roleId = Role.CAREGIVER;
+
         var user = User1.builder()
                 .name(request.getName())
                 .telNum(request.getTelNum())
@@ -58,9 +56,9 @@ public class UserService1 {
 
         var userSettingId = getUserSettingId(userId);
         var userAccountId = getUserAccountId(userId);
+        userRepository.deleteById(user.getUserId());
         userSettingService.deleteUserSetting(userSettingId);
         userAccountService.deleteUserAccount(userAccountId);
-        userRepository.deleteById(user.getUserId());
     }
 
     public User1 updateUser(UpdateUserRequest request) {

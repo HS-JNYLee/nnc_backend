@@ -1,16 +1,15 @@
 package com.eastflag.nnc.testkmj.usersetting;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Getter
+@Setter
 @Table(name = "user_setting")
 public class UserSetting {
     @Id
@@ -18,17 +17,17 @@ public class UserSetting {
     private int userSettingId;
 
     @Column(nullable = false)
-    private Boolean voiceGuide = true;
+    private Boolean voiceGuide;
 
     @Column(nullable = false)
-    private Boolean alertRoute = true;
+    private Boolean alertRoute;
 
     @Column(nullable = false)
-    private Boolean alertDanger = true;
+    private Boolean alertDanger;
 
     @Column(nullable = false)
-    private Boolean lowBus = false;
+    private Boolean lowBus;
 
     @Column(nullable = false)
-    private Boolean elevatorFirst = false;
+    private Boolean elevatorFirst;
 }
