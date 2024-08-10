@@ -1,8 +1,8 @@
 package com.eastflag.nnc.testkmj.user;
 
-import com.eastflag.nnc.testkmj.Request.CreateUserRequest;
-import com.eastflag.nnc.testkmj.Request.DeleteUserRequest;
-import com.eastflag.nnc.testkmj.Request.UpdateUserRequest;
+import com.eastflag.nnc.testkmj.request.CreateUserRequest;
+import com.eastflag.nnc.testkmj.request.DeleteUserRequest;
+import com.eastflag.nnc.testkmj.request.UpdateUserRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

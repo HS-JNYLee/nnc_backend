@@ -1,8 +1,8 @@
 package com.eastflag.nnc.testkmj.user;
 
-import com.eastflag.nnc.testkmj.Request.CreateUserRequest;
-import com.eastflag.nnc.testkmj.Request.DeleteUserRequest;
-import com.eastflag.nnc.testkmj.Request.UpdateUserRequest;
+import com.eastflag.nnc.testkmj.request.CreateUserRequest;
+import com.eastflag.nnc.testkmj.request.DeleteUserRequest;
+import com.eastflag.nnc.testkmj.request.UpdateUserRequest;
 import com.eastflag.nnc.testkmj.useraccount.UserAccount;
 import com.eastflag.nnc.testkmj.useraccount.UserAccountService;
 import com.eastflag.nnc.testkmj.usersetting.UserSetting;
@@ -28,7 +28,7 @@ public class UserService {
      *
      * @param request UserController.createUser API에서 가져온 유저 생성 정보
      */
-    public void createUser(CreateUserRequest request) {
+    public User createUser(CreateUserRequest request) {
         // request 정보들 각 userAccount, userSetting으로 분기.
         UserAccount userAccount = userAccountService.createUserAccount(request);
         UserSetting userSetting = null;
@@ -48,10 +48,12 @@ public class UserService {
                 .build();
 
         userRepository.save(user);
+
+        return user;
     }
 
     public void deleteUser(DeleteUserRequest request) {
-        User user = userRepository
+        var user = userRepository
                 .findById(request.getUserId())
                 .orElseThrow(() -> new RuntimeException(request.getUserId() + "를 찾을 수 없음."));
 
@@ -66,8 +68,26 @@ public class UserService {
         }
     }
 
-    public void updateUser(UpdateUserRequest request) {
+    public User updateUser(UpdateUserRequest request) {
+        var beforeUser = userRepository
+                .findById(request.getUserId())
+                .orElseThrow(() -> new RuntimeException(request.getUserId() + "를 찾을 수 없음."));
 
+        var userAccountId = beforeUser.getUserAccount().getUserAccountId();
+        UserAccount userAccount = userAccountService.updateUserAccount(userAccountId ,request);
+        beforeUser.setUserAccount(userAccount);
+
+        var user = User.builder()
+                .userId(beforeUser.getUserId())
+                .name(request.getName() != null ? request.getName() : beforeUser.getName())
+                .telNum(request.getTelNum() != null ? request.getTelNum() : beforeUser.getTelNum())
+                .roleId(beforeUser.getRoleId())
+                .userAccount(userAccount)
+                .userSetting(beforeUser.getUserSetting())
+                .build();
+        userRepository.save(user);
+
+        return user;
     }
 
 
