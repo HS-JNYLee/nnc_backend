@@ -32,14 +32,17 @@ public class UserService1 {
         UserAccount userAccount = userAccountService.createUserAccount(request);
         UserSetting userSetting = userSettingService.createUserSetting();
 
-        Role roleId;
-        if(request.getCaregiverId() != null) roleId = Role.CARETAKER;
-        else roleId = Role.CAREGIVER;
+        Role role;
+        if(request.getCaregiverEmail() == null) role = Role.CAREGIVER;
+        else {
+            // TODO: relation 추가해볼 것
+            role = Role.CARETAKER;
+        }
 
         var user = User1.builder()
                 .name(request.getName())
                 .telNum(request.getTelNum())
-                .role(roleId)
+                .role(role)
                 .userAccount(userAccount)
                 .userSetting(userSetting)
                 .build();
