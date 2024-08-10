@@ -29,7 +29,7 @@ public class CreateUserRequest {
     private String telNum;
     private String address;
     private String detailAddress;
-    private String caregiverId;
+    private String caregiverEmail;
     private Timestamp createdAt;
     private Timestamp updatedAt;
 }
