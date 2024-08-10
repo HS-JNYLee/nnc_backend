@@ -62,22 +62,6 @@ public class UserService1 {
     }
 
     public User1 updateUser(UpdateUserRequest request) {
-//        var beforeUser = userRepository
-//                .findById(request.getUserId())
-//                .orElseThrow(() -> new RuntimeException(request.getUserId() + "를 찾을 수 없음."));
-//
-//        UserAccount userAccount = userAccountService.updateUserAccount(request);
-//        beforeUser.setUserAccount(userAccount);
-//
-//        var user = User.builder()
-//                .userId(beforeUser.getUserId())
-//                .name(request.getName() != null ? request.getName() : beforeUser.getName())
-//                .telNum(request.getTelNum() != null ? request.getTelNum() : beforeUser.getTelNum())
-//                .roleId(beforeUser.getRoleId())
-//                .userAccount(userAccount)
-//                .userSetting(beforeUser.getUserSetting())
-//                .build();
-
         var user = userRepository
                 .findById(request.getUserId())
                 .orElseThrow(() -> new RuntimeException(request.getUserId() + "를 찾을 수 없음."));

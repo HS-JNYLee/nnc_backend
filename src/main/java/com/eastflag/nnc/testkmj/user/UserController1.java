@@ -89,7 +89,7 @@ public class UserController1 {
         return CommonResponse.builder().code(200).message(userId + ": 객제 전달 성공").data(user).build();
     }
 
-    @GetMapping("/getUser/{userId}/{field}")
+    /*@GetMapping("/getUser/{userId}/{field}")
     public CommonResponse getUserField(
             @PathVariable int userId, @PathVariable UserField field
     ){
@@ -115,7 +115,7 @@ public class UserController1 {
                 return null;
             }
         }
-    }
+    }*/
 
     /**
      * userAccount 정보를 전달하는 코드
