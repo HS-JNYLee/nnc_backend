@@ -14,14 +14,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "emergency")
+@Table(name = "user_emergency")
 public class Emergency {
 
     @Id
-    @Column(nullable = false, name = "user_id")
-    private Integer userId;
+    @Column(name = "emergency_id", nullable = false)
+    private Integer emergencyId;
 
-    @Column(name = "name")
+    @Column(name = "user_id", nullable = false)
+    private Integer userId = 0;
+
+    @Column(name = "delete_yn", nullable = false, length = 1)
+    private String deleteYn = "n";
+
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "tel_num")
@@ -29,4 +35,5 @@ public class Emergency {
 
     @Column(name = "address")
     private String address;
+
 }

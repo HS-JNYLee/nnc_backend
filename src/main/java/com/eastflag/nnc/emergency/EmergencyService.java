@@ -3,10 +3,10 @@ package com.eastflag.nnc.emergency;
 import com.eastflag.nnc.common.CommonResponse;
 import com.eastflag.nnc.common.ResponseMessage;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,8 +18,13 @@ public class EmergencyService {
         this.emergencyRepository = emergencyRepository;
     }
 
-    public Emergency getEmergencyByUserId(int id) {
-        return emergencyRepository.findByUserId(id);
+    public CommonResponse getEmergencyByEmergencyId(int emergencyId) {
+        Emergency emergency = emergencyRepository.findByEmergencyId(emergencyId);
+        return CommonResponse.builder()
+                .code(200)
+                .message(ResponseMessage.SUCCESS)
+                .data(emergency)
+                .build();
     }
 
     public CommonResponse addEmergency(Emergency emergency) {
@@ -44,6 +49,24 @@ public class EmergencyService {
     public CommonResponse updateEmergency(Emergency emergency) {
         Optional<Emergency> emergency1 = emergencyRepository.findByUserIdAndTelNum(emergency.getUserId(), emergency.getTelNum());
         emergency1.ifPresent(value -> emergencyRepository.save(emergency));
+        return CommonResponse.builder()
+                .code(200)
+                .message(ResponseMessage.SUCCESS)
+                .data(emergency)
+                .build();
+    }
+
+    public CommonResponse getAllEmergency(Integer userId) {
+        List<Emergency> emergencies = emergencyRepository.findByUserId(userId);
+        return CommonResponse.builder()
+                .code(200)
+                .message(ResponseMessage.SUCCESS)
+                .data(emergencies)
+                .build();
+    }
+
+    public CommonResponse getEmergencyByUserIdAndTelNum(int userId, String telNum) {
+        Optional<Emergency> emergency = emergencyRepository.findByUserIdAndTelNum(userId, telNum);
         return CommonResponse.builder()
                 .code(200)
                 .message(ResponseMessage.SUCCESS)
