@@ -3,6 +3,7 @@ package com.eastflag.nnc.testkmj.user;
 import com.eastflag.nnc.testkmj.request.CreateUserRequest;
 import com.eastflag.nnc.testkmj.request.DeleteUserRequest;
 import com.eastflag.nnc.testkmj.request.UpdateUserRequest;
+import com.eastflag.nnc.testkmj.request.UpdateUserSettingRequest;
 import com.eastflag.nnc.testkmj.useraccount.UserAccount;
 import com.eastflag.nnc.testkmj.useraccount.UserAccountService;
 import com.eastflag.nnc.testkmj.usersetting.UserSetting;
@@ -73,8 +74,7 @@ public class UserService {
                 .findById(request.getUserId())
                 .orElseThrow(() -> new RuntimeException(request.getUserId() + "를 찾을 수 없음."));
 
-        var userAccountId = beforeUser.getUserAccount().getUserAccountId();
-        UserAccount userAccount = userAccountService.updateUserAccount(userAccountId ,request);
+        UserAccount userAccount = userAccountService.updateUserAccount(request);
         beforeUser.setUserAccount(userAccount);
 
         var user = User.builder()
@@ -90,5 +90,17 @@ public class UserService {
         return user;
     }
 
+    public int getUserAccountId(int userId) {
+        var user = userRepository
+                .findById(userId)
+                .orElseThrow(() -> new RuntimeException(userId + "를 찾을 수 없음."));
+        return user.getUserAccount().getUserAccountId();
+    }
 
+    public int getUserSettingId(int userId) {
+        var user = userRepository
+                .findById(userId)
+                .orElseThrow(() -> new RuntimeException(userId + "를 찾을 수 없음."));
+        return user.getUserSetting().getUserSettingId();
+    }
 }

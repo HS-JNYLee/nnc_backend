@@ -2,12 +2,14 @@ package com.eastflag.nnc.testkmj.useraccount;
 
 import com.eastflag.nnc.testkmj.request.CreateUserRequest;
 import com.eastflag.nnc.testkmj.request.UpdateUserRequest;
+import com.eastflag.nnc.testkmj.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class UserAccountService {
+    private final UserService userService;
     private final UserAccountRepository userAccountRepository;
 
     public UserAccount createUserAccount(CreateUserRequest request){
@@ -30,7 +32,9 @@ public class UserAccountService {
         userAccountRepository.deleteById(userAccountId);
     }
 
-    public UserAccount updateUserAccount(int userAccountId, UpdateUserRequest request) {
+    public UserAccount updateUserAccount(UpdateUserRequest request) {
+        var userAccountId = userService.getUserAccountId(request.getUserId());
+
         var beforeUserAccount = userAccountRepository
                 .findById(userAccountId)
                 .orElseThrow(() -> new RuntimeException(userAccountId + "를 찾을 수 없음."));
@@ -49,5 +53,4 @@ public class UserAccountService {
 
         return userAccount;
     }
-
 }
