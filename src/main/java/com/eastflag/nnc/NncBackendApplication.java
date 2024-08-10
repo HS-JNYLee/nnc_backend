@@ -46,11 +46,4 @@ public class NncBackendApplication {
 
 		};
 	}*/
-
-	@Bean
-	public CommandLineRunner KmjCommandLineRunner(
-			UserService service
-	) {
-		return args -> {};
-	}
 }

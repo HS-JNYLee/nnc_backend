@@ -1,9 +1,10 @@
 package com.eastflag.nnc.testkmj.user;
 
+import com.eastflag.nnc.common.CommonResponse;
 import com.eastflag.nnc.testkmj.request.CreateUserRequest;
-import com.eastflag.nnc.testkmj.request.DeleteUserRequest;
 import com.eastflag.nnc.testkmj.request.UpdateUserRequest;
 import com.eastflag.nnc.testkmj.request.UpdateUserSettingRequest;
+import com.eastflag.nnc.testkmj.useraccount.UserAccountService;
 import com.eastflag.nnc.testkmj.usersetting.UserSettingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +15,11 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final UserAccountService userAccountService;
     private final UserSettingService userSettingService;
 
     /**
-     * 유저를 생성하는 API
+     * user를 생성하는 API
      *
      * @param request 생성할 유저의 정보
      * @return
@@ -30,9 +32,15 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * user를 삭제하는 API
+     *
+     * @param userId
+     * @return
+     */
     @DeleteMapping("/deleteUser/{userId}")
     public ResponseEntity<?> deleteUser(
-        @RequestBody @PathVariable int userId
+        @PathVariable int userId
     ) {
         userService.deleteUser(userId);
         return ResponseEntity.ok().build();
@@ -66,5 +74,73 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * user 정보를 전달하는 코드
+     *
+     * @param userId
+     * @return
+     */
+    @GetMapping("/getUser/{userId}")
+    public CommonResponse.CommonResponseBuilder<Object> getUser(
+        @PathVariable int userId
+    ){
+        var user = userService.getUser(userId);
+        return CommonResponse.builder().code(200).message(userId + ": 객제 전달 성공").data(user);
+    }
 
+    @GetMapping("/getUser/{userId}/{field}")
+    public CommonResponse.CommonResponseBuilder<Object> getUserField(
+        @PathVariable int userId, @PathVariable UserField field
+    ){
+        var user = userService.getUser(userId);
+        switch(field){
+            case NAME -> {
+                return CommonResponse.builder().code(200).message(userId+"(name) 전달 성공").data(user.getName());
+            }
+            case TEL_NUM -> {
+                return CommonResponse.builder().code(200).message(userId+"(tel_num) 전달 성공").data(user.getTelNum());
+            }
+            case ROLE_ID -> {
+                return CommonResponse.builder().code(200).message(userId+"(role_id) 전달 성공").data(user.getRoleId());
+            }
+            case USER_SETTING -> {
+                return CommonResponse.builder().code(200).message(userId+"(user_setting) 전달 성공").data(user.getUserSetting());
+            }
+            case USER_ACCOUNT -> {
+                return CommonResponse.builder().code(200).message(userId+"(user_account) 전달 성공").data(user.getUserAccount());
+            }
+            default -> {
+                // TODO: 에러코드 삽입할 것
+                return null;
+            }
+        }
+    }
+
+    /**
+     * userAccount 정보를 전달하는 코드
+     *
+     * @param userId
+     * @return
+     */
+    @GetMapping("/getUserAccount/{userId}")
+    public CommonResponse.CommonResponseBuilder<Object> getUserAccount(
+        @PathVariable int userId
+    ){
+        var userAccount = userAccountService.getUserAccount(userId);
+        return CommonResponse.builder().code(200).message(userId + ": 객제 전달 성공").data(userAccount);
+    }
+
+    /**
+     * userSetting 정보를 전달하는 코드
+     *
+     * @param userId
+     * @return
+     */
+    @GetMapping("/getUserSetting/{userId}")
+    public CommonResponse.CommonResponseBuilder<Object> getUserSetting(
+        @PathVariable int userId
+    ){
+        var userSetting = userSettingService.getUserSetting(userId);
+        return CommonResponse.builder().code(200).message(userId + ": 객제 전달 성공").data(userSetting);
+    }
 }

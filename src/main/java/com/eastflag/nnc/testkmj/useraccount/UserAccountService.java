@@ -66,4 +66,12 @@ public class UserAccountService {
 
         return userAccount;
     }
+
+    public UserAccount getUserAccount(int userId) {
+        var userAccountId = userService.getUserAccountId(userId);
+        var userAccount = userAccountRepository
+                .findById(userAccountId)
+                .orElseThrow(() -> new RuntimeException(userAccountId + "를 찾을 수 없음."));
+        return userAccount;
+    }
 }

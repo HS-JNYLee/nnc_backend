@@ -108,4 +108,11 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException(userId + "를 찾을 수 없음."));
         return user.getUserSetting().getUserSettingId();
     }
+
+    public User getUser(int userId) {
+        var user = userRepository
+                .findById(userId)
+                .orElseThrow(() -> new RuntimeException(userId + "를 찾을 수 없음."));
+        return user;
+    }
 }

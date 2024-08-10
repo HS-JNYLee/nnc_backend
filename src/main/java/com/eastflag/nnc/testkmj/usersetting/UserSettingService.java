@@ -53,4 +53,12 @@ public class UserSettingService {
 
         return userSetting;
     }
+
+    public UserSetting getUserSetting(int userId) {
+        var userSettingId = userService.getUserSettingId(userId);
+        var userSetting = userSettingRepository
+                .findById(userSettingId)
+                .orElseThrow(() -> new RuntimeException(userSettingId + "를 찾을 수 없음."));
+        return userSetting;
+    }
 }
