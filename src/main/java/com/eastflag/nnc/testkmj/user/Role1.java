@@ -6,7 +6,7 @@ package com.eastflag.nnc.testkmj.user;
  * CAREGIVER (보호자): 보호자 계정
  * CARETAKER (사용자): 피보호자 계정
  */
-public enum Role {
+public enum Role1 {
     ADMIN,
     CAREGIVER,
     CARETAKER

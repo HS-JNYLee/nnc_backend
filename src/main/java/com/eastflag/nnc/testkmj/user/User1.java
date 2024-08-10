@@ -31,7 +31,7 @@ public class User1 {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role role;
+    private Role1 role;
 
     @OneToOne
     @JoinColumn(name = "user_setting_id")

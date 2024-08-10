@@ -32,11 +32,11 @@ public class UserService1 {
         UserAccount userAccount = userAccountService.createUserAccount(request);
         UserSetting userSetting = userSettingService.createUserSetting();
 
-        Role role;
-        if(request.getCaregiverEmail() == null) role = Role.CAREGIVER;
+        Role1 role;
+        if(request.getCaregiverEmail() == null) role = Role1.CAREGIVER;
         else {
             // TODO: relation 추가해볼 것
-            role = Role.CARETAKER;
+            role = Role1.CARETAKER;
         }
 
         var user = User1.builder()
