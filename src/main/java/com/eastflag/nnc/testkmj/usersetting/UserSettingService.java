@@ -1,14 +1,14 @@
 package com.eastflag.nnc.testkmj.usersetting;
 
 import com.eastflag.nnc.testkmj.request.UpdateUserSettingRequest;
-import com.eastflag.nnc.testkmj.user.UserService;
+import com.eastflag.nnc.testkmj.user.UserService1;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class UserSettingService {
-    private final UserService userService;
+    private final UserService1 userService;
     private final UserSettingRepository userSettingRepository;
 
     public UserSetting createUserSetting() {

@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
-public class UserController {
-    private final UserService userService;
+public class UserController1 {
+    private final UserService1 userService;
     private final UserAccountService userAccountService;
     private final UserSettingService userSettingService;
 
@@ -26,7 +26,7 @@ public class UserController {
      */
     @PostMapping("/createUser")
     public ResponseEntity<?> createUser(
-        @RequestBody CreateUserRequest request
+            @RequestBody CreateUserRequest request
     ) {
         userService.createUser(request);
         return ResponseEntity.ok().build();
@@ -40,7 +40,7 @@ public class UserController {
      */
     @DeleteMapping("/deleteUser/{userId}")
     public ResponseEntity<?> deleteUser(
-        @PathVariable int userId
+            @PathVariable int userId
     ) {
         userService.deleteUser(userId);
         return ResponseEntity.ok().build();
@@ -54,10 +54,10 @@ public class UserController {
      */
     @PatchMapping("/updateUser")
     public ResponseEntity<?> updateUser(
-        @RequestBody UpdateUserRequest request
+            @RequestBody UpdateUserRequest request
     ) {
-      userService.updateUser(request);
-      return ResponseEntity.ok().build();
+        userService.updateUser(request);
+        return ResponseEntity.ok().build();
     }
 
     /**
@@ -68,7 +68,7 @@ public class UserController {
      */
     @PatchMapping("/updateUserSetting")
     public ResponseEntity<?> updateUserSetting(
-        @RequestBody UpdateUserSettingRequest request
+            @RequestBody UpdateUserSettingRequest request
     ){
         userSettingService.updateUserSetting(request);
         return ResponseEntity.ok().build();
@@ -82,7 +82,7 @@ public class UserController {
      */
     @GetMapping("/getUser/{userId}")
     public CommonResponse.CommonResponseBuilder<Object> getUser(
-        @PathVariable int userId
+            @PathVariable int userId
     ){
         var user = userService.getUser(userId);
         return CommonResponse.builder().code(200).message(userId + ": 객제 전달 성공").data(user);
@@ -90,7 +90,7 @@ public class UserController {
 
     @GetMapping("/getUser/{userId}/{field}")
     public CommonResponse.CommonResponseBuilder<Object> getUserField(
-        @PathVariable int userId, @PathVariable UserField field
+            @PathVariable int userId, @PathVariable UserField field
     ){
         var user = userService.getUser(userId);
         switch(field){
@@ -101,7 +101,7 @@ public class UserController {
                 return CommonResponse.builder().code(200).message(userId+"(tel_num) 전달 성공").data(user.getTelNum());
             }
             case ROLE_ID -> {
-                return CommonResponse.builder().code(200).message(userId+"(role_id) 전달 성공").data(user.getRoleId());
+                return CommonResponse.builder().code(200).message(userId+"(role_id) 전달 성공").data(user.getRole());
             }
             case USER_SETTING -> {
                 return CommonResponse.builder().code(200).message(userId+"(user_setting) 전달 성공").data(user.getUserSetting());
@@ -124,7 +124,7 @@ public class UserController {
      */
     @GetMapping("/getUserAccount/{userId}")
     public CommonResponse.CommonResponseBuilder<Object> getUserAccount(
-        @PathVariable int userId
+            @PathVariable int userId
     ){
         var userAccount = userAccountService.getUserAccount(userId);
         return CommonResponse.builder().code(200).message(userId + ": 객제 전달 성공").data(userAccount);
@@ -138,7 +138,7 @@ public class UserController {
      */
     @GetMapping("/getUserSetting/{userId}")
     public CommonResponse.CommonResponseBuilder<Object> getUserSetting(
-        @PathVariable int userId
+            @PathVariable int userId
     ){
         var userSetting = userSettingService.getUserSetting(userId);
         return CommonResponse.builder().code(200).message(userId + ": 객제 전달 성공").data(userSetting);

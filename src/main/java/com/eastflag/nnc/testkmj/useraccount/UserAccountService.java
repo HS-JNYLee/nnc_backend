@@ -2,14 +2,14 @@ package com.eastflag.nnc.testkmj.useraccount;
 
 import com.eastflag.nnc.testkmj.request.CreateUserRequest;
 import com.eastflag.nnc.testkmj.request.UpdateUserRequest;
-import com.eastflag.nnc.testkmj.user.UserService;
+import com.eastflag.nnc.testkmj.user.UserService1;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class UserAccountService {
-    private final UserService userService;
+    private final UserService1 userService;
     private final UserAccountRepository userAccountRepository;
 
     public UserAccount createUserAccount(CreateUserRequest request){

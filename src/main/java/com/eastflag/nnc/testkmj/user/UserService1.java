@@ -1,9 +1,7 @@
 package com.eastflag.nnc.testkmj.user;
 
 import com.eastflag.nnc.testkmj.request.CreateUserRequest;
-import com.eastflag.nnc.testkmj.request.DeleteUserRequest;
 import com.eastflag.nnc.testkmj.request.UpdateUserRequest;
-import com.eastflag.nnc.testkmj.request.UpdateUserSettingRequest;
 import com.eastflag.nnc.testkmj.useraccount.UserAccount;
 import com.eastflag.nnc.testkmj.useraccount.UserAccountService;
 import com.eastflag.nnc.testkmj.usersetting.UserSetting;
@@ -16,11 +14,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserService1 {
     // 해싱을 위한 것이라고 추정
     //private final PasswordEncoder passwordEncoder;
 
-    private final UserRepository userRepository;
+    private final UserRepository1 userRepository;
     private final UserAccountService userAccountService; // 미완
     private final UserSettingService userSettingService; // 미완
 
@@ -29,21 +27,21 @@ public class UserService {
      *
      * @param request UserController.createUser API에서 가져온 유저 생성 정보
      */
-    public User createUser(CreateUserRequest request) {
+    public User1 createUser(CreateUserRequest request) {
         // request 정보들 각 userAccount, userSetting으로 분기.
         UserAccount userAccount = userAccountService.createUserAccount(request);
         UserSetting userSetting = null;
 
-        RoleId roleId;
-        if(request.getCaregiverId() != null) roleId = RoleId.CARETAKER;
+        Role roleId;
+        if(request.getCaregiverId() != null) roleId = Role.CARETAKER;
         else {
             userSetting = userSettingService.createUserSetting();
-            roleId = RoleId.CAREGIVER;
+            roleId = Role.CAREGIVER;
         }
-        var user = User.builder()
+        var user = User1.builder()
                 .name(request.getName())
                 .telNum(request.getTelNum())
-                .roleId(roleId)
+                .role(roleId)
                 .userAccount(userAccount)
                 .userSetting(userSetting)
                 .build();
@@ -63,7 +61,7 @@ public class UserService {
         userRepository.deleteById(user.getUserId());
     }
 
-    public User updateUser(UpdateUserRequest request) {
+    public User1 updateUser(UpdateUserRequest request) {
 //        var beforeUser = userRepository
 //                .findById(request.getUserId())
 //                .orElseThrow(() -> new RuntimeException(request.getUserId() + "를 찾을 수 없음."));
@@ -109,7 +107,7 @@ public class UserService {
         return user.getUserSetting().getUserSettingId();
     }
 
-    public User getUser(int userId) {
+    public User1 getUser(int userId) {
         var user = userRepository
                 .findById(userId)
                 .orElseThrow(() -> new RuntimeException(userId + "를 찾을 수 없음."));
