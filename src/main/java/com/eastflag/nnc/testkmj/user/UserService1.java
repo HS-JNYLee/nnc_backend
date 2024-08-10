@@ -42,7 +42,7 @@ public class UserService1 {
         var user = User1.builder()
                 .name(request.getName())
                 .telNum(request.getTelNum())
-                .role(role)
+                .role1(role)
                 .userAccount(userAccount)
                 .userSetting(userSetting)
                 .build();
