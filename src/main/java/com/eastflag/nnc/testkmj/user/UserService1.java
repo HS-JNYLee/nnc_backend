@@ -56,8 +56,10 @@ public class UserService1 {
                 .findById(userId)
                 .orElseThrow(() -> new RuntimeException(userId + "를 찾을 수 없음."));
 
-        userSettingService.deleteUserSetting(userId);
-        userAccountService.deleteUserAccount(userId);
+        var userSettingId = getUserSettingId(userId);
+        var userAccountId = getUserAccountId(userId);
+        userSettingService.deleteUserSetting(userSettingId);
+        userAccountService.deleteUserAccount(userAccountId);
         userRepository.deleteById(user.getUserId());
     }
 
@@ -85,7 +87,8 @@ public class UserService1 {
         if(request.getName() != null) user.setName(request.getName());
         if(request.getTelNum() != null) user.setTelNum(request.getTelNum());
 
-        UserAccount userAccount = userAccountService.updateUserAccount(request);
+        var userAccountId = getUserAccountId(request.getUserId());
+        UserAccount userAccount = userAccountService.updateUserAccount(userAccountId, request);
         user.setUserAccount(userAccount);
 
         userRepository.save(user);

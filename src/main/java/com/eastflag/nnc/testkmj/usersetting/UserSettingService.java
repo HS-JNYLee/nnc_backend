@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class UserSettingService {
-    private final UserService1 userService;
     private final UserSettingRepository userSettingRepository;
 
     public UserSetting createUserSetting() {
@@ -19,14 +18,11 @@ public class UserSettingService {
         return userSetting;
     }
 
-    public void deleteUserSetting(int userId) {
-        var userSettingId = userService.getUserSettingId(userId);
+    public void deleteUserSetting(int userSettingId) {
         userSettingRepository.deleteById(userSettingId);
     }
 
-    public UserSetting updateUserSetting(UpdateUserSettingRequest request) {
-        var userSettingId = userService.getUserSettingId(request.getUserId());
-
+    public UserSetting updateUserSetting(int userSettingId, UpdateUserSettingRequest request) {
 //        var beforeSetting = userSettingRepository
 //                .findById(userSettingId)
 //                .orElseThrow(() -> new RuntimeException(userSettingId + "를 찾을 수 없음."));
@@ -54,8 +50,7 @@ public class UserSettingService {
         return userSetting;
     }
 
-    public UserSetting getUserSetting(int userId) {
-        var userSettingId = userService.getUserSettingId(userId);
+    public UserSetting getUserSetting(int userSettingId) {
         var userSetting = userSettingRepository
                 .findById(userSettingId)
                 .orElseThrow(() -> new RuntimeException(userSettingId + "를 찾을 수 없음."));

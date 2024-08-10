@@ -70,7 +70,8 @@ public class UserController1 {
     public ResponseEntity<?> updateUserSetting(
             @RequestBody UpdateUserSettingRequest request
     ){
-        userSettingService.updateUserSetting(request);
+        var userSettingId = userService.getUserSettingId(request.getUserId());
+        userSettingService.updateUserSetting(userSettingId, request);
         return ResponseEntity.ok().build();
     }
 
@@ -126,7 +127,8 @@ public class UserController1 {
     public CommonResponse.CommonResponseBuilder<Object> getUserAccount(
             @PathVariable int userId
     ){
-        var userAccount = userAccountService.getUserAccount(userId);
+        var userAccountId = userService.getUserAccountId(userId);
+        var userAccount = userAccountService.getUserAccount(userAccountId);
         return CommonResponse.builder().code(200).message(userId + ": 객제 전달 성공").data(userAccount);
     }
 
@@ -140,7 +142,8 @@ public class UserController1 {
     public CommonResponse.CommonResponseBuilder<Object> getUserSetting(
             @PathVariable int userId
     ){
-        var userSetting = userSettingService.getUserSetting(userId);
+        var userSettingId = userService.getUserSettingId(userId);
+        var userSetting = userSettingService.getUserSetting(userSettingId);
         return CommonResponse.builder().code(200).message(userId + ": 객제 전달 성공").data(userSetting);
     }
 }

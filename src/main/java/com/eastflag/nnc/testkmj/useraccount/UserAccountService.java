@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class UserAccountService {
-    private final UserService1 userService;
     private final UserAccountRepository userAccountRepository;
 
     public UserAccount createUserAccount(CreateUserRequest request){
@@ -28,13 +27,11 @@ public class UserAccountService {
         return userAccount;
     }
 
-    public void deleteUserAccount(int userId) {
-        var userAccountId = userService.getUserAccountId(userId);
+    public void deleteUserAccount(int userAccountId) {
         userAccountRepository.deleteById(userAccountId);
     }
 
-    public UserAccount updateUserAccount(UpdateUserRequest request) {
-        var userAccountId = userService.getUserAccountId(request.getUserId());
+    public UserAccount updateUserAccount(int userAccountId, UpdateUserRequest request) {
 //
 //        var beforeUserAccount = userAccountRepository
 //                .findById(userAccountId)
@@ -67,8 +64,7 @@ public class UserAccountService {
         return userAccount;
     }
 
-    public UserAccount getUserAccount(int userId) {
-        var userAccountId = userService.getUserAccountId(userId);
+    public UserAccount getUserAccount(int userAccountId) {
         var userAccount = userAccountRepository
                 .findById(userAccountId)
                 .orElseThrow(() -> new RuntimeException(userAccountId + "를 찾을 수 없음."));
