@@ -1,6 +1,8 @@
 package com.eastflag.nnc.testkmj.user;
 
 import com.eastflag.nnc.common.CommonResponse;
+import com.eastflag.nnc.testkmj.relation.UserRelationRepository;
+import com.eastflag.nnc.testkmj.relation.UserRelationService;
 import com.eastflag.nnc.testkmj.request.CreateUserRequest;
 import com.eastflag.nnc.testkmj.request.UpdateUserRequest;
 import com.eastflag.nnc.testkmj.request.UpdateUserSettingRequest;
@@ -20,6 +22,7 @@ public class UserController1 {
     private final UserService1 userService;
     private final UserAccountService userAccountService;
     private final UserSettingService userSettingService;
+    private final UserRelationRepository userRelationRepository;
 
     /**
      * User1 생성
@@ -120,5 +123,21 @@ public class UserController1 {
         var userSettingId = userService.getUserSettingId(userId);
         var userSetting = userSettingService.getUserSetting(userSettingId);
         return CommonResponse.builder().code(200).message(userId + ": 객제 전달 성공").data(userSetting).build();
+    }
+
+    /**
+     * UserRelation 정보를 전달한다.
+     *
+     * @param userId 전달받을 User1 Id
+     * @return 성공: 200
+     */
+    @GetMapping("/getUserRelation/{userId}")
+    public CommonResponse getUserRelation(
+            @PathVariable int userId
+    ) {
+        var userRelation = userRelationRepository.findByCaretakerId(userId).orElseGet(() -> userRelationRepository
+                .findByCaregiverId(userId)
+                .orElseThrow(() -> new RuntimeException(userId + "에 대한 관계 설정이 없음")));
+        return CommonResponse.builder().code(200).message(userId + ": 객제 전달 성공").data(userRelation).build();
     }
 }

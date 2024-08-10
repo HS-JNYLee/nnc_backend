@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface UserRepository1 extends JpaRepository<User1, Integer> {
     // 사용하진 않는데 가능해서 만들어둠
-    // Optional<User> findByTelNum(String email);
+    // Optional<User1> findByTelNum(String email);
 }

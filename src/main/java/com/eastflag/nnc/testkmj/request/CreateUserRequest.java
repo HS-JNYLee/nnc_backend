@@ -15,7 +15,8 @@ import java.sql.Timestamp;
  * telNum (전화번호): user1.tel_num
  * address (주소): user_account.address
  * detailAddress (상세 주소): user_account.detail_address
- * caregiverId (보호자 인증하기 후 반환된 Id 값): relation.caregiver_id
+ * caregiverId (보호자 인증하기 후 반환된 Id 값): user_relation.caregiver_id ※ -1일 경우 보호자 계정
+ * caregiverRelation (사용자와의 관계): user_relation.relation ※ -1이 아닐 경우에만 참조
  * createdAt (생성 시간): user_account.created_at
  * updatedAt (변경 시간) ※ 생성시간과 동일: user_account.updated_at
  */
@@ -29,7 +30,8 @@ public class CreateUserRequest {
     private String telNum;
     private String address;
     private String detailAddress;
-    private String caregiverEmail;
+    private int caregiverId;
+    private String caregiverRelation;
     private Timestamp createdAt;
     private Timestamp updatedAt;
 }

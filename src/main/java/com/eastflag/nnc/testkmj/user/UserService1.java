@@ -1,8 +1,10 @@
 package com.eastflag.nnc.testkmj.user;
 
+import com.eastflag.nnc.testkmj.relation.UserRelationService;
 import com.eastflag.nnc.testkmj.request.CreateUserRequest;
 import com.eastflag.nnc.testkmj.request.UpdateUserRequest;
 import com.eastflag.nnc.testkmj.useraccount.UserAccount;
+import com.eastflag.nnc.testkmj.useraccount.UserAccountRepository;
 import com.eastflag.nnc.testkmj.useraccount.UserAccountService;
 import com.eastflag.nnc.testkmj.usersetting.UserSetting;
 import com.eastflag.nnc.testkmj.usersetting.UserSettingService;
@@ -21,6 +23,8 @@ public class UserService1 {
     private final UserRepository1 userRepository;
     private final UserAccountService userAccountService;
     private final UserSettingService userSettingService;
+    private final UserRelationService userRelationService;
+    private final UserAccountRepository userAccountRepository;
 
     /**
      * 유저 Entity를 DataBase에 생성하는 함수
@@ -36,11 +40,8 @@ public class UserService1 {
 
         // Relation 관계는 CareTaker 생성 시 생성
         Role1 role;
-        if(request.getCaregiverEmail() == null) role = Role1.CAREGIVER;
-        else {
-            // TODO: relation 추가해볼 것
-            role = Role1.CARETAKER;
-        }
+        if(request.getCaregiverId() == -1) role = Role1.CAREGIVER;
+        else role = Role1.CARETAKER;
 
         var user = User1.builder()
                 .name(request.getName())
@@ -51,6 +52,8 @@ public class UserService1 {
                 .build();
 
         userRepository.save(user);
+
+        if(role == Role1.CARETAKER) userRelationService.createUserRelation(user.getUserId(),request.getCaregiverId(), request.getCaregiverRelation());
 
         return user;
     }
