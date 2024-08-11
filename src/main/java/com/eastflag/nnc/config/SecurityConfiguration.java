@@ -33,8 +33,7 @@ public class SecurityConfiguration {
     private static final String[] UNAUTHORIZED_WHITE_LIST_URL = {
             "/swagger-ui/**",    // Swagger UI 경로 추가
             "/v3/api-docs/**",   // OpenAPI 문서 경로 추가
-            "/swagger-ui.html",   // Swagger UI 경로 추가
-            "/api/v1/**"
+            "/api/v1/**"   // Swagger UI 경로 추가
     };
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final JwtExceptionFilter jwtExceptionFilter;
