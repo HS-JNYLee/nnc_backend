@@ -126,9 +126,17 @@ public class UserController1 {
         return CommonResponse.builder().code(200).message(userId + ": 객제 전달 성공").data(userSetting).build();
     }
 
+    /**
+     * User1 Login
+     * 
+     * @param request 로그인할 User1의 email, password
+     * @return 로그인 된 User1 객체
+     */
     @PostMapping("/login")
     public CommonResponse login(@RequestBody LoginRequest request) {
         var user = userService.login(request.getEmail(), request.getPassword());
+        if(user == null) CommonResponse.builder().code(401 ).message(request.getEmail() + "로그인 실패").build();
+
         return CommonResponse.builder().code(200).message(request.getEmail() + ": 로그인 성공").data(user).build();
     }
 }

@@ -24,7 +24,6 @@ public class UserService1 {
     private final UserAccountService userAccountService;
     private final UserSettingService userSettingService;
     private final UserRelationService userRelationService;
-    private final UserAccountRepository userAccountRepository;
 
     /**
      * 유저 Entity를 DataBase에서 생성하는 함수
@@ -148,8 +147,18 @@ public class UserService1 {
         return user.getUserSetting().getUserSettingId();
     }
 
+    /**
+     * login 기능 구현 함수
+     *
+     * @param email login할 계정 email
+     * @param password login할 계정 password
+     * @return login된 User Entity ※ userAccountService.getLoginUserAccount에서 null 반환 시 null
+     */
     public User1 login(String email, String password) {
+        // 조회를 하지 못할 시 null을 반환한다.
         var userAccount = userAccountService.getLoginUserAccount(email, password);
+        if(userAccount == null) return null;
+
         var user = userRepository
                 .findByUserAccount(userAccount)
                 .orElseThrow(() -> new RuntimeException("User1: 로그인 실패"));

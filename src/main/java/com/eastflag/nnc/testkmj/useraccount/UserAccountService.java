@@ -84,10 +84,17 @@ public class UserAccountService {
         return userAccount;
     }
 
+    /**
+     * 로그인 정보를 통해 user_account를 조회하는 함수
+     *
+     * @param email login할 계정 email
+     * @param password login할 계정 password
+     * @return login된 UserAccount Entity ※ email과 password가 일치하지 않을 시 null을 반환 
+     */
     public UserAccount getLoginUserAccount(String email, String password) {
         var userAccount = userAccountRepository
                 .findByEmailAndPassword(email, password)
-                .orElseThrow(() -> new RuntimeException("UserAccountService: 로그인 실패"));
+                .orElse(null);
         return userAccount;
     }
 }
