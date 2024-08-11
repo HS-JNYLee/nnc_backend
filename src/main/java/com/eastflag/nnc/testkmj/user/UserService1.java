@@ -152,7 +152,7 @@ public class UserService1 {
         var userAccount = userAccountService.getLoginUserAccount(email, password);
         var user = userRepository
                 .findByUserAccount(userAccount)
-                .orElseThrow(() -> new RuntimeException("로그인 실패"));
+                .orElseThrow(() -> new RuntimeException("User1: 로그인 실패"));
         return user;
     }
 }

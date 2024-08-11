@@ -87,7 +87,7 @@ public class UserAccountService {
     public UserAccount getLoginUserAccount(String email, String password) {
         var userAccount = userAccountRepository
                 .findByEmailAndPassword(email, password)
-                .orElseThrow(() -> new RuntimeException("로그인 실패"));
+                .orElseThrow(() -> new RuntimeException("UserAccountService: 로그인 실패"));
         return userAccount;
     }
 }

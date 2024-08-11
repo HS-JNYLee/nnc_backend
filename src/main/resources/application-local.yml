@@ -1,17 +1,17 @@
 spring:
   # 원격 서버용
-  datasource:
-    url: jdbc:mariadb://mariadb:3306/nncdb
-    username: nnc
-    password: abcd1234
-    driver-class-name: org.mariadb.jdbc.Driver
+#  datasource:
+#    url: jdbc:mariadb://mariadb:3306/nncdb
+#    username: nnc
+#    password: abcd1234
+#    driver-class-name: org.mariadb.jdbc.Driver
 
   # 로컬 서버 테스트용
-  # datasource:
-  #  url: jdbc:mariadb://localhost:6033/nncdb
-  #  username: root
-  #  password: 1234
-  #  driver-class-name: org.mariadb.jdbc.Driver
+  datasource:
+    url: jdbc:mariadb://localhost:3306/probono
+    username: root
+    password: root1234
+    driver-class-name: org.mariadb.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: update
