@@ -5,11 +5,21 @@ import com.eastflag.nnc.testkmj.request.UpdateUserRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+/**
+ * 유저 계정 관리 Service 클래스
+ *
+ */
 @Service
 @RequiredArgsConstructor
 public class UserAccountService {
     private final UserAccountRepository userAccountRepository;
 
+    /**
+     * 유저 계정 Entity를 DataBase에 생성하는 함수
+     *
+     * @param request UserController1.createUser API에서 가져온 유저 생성 정보
+     * @return 생성된 유저 계정 Entity
+     */
     public UserAccount createUserAccount(CreateUserRequest request){
         var userAccount = UserAccount.builder()
                 .email(request.getEmail())
@@ -26,15 +36,28 @@ public class UserAccountService {
         return userAccount;
     }
 
+    /**
+     * 유저 계정 Entity를 DataBase에 삭제하는 함수
+     *
+     * @param userAccountId 삭제할 Entity ID
+     */
     public void deleteUserAccount(int userAccountId) {
         userAccountRepository.deleteById(userAccountId);
     }
 
+    /**
+     * 특정 Entity 데이터를 변경하는 함수
+     *
+     * @param userAccountId 변경할 Entity ID
+     * @param request UserController1.updateUser에서 가져온 정보
+     * @return 변경된 UserAccount Entity
+     */
     public UserAccount updateUserAccount(int userAccountId, UpdateUserRequest request) {
         var userAccount = userAccountRepository
                 .findById(userAccountId)
                 .orElseThrow(() -> new RuntimeException(userAccountId + "를 찾을 수 없음."));
 
+        // null이 아닌 값만 setter로 수정한다.
         if(request.getEmail() != null) userAccount.setEmail(request.getEmail());
         if(request.getPassword() != null) userAccount.setPassword(request.getPassword());
         if(request.getPasswordSalt() != null) userAccount.setPasswordSalt(request.getPasswordSalt());
@@ -48,6 +71,12 @@ public class UserAccountService {
         return userAccount;
     }
 
+    /**
+     * 특정 Entity 데이터를 반환하는 함수
+     *
+     * @param userAccountId 반환받을 UserAccount의 user_account_id
+     * @return user_account_id에 맞는 UserAccount Entity
+     */
     public UserAccount getUserAccount(int userAccountId) {
         var userAccount = userAccountRepository
                 .findById(userAccountId)
