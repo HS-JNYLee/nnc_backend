@@ -1,5 +1,6 @@
 package com.eastflag.nnc.testkmj.relation;
 
+import com.eastflag.nnc.testkmj.request.UpdateUserRelationRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -49,5 +50,17 @@ public class UserRelationService {
         userRelationRepository.save(userRelation);
 
         return userRelation;
+    }
+
+    /**
+     * 유저 관계 Entity를 DataBase에서 삭제하는 힘수
+     * 사용자 계정이 삭제될 때 호출된다.
+     */
+    public void deleteUserRelation(int userId) {
+        var userRelation = userRelationRepository
+                .findByCaretakerId(userId)
+                .orElseThrow(() -> new RuntimeException(userId + "를 찾을 수 없음."));
+
+        userRelationRepository.deleteById(userRelation.getUserRelationId());
     }
 }

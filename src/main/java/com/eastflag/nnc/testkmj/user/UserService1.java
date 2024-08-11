@@ -27,7 +27,7 @@ public class UserService1 {
     private final UserAccountRepository userAccountRepository;
 
     /**
-     * 유저 Entity를 DataBase에 생성하는 함수
+     * 유저 Entity를 DataBase에서 생성하는 함수
      *
      * @param request UserController1.createUser API에서 가져온 유저 생성 정보
      * @return 생성된 유저 Entity
@@ -59,7 +59,7 @@ public class UserService1 {
     }
 
     /**
-     * 유저 Entity를 DataBase에 삭제하는 함수
+     * 유저 Entity를 DataBase에서 삭제하는 함수
      *
      * @param userId 삭제할 Entity ID
      */
@@ -73,6 +73,9 @@ public class UserService1 {
         var userAccountId = getUserAccountId(userId);
         userRepository.deleteById(user.getUserId());
         userSettingService.deleteUserSetting(userSettingId);
+
+        //Caretaker인 경우 user_relation도 삭제해야 한다.
+        if(user.getRole1() == Role1.CARETAKER) userRelationService.deleteUserRelation(userId);
 
         userAccountService.deleteUserAccount(userAccountId);
     }

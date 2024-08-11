@@ -22,7 +22,7 @@ import lombok.*;
 public class UserRelation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int relationId;
+    private int userRelationId;
 
     @Column(unique = true, nullable = false)
     @JoinColumn(name = "user_id")

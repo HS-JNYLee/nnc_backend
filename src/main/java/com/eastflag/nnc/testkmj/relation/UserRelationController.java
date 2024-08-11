@@ -1,6 +1,7 @@
 package com.eastflag.nnc.testkmj.relation;
 
 import com.eastflag.nnc.common.CommonResponse;
+import com.eastflag.nnc.testkmj.request.UpdateUserRelationRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +32,13 @@ public class UserRelationController {
         return CommonResponse.builder().code(200).message(userId + ": 객제 전달 성공").data(userRelation).build();
     }
 
-    //TODO: 사용자가 보호자 변경하는 것
+    /**
+     * UserRelation 정보 업데이트
+     * ※ 관계를 변경시키는 주체는 무조건 CareTaker이다.
+     *
+     * @param request 수정할 user_relation 정보
+     * @return 성공: 200
+     */
     @PatchMapping("/updateUserRelation")
     public CommonResponse updateUserRelation(
             @RequestBody UpdateUserRelationRequest request
@@ -40,6 +47,4 @@ public class UserRelationController {
 
         return CommonResponse.builder().code(200).message(request.getCaretakerId() + ": 객제 전달 성공").data(userRelation).build();
     }
-
-    //TODO: 관계는 사용자 계정이 삭제될 때 작동
 }
