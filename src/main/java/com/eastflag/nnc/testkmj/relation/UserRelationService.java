@@ -31,4 +31,23 @@ public class UserRelationService {
 
         return userRelation;
     }
+
+    /**
+     * 유저 관계 Entity 데이터를 변경하는 함수
+     * ※ 관계를 변경시키는 주체는 무조건 CareTaker이다.
+     *
+     * @param request UserRelationController.updateUserRelation에서 가져온 정보
+     */
+    public UserRelation updateUserRelation(UpdateUserRelationRequest request) {
+        var userRelation = userRelationRepository
+                .findByCaretakerId(request.getCaretakerId())
+                .orElseThrow(() -> new RuntimeException(request.getCaretakerId() + "를 찾을 수 없음."));
+
+        userRelation.setCaregiverId(request.getCaregiverId());
+        userRelation.setRelation(request.getRelation());
+
+        userRelationRepository.save(userRelation);
+
+        return userRelation;
+    }
 }
