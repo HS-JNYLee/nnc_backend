@@ -83,4 +83,11 @@ public class UserAccountService {
                 .orElseThrow(() -> new RuntimeException(userAccountId + "를 찾을 수 없음."));
         return userAccount;
     }
+
+    public UserAccount getLoginUserAccount(String email, String password) {
+        var userAccount = userAccountRepository
+                .findByEmailAndPassword(email, password)
+                .orElseThrow(() -> new RuntimeException("로그인 실패"));
+        return userAccount;
+    }
 }

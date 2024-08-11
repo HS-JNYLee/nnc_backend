@@ -147,4 +147,12 @@ public class UserService1 {
                 .orElseThrow(() -> new RuntimeException(userId + "를 찾을 수 없음."));
         return user.getUserSetting().getUserSettingId();
     }
+
+    public User1 login(String email, String password) {
+        var userAccount = userAccountService.getLoginUserAccount(email, password);
+        var user = userRepository
+                .findByUserAccount(userAccount)
+                .orElseThrow(() -> new RuntimeException("로그인 실패"));
+        return user;
+    }
 }
