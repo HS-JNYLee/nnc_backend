@@ -4,8 +4,10 @@ import com.eastflag.nnc.common.CommonResponse;
 import com.eastflag.nnc.testkmj.relation.UserRelationRepository;
 import com.eastflag.nnc.testkmj.relation.UserRelationService;
 import com.eastflag.nnc.testkmj.request.CreateUserRequest;
+import com.eastflag.nnc.testkmj.request.LoginRequest;
 import com.eastflag.nnc.testkmj.request.UpdateUserRequest;
 import com.eastflag.nnc.testkmj.request.UpdateUserSettingRequest;
+import com.eastflag.nnc.testkmj.useraccount.UserAccount;
 import com.eastflag.nnc.testkmj.useraccount.UserAccountService;
 import com.eastflag.nnc.testkmj.usersetting.UserSettingService;
 import lombok.RequiredArgsConstructor;
@@ -122,5 +124,19 @@ public class UserController1 {
         var userSettingId = userService.getUserSettingId(userId);
         var userSetting = userSettingService.getUserSetting(userSettingId);
         return CommonResponse.builder().code(200).message(userId + ": 객제 전달 성공").data(userSetting).build();
+    }
+
+    /**
+     * User1 Login
+     * 
+     * @param request 로그인할 User1의 email, password
+     * @return 로그인 된 User1 객체
+     */
+    @PostMapping("/login")
+    public CommonResponse login(@RequestBody LoginRequest request) {
+        var user = userService.login(request.getEmail(), request.getPassword());
+        if(user == null) CommonResponse.builder().code(401 ).message(request.getEmail() + "로그인 실패").build();
+
+        return CommonResponse.builder().code(200).message(request.getEmail() + ": 로그인 성공").data(user).build();
     }
 }

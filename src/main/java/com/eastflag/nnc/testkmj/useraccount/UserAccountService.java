@@ -83,4 +83,18 @@ public class UserAccountService {
                 .orElseThrow(() -> new RuntimeException(userAccountId + "를 찾을 수 없음."));
         return userAccount;
     }
+
+    /**
+     * 로그인 정보를 통해 user_account를 조회하는 함수
+     *
+     * @param email login할 계정 email
+     * @param password login할 계정 password
+     * @return login된 UserAccount Entity ※ email과 password가 일치하지 않을 시 null을 반환 
+     */
+    public UserAccount getLoginUserAccount(String email, String password) {
+        var userAccount = userAccountRepository
+                .findByEmailAndPassword(email, password)
+                .orElse(null);
+        return userAccount;
+    }
 }
