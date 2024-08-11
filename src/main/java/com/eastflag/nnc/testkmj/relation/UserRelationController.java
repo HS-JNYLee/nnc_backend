@@ -43,8 +43,8 @@ public class UserRelationController {
     public CommonResponse updateUserRelation(
             @RequestBody UpdateUserRelationRequest request
     ){
-        var userRelation = userRelationService.updateUserRelation(request);
+        userRelationService.updateUserRelation(request);
 
-        return CommonResponse.builder().code(200).message(request.getCaretakerId() + ": 객제 전달 성공").data(userRelation).build();
+        return CommonResponse.builder().code(200).message(request.getCaretakerId() + ": 객제 전달 성공").build();
     }
 }
