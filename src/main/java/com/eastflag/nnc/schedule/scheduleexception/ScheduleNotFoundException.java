@@ -5,9 +5,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(code = HttpStatus.NOT_FOUND)
 public class ScheduleNotFoundException extends RuntimeException {
-
     public ScheduleNotFoundException(String msg){
         super(msg);
     }
-
 }

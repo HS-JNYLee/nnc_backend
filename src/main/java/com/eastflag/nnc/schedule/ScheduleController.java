@@ -44,10 +44,6 @@ public class ScheduleController {
     public CommonResponse getScheduleByScheduleID(@PathVariable(name = "scheduleid") int scheduleid) throws ScheduleNotFoundException {
         Schedule res = this.scheduleDaoService.findScheduleByScheduleID(scheduleid);
 
-        if(res==null){ //찾는 값이 없는 경우
-            throw new ScheduleNotFoundException("Schedule Not Found in this Schedule ID");
-        }
-
         return CommonResponse.builder().code(200).message("Find Success").data(res).build();
     }
 
@@ -71,9 +67,9 @@ public class ScheduleController {
         return CommonResponse.builder().code(200).message("Modify Complete").data(this.scheduleDaoService.modify(schedule)).build();
     }
 
-    @DeleteMapping("/remove/{userid}/{scheduleid}")
-    public CommonResponse removeSchedule(@PathVariable(name="userid") int userid, @PathVariable(name = "scheduleid") int scheduleid){
-        return CommonResponse.builder().code(200).message("Delete Complete").data(this.scheduleDaoService.removeSchedule(userid, scheduleid)).build();
+    @DeleteMapping("/remove/{scheduleid}")
+    public CommonResponse removeSchedule(@PathVariable(name = "scheduleid") int scheduleid){
+        return CommonResponse.builder().code(200).message("Delete Complete").data(this.scheduleDaoService.removeSchedule(scheduleid)).build();
     }
 
 }

@@ -5,7 +5,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp ;
 import java.util.List;
 import java.util.function.Predicate;
@@ -33,71 +35,57 @@ public class ScheduleDaoService {
 
     public Schedule saveSchedule(Schedule schedule){
 
-        if(findScheduleByScheduleID(schedule.getUser_id(),schedule.getSchedule_id())!=null){
-            return schedule; // 값이 이미 존재 한다면, 아무런 동작X
-        }
+        sdl.save(schedule);
 
-        Schedule tmp = schedule;
-        sdl.save(tmp);
-        return tmp;
+        return schedule;
     }
 
     public List<Schedule> getAllSchedule(int user_id){
-        ArrayList<Schedule> res = new ArrayList<Schedule>();
-        for(Schedule sc : sdl){
-            if(sc.getUser_id()==user_id){
-                res.add(sc);
-            }
-        }
 
-        return res;
+        return sdl.findScheduleByUserId(user_id);
     }
 
     // 값을 찾는 로직 - shceduleID 이용
-    public Schedule findScheduleByScheduleID(int userID, int scheduleID){
-        Predicate<Schedule> findUserid = sc->sc.getSchedule_id()==scheduleID && sc.getUser_id()==userID;
-        return sdl.stream().filter(findUserid).findFirst().orElse(null);
+    public Schedule findScheduleByScheduleID(int scheduleID){
+
+        return sdl.findById(scheduleID)
+                .orElseThrow(() -> new ScheduleNotFoundException("Not Found Schedule ID"));
     }
 
     // 값을 찾는 로직 - Datetime 이용
-    public List<Schedule> getScheduleByDateTime(int userID, String dateTime){
+    public List<Schedule> getScheduleByDateTime(int userID, String dateTime) throws UnsupportedEncodingException {
+        dateTime = URLDecoder.decode(dateTime, StandardCharsets.UTF_8);
 
         Timestamp check = Timestamp.valueOf(dateTime);
 
-        Predicate<Schedule> findUserid = sc -> sc.getUser_id()==userID;
-        //Predicate<Schedule> findDate = sc-> check.after(Timestamp.valueOf(sc.getDate_begin())) && check.before(Timestamp.valueOf(sc.getDate_end()));
-        Predicate<Schedule> findDate = sc-> check.getTime() >= Timestamp.valueOf(sc.getDate_begin()).getTime() && check.getTime() >= Timestamp.valueOf(sc.getDate_end()).getTime();
+        Predicate<Schedule> findDate = sc-> check.getTime() >= Timestamp.valueOf(sc.getDateBegin()).getTime() && check.getTime() <= Timestamp.valueOf(sc.getDateEnd()).getTime();
 
-        List<Schedule> res = sdl.stream().filter(findUserid.and(findDate)).collect(Collectors.toList());
+        List<Schedule> target = sdl.findScheduleByUserId(userID);
 
-        return res;
+        target = target.stream().filter(findDate).collect(Collectors.toList());
+
+        return target;
     }
 
     // schedule 삭제
-    public Schedule removeSchedule(int userID, int scheduleID) {
-        Schedule del = findScheduleByScheduleID(userID, scheduleID);
+    public Schedule removeSchedule(int scheduleID) {
+        var ret = findScheduleByScheduleID(scheduleID);
 
-        if(del==null){ // 삭제할 값이 없다면 값 삭제 메시지 전송
-            throw new ScheduleNotFoundException("Remove Schedule Fail");
-        }
+        sdl.deleteById(scheduleID);
 
-        sdl.remove(del);
-
-        return del;
+        return ret;
     }
 
     //schedule 수정
     public Schedule modify(Schedule schedule) {
-        Schedule target = findScheduleByScheduleID(schedule.getUser_id(), schedule.getSchedule_id());
-
-        if(target==null){ // 수정할 값이 없다면 삭제 메시지 전송
-            throw new ScheduleNotFoundException("Modify Schedule Fail : Schedule is Not Exist");
-        }
+        var target = findScheduleByScheduleID(schedule.getScheduleId());
 
         target.setTitle(schedule.getTitle());
         target.setDescription(schedule.getDescription());
-        target.setDate_begin(schedule.getDate_begin());
-        target.setDate_end(schedule.getDate_end());
+        target.setDateBegin(schedule.getDateBegin());
+        target.setDateEnd(schedule.getDateEnd());
+
+        sdl.save(target);
 
         return target;
     }
