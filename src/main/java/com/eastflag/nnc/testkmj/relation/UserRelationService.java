@@ -40,6 +40,8 @@ public class UserRelationService {
      * @param request UserRelationController.updateUserRelation에서 가져온 정보
      */
     public UserRelation updateUserRelation(UpdateUserRelationRequest request) {
+        // TODO: <예외처리 >userId가 Caregiver인 경우
+
         var userRelation = userRelationRepository
                 .findByCaretakerId(request.getCaretakerId())
                 .orElseThrow(() -> new RuntimeException(request.getCaretakerId() + "를 찾을 수 없음."));
@@ -57,6 +59,8 @@ public class UserRelationService {
      * 사용자 계정이 삭제될 때 호출된다.
      */
     public void deleteUserRelation(int userId) {
+        // TODO: <예외처리 >userId가 Caregiver인 경우
+
         var userRelation = userRelationRepository
                 .findByCaretakerId(userId)
                 .orElseThrow(() -> new RuntimeException(userId + "를 찾을 수 없음."));

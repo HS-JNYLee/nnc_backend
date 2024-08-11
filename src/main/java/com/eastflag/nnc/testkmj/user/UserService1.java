@@ -53,6 +53,8 @@ public class UserService1 {
 
         userRepository.save(user);
 
+        // TODO: userRelation.relation 기본 값 "보호자"로 설정
+
         if(role == Role1.CARETAKER) userRelationService.createUserRelation(user.getUserId(),request.getCaregiverId(), request.getCaregiverRelation());
 
         return user;
@@ -76,6 +78,8 @@ public class UserService1 {
 
         //Caretaker인 경우 user_relation도 삭제해야 한다.
         if(user.getRole1() == Role1.CARETAKER) userRelationService.deleteUserRelation(userId);
+
+        // TODO: <예외처리> Caregiver의 경우 Caretaker가 있다면 삭제가 불가능하게 해야한다.
 
         userAccountService.deleteUserAccount(userAccountId);
     }
