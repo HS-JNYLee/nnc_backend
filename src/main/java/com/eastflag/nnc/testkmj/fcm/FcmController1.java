@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/fcm")
 @RequiredArgsConstructor
-public class FcmController {
-    private final FcmService fcmService;
+public class FcmController1 {
+    private final FcmService1 fcmService;
 
     @PostMapping("/createFcm")
     public CommonResponse createFcm(
-            @RequestBody FcmRequest request
+            @RequestBody FcmRequest1 request
     ) {
         fcmService.createFcm(request);
         return CommonResponse.builder().code(200).message(request.getUserId()+"(name) token 생성 성공").build();
@@ -20,7 +20,7 @@ public class FcmController {
 
     @PatchMapping("/updateFcm")
     public CommonResponse updateFcm(
-            @RequestBody FcmRequest request
+            @RequestBody FcmRequest1 request
     ) {
         fcmService.updateFcm(request);
         return CommonResponse.builder().code(200).message(request.getUserId()+"(name) token 변경 성공").build();

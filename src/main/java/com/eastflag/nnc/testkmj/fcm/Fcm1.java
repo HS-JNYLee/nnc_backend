@@ -10,8 +10,8 @@ import lombok.*;
 @Entity
 @Getter
 @Setter
-@Table(name = "fcm")
-public class Fcm {
+@Table(name = "fcm1")
+public class Fcm1 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int FcmId;

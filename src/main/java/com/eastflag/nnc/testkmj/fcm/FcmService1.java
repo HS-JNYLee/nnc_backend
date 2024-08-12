@@ -8,12 +8,12 @@ import java.util.logging.Logger;
 
 @Service
 @RequiredArgsConstructor
-public class FcmService {
-    private final FcmRepository fcmRepository;
+public class FcmService1 {
+    private final FcmRepository1 fcmRepository;
     private final UserRelationService userRelationService;
 
-    public Fcm createFcm(FcmRequest request) {
-        var fcm = Fcm.builder()
+    public Fcm1 createFcm(FcmRequest1 request) {
+        var fcm = Fcm1.builder()
                 .userId(request.getUserId())
                 .fcmToken(request.getFcmToken())
                 .build();
@@ -23,7 +23,7 @@ public class FcmService {
         return fcm;
     }
 
-    public Fcm updateFcm(FcmRequest request) {
+    public Fcm1 updateFcm(FcmRequest1 request) {
         var fcm = fcmRepository
                 .findByUserId(request.getUserId())
                 .orElseThrow(() -> new RuntimeException(request.getUserId() + "의 토큰을 찾을 수 없음."));
