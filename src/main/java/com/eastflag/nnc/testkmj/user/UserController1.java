@@ -119,10 +119,10 @@ public class UserController1 {
             @PathVariable String caregiverEmail
     ){
         var userAccount = userAccountService.getUserAccount(caregiverEmail);
-        var userAccountId = userService.getUser(userAccount);
+        var caregiverUserId = userService.getUser(userAccount).getUserId();
         // TODO: 보호자 승인 허가 전송하는 팝업 알림 전송
         // TODO: ※ (2024-08-12) 현재는 다이렉트로 전달 중인데, 완성 후에는 .data(userAccountId)생략할 것
-        return CommonResponse.builder().code(200).message(userAccountId + ": 허가 요청 알림 전달 성공").data(userAccountId).build();
+        return CommonResponse.builder().code(200).message(caregiverUserId + ": 허가 요청 알림 전달 성공").data(caregiverUserId).build();
     }
 
     /**
