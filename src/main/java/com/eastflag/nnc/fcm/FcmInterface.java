@@ -13,6 +13,6 @@ public interface FcmInterface {
             "accept: application/json",
             "content-type: application/json"
     })
-    @POST("657423783174/messages:send")
+    @POST("338681595305/messages:send")
     Call<ResponseBody> postCareGiver(@Header("Authorization") String oAuthToken, @Body MessageWrapper message);
 }

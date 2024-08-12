@@ -1,10 +1,13 @@
 package com.eastflag.nnc.fcm;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Data;
+import lombok.*;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
+@AllArgsConstructor
+@Builder
+@NoArgsConstructor
 public class Notification {
     private String title;
     private String body;

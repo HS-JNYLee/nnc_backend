@@ -3,7 +3,6 @@ package com.eastflag.nnc.schedule;
 import com.eastflag.nnc.common.CommonResponse;
 import com.eastflag.nnc.schedule.scheduleexception.ScheduleNotFoundException;
 import org.springframework.web.bind.annotation.*;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
