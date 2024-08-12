@@ -16,8 +16,8 @@ public class FcmController {
 
     private final FcmService fcmService;
 
-    @GetMapping()
-    public ResponseEntity<CommonResponse> fcm() throws IOException {
-        return ResponseEntity.ok(fcmService.postMessageCareGiver());
+    @PostMapping()
+    public ResponseEntity<CommonResponse> fcm(@RequestBody MessageWrapper messageWrapper) throws IOException {
+        return ResponseEntity.ok(fcmService.postMessageCareGiver(messageWrapper));
     }
 }
