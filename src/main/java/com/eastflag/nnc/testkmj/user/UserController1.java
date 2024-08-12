@@ -109,6 +109,23 @@ public class UserController1 {
     }
 
     /**
+     * UserAccount 정보 전달
+     *
+     * @param caregiverEmail 인증할 보호자 Id
+     * @return 성공: 200
+     */
+    @GetMapping("/getLinkPermission/{caregiverEmail}")
+    public CommonResponse getLinkPermission(
+            @PathVariable String caregiverEmail
+    ){
+        var userAccount = userAccountService.getUserAccount(caregiverEmail);
+        var userAccountId = userService.getUser(userAccount);
+        // TODO: 보호자 승인 허가 전송하는 팝업 알림 전송
+        // TODO: ※ (2024-08-12) 현재는 다이렉트로 전달 중인데, 완성 후에는 .data(userAccountId)생략할 것
+        return CommonResponse.builder().code(200).message(userAccountId + ": 허가 요청 알림 전달 성공").data(userAccountId).build();
+    }
+
+    /**
      * UserSetting 정보를 전달한다.
      *
      * @param userId 전달받을 User1 Id

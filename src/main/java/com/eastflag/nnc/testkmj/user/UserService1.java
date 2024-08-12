@@ -125,6 +125,13 @@ public class UserService1 {
         return user;
     }
 
+    public User1 getUser(UserAccount userAccount) {
+        var user = userRepository
+                .findByUserAccount(userAccount)
+                .orElseThrow(() -> new RuntimeException(userAccount.getUserAccountId() + "(userAccountId) 를 찾을 수 없음."));
+        return user;
+    }
+
     /**
      * user1.userId를 통해 user_account_id를 조회하는 함수
      *
