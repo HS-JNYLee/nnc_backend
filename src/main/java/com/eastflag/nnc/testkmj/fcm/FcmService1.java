@@ -23,6 +23,17 @@ public class FcmService1 {
         return fcm;
     }
 
+    public Fcm1 createFcm(int userId, String fcmToken) {
+        var fcm = Fcm1.builder()
+                .userId(userId)
+                .fcmToken(fcmToken)
+                .build();
+
+        fcmRepository.save(fcm);
+
+        return fcm;
+    }
+
     public Fcm1 updateFcm(FcmRequest1 request) {
         var fcm = fcmRepository
                 .findByUserId(request.getUserId())

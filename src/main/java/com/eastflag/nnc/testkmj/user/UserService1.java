@@ -1,5 +1,7 @@
 package com.eastflag.nnc.testkmj.user;
 
+import com.eastflag.nnc.testkmj.fcm.FcmRepository1;
+import com.eastflag.nnc.testkmj.fcm.FcmService1;
 import com.eastflag.nnc.testkmj.userrelation.UserRelationService;
 import com.eastflag.nnc.testkmj.request.CreateUserRequest;
 import com.eastflag.nnc.testkmj.request.UpdateUserRequest;
@@ -23,6 +25,7 @@ public class UserService1 {
     private final UserAccountService userAccountService;
     private final UserSettingService userSettingService;
     private final UserRelationService userRelationService;
+    private final FcmService1 fcmService;
 
     /**
      * 유저 Entity를 DataBase에서 생성하는 함수
@@ -52,6 +55,8 @@ public class UserService1 {
         userRepository.save(user);
 
         // TODO: userRelation.relation 기본 값 "보호자"로 설정
+
+        fcmService.createFcm(user.getUserId(),request.getFcmToken());
 
         if(role == Role1.CARETAKER) userRelationService.createUserRelation(user.getUserId(),request.getCaregiverId(), request.getCaregiverRelation());
 

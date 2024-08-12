@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 public class FcmController1 {
     private final FcmService1 fcmService;
 
+    // TODO: 회원가입 시 Fcm을 생성할 것이므로 잠성 이용 중단
     @PostMapping("/createFcm")
     public CommonResponse createFcm(
             @RequestBody FcmRequest1 request
