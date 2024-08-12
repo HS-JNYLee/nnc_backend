@@ -4,11 +4,20 @@ import com.eastflag.nnc.testkmj.request.UpdateUserSettingRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+/**
+ * 유저 설정 관리 Service 클래스
+ *
+ */
 @Service
 @RequiredArgsConstructor
 public class UserSettingService {
     private final UserSettingRepository userSettingRepository;
 
+    /**
+     * 유저 설정 Entity를 DataBase에 생성하는 함수
+     *
+     * @return 생성된 유저 설정 Entity
+     */
     public UserSetting createUserSetting() {
         var userSetting = UserSetting.builder()
                 .voiceGuide(true)
@@ -23,27 +32,28 @@ public class UserSettingService {
         return userSetting;
     }
 
+    /**
+     * 유저 설정 Entity를 DataBase에 삭제하는 함수
+     *
+     * @param userSettingId 삭제할 Entity ID
+     */
     public void deleteUserSetting(int userSettingId) {
         userSettingRepository.deleteById(userSettingId);
     }
 
+    /**
+     * 특정 Entity 데이터를 변경하는 함수
+     *
+     * @param userSettingId 변경할 Entity ID
+     * @param request UserController1.updateUserSetting에서 가져온 정보
+     * @return 변경된 UserSetting Entity
+     */
     public UserSetting updateUserSetting(int userSettingId, UpdateUserSettingRequest request) {
-//        var beforeSetting = userSettingRepository
-//                .findById(userSettingId)
-//                .orElseThrow(() -> new RuntimeException(userSettingId + "를 찾을 수 없음."));
-//
-//        var userSetting = UserSetting.builder()
-//                .userSettingId(userSettingId)
-//                .voiceGuide(request.getVoiceGuide() != null ? request.getVoiceGuide() : beforeSetting.getVoiceGuide())
-//                .alertRoute(request.getAlertRoute() != null ? request.getAlertRoute() : beforeSetting.getAlertRoute())
-//                .alertDanger(request.getAlertDanger() != null ? request.getAlertDanger() : beforeSetting.getAlertDanger())
-//                .lowBus(request.getLowBus() != null ? request.getLowBus() : beforeSetting.getLowBus())
-//                .elevatorFirst(request.getElevatorFirst() != null ? request.getLowBus() : beforeSetting.getLowBus())
-//                .build();
-
         var userSetting = userSettingRepository
                 .findById(userSettingId)
                 .orElseThrow(() -> new RuntimeException(userSettingId + "를 찾을 수 없음."));
+
+        // null이 아닌 값만 setter로 수정한다.
         if(request.getVoiceGuide() != null) userSetting.setVoiceGuide(request.getVoiceGuide());
         if(request.getAlertRoute() != null) userSetting.setAlertRoute(request.getAlertRoute());
         if(request.getAlertDanger() != null) userSetting.setAlertDanger(request.getAlertDanger());
@@ -55,6 +65,12 @@ public class UserSettingService {
         return userSetting;
     }
 
+    /**
+     * 특정 Entity 데이터를 반환하는 함수
+     *
+     * @param userSettingId 반환받을 UserSetting의 user_setting_id
+     * @return user_setting_id에 맞는 UserSetting Entity
+     */
     public UserSetting getUserSetting(int userSettingId) {
         var userSetting = userSettingRepository
                 .findById(userSettingId)

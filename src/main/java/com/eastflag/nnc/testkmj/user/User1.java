@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 /**
+ * User1 Entity: user1 Table 정보
+ *
  * userId (고유ID): 유저 식별자
  * name (이름): 사용자 성명
  * telNum (전화번호): 사용자 연락처
