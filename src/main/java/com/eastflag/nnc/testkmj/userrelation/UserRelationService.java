@@ -1,4 +1,4 @@
-package com.eastflag.nnc.testkmj.relation;
+package com.eastflag.nnc.testkmj.userrelation;
 
 import com.eastflag.nnc.testkmj.request.UpdateUserRelationRequest;
 import lombok.RequiredArgsConstructor;
@@ -66,5 +66,22 @@ public class UserRelationService {
                 .orElseThrow(() -> new RuntimeException(userId + "를 찾을 수 없음."));
 
         userRelationRepository.deleteById(userRelation.getUserRelationId());
+    }
+
+    public UserRelation getUserRelation(int userId) {
+        var userRelation = userRelationRepository.findByCaretakerId(userId).orElseGet(() -> userRelationRepository
+                .findByCaregiverId(userId)
+                .orElseThrow(() -> new RuntimeException(userId + "에 대한 관계 설정이 없음")));
+        return userRelation;
+    }
+
+    public int getAnotherUserId(int userId) {
+        var userRelation = getUserRelation(userId);
+
+        var caretakerId = userRelation.getCaretakerId();
+        var caregiverId = userRelation.getCaregiverId();
+
+        if(userId == caretakerId) return caregiverId;
+        else return caretakerId;
     }
 }

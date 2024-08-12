@@ -1,4 +1,4 @@
-package com.eastflag.nnc.testkmj.relation;
+package com.eastflag.nnc.testkmj.userrelation;
 
 import com.eastflag.nnc.common.CommonResponse;
 import com.eastflag.nnc.testkmj.request.UpdateUserRelationRequest;
@@ -26,9 +26,7 @@ public class UserRelationController {
     public CommonResponse getUserRelation(
             @PathVariable int userId
     ) {
-        var userRelation = userRelationRepository.findByCaretakerId(userId).orElseGet(() -> userRelationRepository
-                .findByCaregiverId(userId)
-                .orElseThrow(() -> new RuntimeException(userId + "에 대한 관계 설정이 없음")));
+        var userRelation = userRelationService.getUserRelation(userId);
         return CommonResponse.builder().code(200).message(userId + ": 객제 전달 성공").data(userRelation).build();
     }
 

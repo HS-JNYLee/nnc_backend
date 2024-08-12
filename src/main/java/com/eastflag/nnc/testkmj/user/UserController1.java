@@ -1,13 +1,10 @@
 package com.eastflag.nnc.testkmj.user;
 
 import com.eastflag.nnc.common.CommonResponse;
-import com.eastflag.nnc.testkmj.relation.UserRelationRepository;
-import com.eastflag.nnc.testkmj.relation.UserRelationService;
 import com.eastflag.nnc.testkmj.request.CreateUserRequest;
 import com.eastflag.nnc.testkmj.request.LoginRequest;
 import com.eastflag.nnc.testkmj.request.UpdateUserRequest;
 import com.eastflag.nnc.testkmj.request.UpdateUserSettingRequest;
-import com.eastflag.nnc.testkmj.useraccount.UserAccount;
 import com.eastflag.nnc.testkmj.useraccount.UserAccountService;
 import com.eastflag.nnc.testkmj.usersetting.UserSettingService;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.eastflag.nnc.testkmj.relation;
+package com.eastflag.nnc.testkmj.userrelation;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

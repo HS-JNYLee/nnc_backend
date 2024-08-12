@@ -1,10 +1,9 @@
 package com.eastflag.nnc.testkmj.user;
 
-import com.eastflag.nnc.testkmj.relation.UserRelationService;
+import com.eastflag.nnc.testkmj.userrelation.UserRelationService;
 import com.eastflag.nnc.testkmj.request.CreateUserRequest;
 import com.eastflag.nnc.testkmj.request.UpdateUserRequest;
 import com.eastflag.nnc.testkmj.useraccount.UserAccount;
-import com.eastflag.nnc.testkmj.useraccount.UserAccountRepository;
 import com.eastflag.nnc.testkmj.useraccount.UserAccountService;
 import com.eastflag.nnc.testkmj.usersetting.UserSetting;
 import com.eastflag.nnc.testkmj.usersetting.UserSettingService;
