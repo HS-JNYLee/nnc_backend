@@ -1,14 +1,22 @@
 package com.eastflag.nnc.testkmj.user;
 
 import com.eastflag.nnc.common.CommonResponse;
+import com.eastflag.nnc.testkmj.relation.UserRelationRepository;
+import com.eastflag.nnc.testkmj.relation.UserRelationService;
 import com.eastflag.nnc.testkmj.request.CreateUserRequest;
+import com.eastflag.nnc.testkmj.request.LoginRequest;
 import com.eastflag.nnc.testkmj.request.UpdateUserRequest;
 import com.eastflag.nnc.testkmj.request.UpdateUserSettingRequest;
+import com.eastflag.nnc.testkmj.useraccount.UserAccount;
 import com.eastflag.nnc.testkmj.useraccount.UserAccountService;
 import com.eastflag.nnc.testkmj.usersetting.UserSettingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * User1, UserAccount, UserSetting과 관련된 API가 관리되는 Controller
+ * ※ User라는 객체의 중복으로 User1로 명명함. (중복된 클래스 명은 전부 1로 표기하였음.)
+ */
 @RestController
 @RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
@@ -18,7 +26,7 @@ public class UserController1 {
     private final UserSettingService userSettingService;
 
     /**
-     * User 생성
+     * User1 생성
      *
      * @param request 생성할 유저의 정보
      * @return 성공: 200
@@ -32,9 +40,9 @@ public class UserController1 {
     }
 
     /**
-     * User 삭제
+     * User1 삭제
      *
-     * @param userId 삭제할 User Id
+     * @param userId 삭제할 User1 Id
      * @return 성공: 200
      */
     @DeleteMapping("/deleteUser/{userId}")
@@ -46,9 +54,9 @@ public class UserController1 {
     }
 
     /**
-     * User와 UserAccount 정보 업데이트
+     * User1과 UserAccount 정보 업데이트
      *
-     * @param request 수정할 user, user_account 정보
+     * @param request 수정할 user1, user_account 정보
      * @return 성공: 200
      */
     @PatchMapping("/updateUser")
@@ -75,9 +83,9 @@ public class UserController1 {
     }
 
     /**
-     * User 정보 전달
+     * User1 정보 전달
      *
-     * @param userId 전달받을 User Id
+     * @param userId 전달받을 User1 Id
      * @return 성공: 200
      */
     @GetMapping("/getUser/{userId}")
@@ -91,7 +99,7 @@ public class UserController1 {
     /**
      * UserAccount 정보 전달
      *
-     * @param userId 전달받을 User Id
+     * @param userId 전달받을 User1 Id
      * @return 성공: 200
      */
     @GetMapping("/getUserAccount/{userId}")
@@ -106,7 +114,7 @@ public class UserController1 {
     /**
      * UserSetting 정보를 전달한다.
      *
-     * @param userId 전달받을 User Id
+     * @param userId 전달받을 User1 Id
      * @return 성공: 200
      */
     @GetMapping("/getUserSetting/{userId}")
@@ -116,5 +124,19 @@ public class UserController1 {
         var userSettingId = userService.getUserSettingId(userId);
         var userSetting = userSettingService.getUserSetting(userSettingId);
         return CommonResponse.builder().code(200).message(userId + ": 객제 전달 성공").data(userSetting).build();
+    }
+
+    /**
+     * User1 Login
+     * 
+     * @param request 로그인할 User1의 email, password
+     * @return 로그인 된 User1 객체
+     */
+    @PostMapping("/login")
+    public CommonResponse login(@RequestBody LoginRequest request) {
+        var user = userService.login(request.getEmail(), request.getPassword());
+        if(user == null) CommonResponse.builder().code(401 ).message(request.getEmail() + "로그인 실패").build();
+
+        return CommonResponse.builder().code(200).message(request.getEmail() + ": 로그인 성공").data(user).build();
     }
 }
