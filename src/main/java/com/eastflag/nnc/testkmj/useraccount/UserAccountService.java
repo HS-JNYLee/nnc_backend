@@ -85,6 +85,19 @@ public class UserAccountService {
     }
 
     /**
+     * 특정 Entity 데이터를 반환하는 함수
+     *
+     * @param userAccountEmail 반환받을 UserAccount의 user_account_email
+     * @return user_account_id에 맞는 UserAccount Entity
+     */
+    public UserAccount getUserAccount(String userAccountEmail) {
+        var userAccount = userAccountRepository
+                .findByEmail(userAccountEmail)
+                .orElseThrow(() -> new RuntimeException(userAccountEmail + "를 찾을 수 없음."));
+        return userAccount;
+    }
+
+    /**
      * 로그인 정보를 통해 user_account를 조회하는 함수
      *
      * @param email login할 계정 email

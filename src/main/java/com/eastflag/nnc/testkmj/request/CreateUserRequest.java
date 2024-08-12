@@ -30,6 +30,7 @@ public class CreateUserRequest {
     private String telNum;
     private String address;
     private String detailAddress;
+    private String fcmToken;
     private int caregiverId;
     private String caregiverRelation;
     private Timestamp createdAt;

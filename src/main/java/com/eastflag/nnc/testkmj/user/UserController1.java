@@ -1,13 +1,10 @@
 package com.eastflag.nnc.testkmj.user;
 
 import com.eastflag.nnc.common.CommonResponse;
-import com.eastflag.nnc.testkmj.relation.UserRelationRepository;
-import com.eastflag.nnc.testkmj.relation.UserRelationService;
 import com.eastflag.nnc.testkmj.request.CreateUserRequest;
 import com.eastflag.nnc.testkmj.request.LoginRequest;
 import com.eastflag.nnc.testkmj.request.UpdateUserRequest;
 import com.eastflag.nnc.testkmj.request.UpdateUserSettingRequest;
-import com.eastflag.nnc.testkmj.useraccount.UserAccount;
 import com.eastflag.nnc.testkmj.useraccount.UserAccountService;
 import com.eastflag.nnc.testkmj.usersetting.UserSettingService;
 import lombok.RequiredArgsConstructor;
@@ -109,6 +106,23 @@ public class UserController1 {
         var userAccountId = userService.getUserAccountId(userId);
         var userAccount = userAccountService.getUserAccount(userAccountId);
         return CommonResponse.builder().code(200).message(userId + ": 객제 전달 성공").data(userAccount).build();
+    }
+
+    /**
+     * UserAccount 정보 전달
+     *
+     * @param caregiverEmail 인증할 보호자 Id
+     * @return 성공: 200
+     */
+    @GetMapping("/getLinkPermission/{caregiverEmail}")
+    public CommonResponse getLinkPermission(
+            @PathVariable String caregiverEmail
+    ){
+        var userAccount = userAccountService.getUserAccount(caregiverEmail);
+        var caregiverUserId = userService.getUser(userAccount).getUserId();
+        // TODO: 보호자 승인 허가 전송하는 팝업 알림 전송
+        // TODO: ※ (2024-08-12) 현재는 다이렉트로 전달 중인데, 완성 후에는 .data(userAccountId)생략할 것
+        return CommonResponse.builder().code(200).message(caregiverUserId + ": 허가 요청 알림 전달 성공").data(caregiverUserId).build();
     }
 
     /**
