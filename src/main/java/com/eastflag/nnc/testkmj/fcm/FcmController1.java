@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/fcm")
+@RequestMapping("/api/v1/fcm1")
 @RequiredArgsConstructor
 public class FcmController1 {
     private final FcmService1 fcmService;
