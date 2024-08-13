@@ -6,6 +6,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface RouteRepository extends JpaRepository<Route, Long> {
-    Optional<Route> findByRouteId(@Param("route_id") Integer route_id);
-    Optional<Route> deleteByRouteId(@Param("route_id") Integer route_id);
+    Optional<Route> findByRouteId(@Param("route_id") Integer routeId);
+    Optional<Route> deleteByRouteId(@Param("route_id") Integer routeId);
 }

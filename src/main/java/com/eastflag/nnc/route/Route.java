@@ -14,7 +14,7 @@ import lombok.*;
 public class Route {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer route_id;
+    private Integer routeId;
 
     @Embedded
     @Column(name = "location", nullable = false)
