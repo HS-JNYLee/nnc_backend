@@ -17,8 +17,8 @@ public class RouteService {
         this.routeRepository = routeRepository;
     }
 
-    public CommonResponse getRouteById(int route_id){
-        Optional<Route> route = routeRepository.findRouteById(route_id);
+    public CommonResponse getRouteById(Integer route_id){
+        Optional<Route> route = routeRepository.findByRouteId(route_id);
         String message = null;
         if (route.isPresent())
             message = ResponseMessage.SUCCESS;
@@ -41,8 +41,8 @@ public class RouteService {
                 .build();
     }
 
-    public CommonResponse deleteRouteById(int route_id){
-        Optional<Route> route = routeRepository.deleteRouteById(route_id);
+    public CommonResponse deleteRouteById(Integer route_id){
+        Optional<Route> route = routeRepository.deleteByRouteId(route_id);
         String message = "";
         if (route.isPresent())
             message = ResponseMessage.SUCCESS;
@@ -55,10 +55,10 @@ public class RouteService {
                 .build();
     }
 
-    public CommonResponse updateRouteById(int route_id, Route route){
-        Optional<Route> routeOptional = routeRepository.findRouteById(route_id);
+    public CommonResponse updateRouteById(Integer route_id, Route route){
+        Optional<Route> routeOptional = routeRepository.findByRouteId(route_id);
         if(routeOptional.isPresent())
-            routeRepository.deleteRouteById(route_id);
+            routeRepository.deleteByRouteId(route_id);
         routeRepository.save(route);
         return CommonResponse.builder()
                 .code(200)
