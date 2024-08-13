@@ -12,7 +12,8 @@ import lombok.*;
 @Entity
 @Table(name = "route")
 public class Route {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer route_id;
 
     @Embedded
