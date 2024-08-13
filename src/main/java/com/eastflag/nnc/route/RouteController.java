@@ -11,8 +11,8 @@ public class RouteController {
     public RouteController(RouteService routeService) {this.routeService = routeService;}
 
     @GetMapping("/{route_id}")
-    public ResponseEntity<CommonResponse> getRouteById(@PathVariable Integer route_id) {
-        return ResponseEntity.ok(routeService.getRouteById(route_id));
+    public ResponseEntity<CommonResponse> getRouteById(@PathVariable("route_id") Integer routeId) {
+        return ResponseEntity.ok(routeService.getRouteById(routeId));
     }
 
     @PostMapping
@@ -21,12 +21,12 @@ public class RouteController {
     }
 
     @DeleteMapping("/delete/{route_id}")
-    public ResponseEntity<CommonResponse> deleteRoute(@PathVariable Integer route_id) {
-        return ResponseEntity.ok(routeService.deleteRouteById(route_id));
+    public ResponseEntity<CommonResponse> deleteRoute(@PathVariable("route_id") Integer routeId) {
+        return ResponseEntity.ok(routeService.deleteRouteById(routeId));
     }
 
     @PatchMapping("/update/{route_id}")
-    public ResponseEntity<CommonResponse> updateRoute(@PathVariable Integer route_id, @RequestBody Route route) {
-        return ResponseEntity.ok(routeService.updateRouteById(route_id, route));
+    public ResponseEntity<CommonResponse> updateRoute(@PathVariable("route_id") Integer routeId, @RequestBody Route route) {
+        return ResponseEntity.ok(routeService.updateRouteById(routeId, route));
     }
 }
