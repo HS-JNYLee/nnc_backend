@@ -37,11 +37,11 @@ public class EmergencyService {
     }
 
     public CommonResponse deleteEmergency(int emergencyId) {
-        Emergency emergency = emergencyRepository.deleteByEmergencyId(emergencyId);
+        Integer index = emergencyRepository.deleteByEmergencyId(emergencyId);
         return CommonResponse.builder()
                 .code(200)
                 .message(ResponseMessage.SUCCESS)
-                .data(emergency)
+                .data(index)
                 .build();
     }
 
