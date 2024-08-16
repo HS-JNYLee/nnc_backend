@@ -1,4 +1,4 @@
-package com.eastflag.nnc.testkmj.fcm;
+package com.eastflag.nnc.testkmj.request;
 
 import lombok.Builder;
 import lombok.Getter;

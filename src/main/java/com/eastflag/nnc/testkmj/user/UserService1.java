@@ -1,5 +1,6 @@
 package com.eastflag.nnc.testkmj.user;
 
+import com.eastflag.nnc.testkmj.error.User1Exception;
 import com.eastflag.nnc.testkmj.fcm.FcmRepository1;
 import com.eastflag.nnc.testkmj.fcm.FcmService1;
 import com.eastflag.nnc.testkmj.userrelation.UserRelationService;
@@ -11,6 +12,8 @@ import com.eastflag.nnc.testkmj.usersetting.UserSetting;
 import com.eastflag.nnc.testkmj.usersetting.UserSettingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import static com.eastflag.nnc.testkmj.error.ErrorCode.*;
 
 /**
  * 유저 관리 Service 클래스
@@ -42,7 +45,7 @@ public class UserService1 {
 
         // Relation 관계는 CareTaker 생성 시 생성
         Role1 role;
-        if(request.getCaregiverId() == -1) role = Role1.CAREGIVER;
+        if(request.getCaregiverId() == 0) role = Role1.CAREGIVER;
         else role = Role1.CARETAKER;
 
         var user = User1.builder()
@@ -55,11 +58,10 @@ public class UserService1 {
 
         userRepository.save(user);
 
-        // TODO: userRelation.relation 기본 값 "보호자"로 설정
-
         fcmService.createFcm(user.getUserId(),request.getFcmToken());
 
-        if(role == Role1.CARETAKER) userRelationService.createUserRelation(user.getUserId(),request.getCaregiverId(), request.getCaregiverRelation());
+        if(role == Role1.CARETAKER)
+            userRelationService.createUserRelation(user.getUserId(),request.getCaregiverId(), request.getCaregiverRelation());
 
         return user;
     }
@@ -72,18 +74,18 @@ public class UserService1 {
     public void deleteUser(int userId) {
         var user = userRepository
                 .findById(userId)
-                .orElseThrow(() -> new RuntimeException(userId + "를 찾을 수 없음."));
+                .orElseThrow(() -> new User1Exception(USER_ID_NOT_FOUND));
+
+        // Caretaker인 경우 user_relation도 삭제해야 한다.
+        // Caregiver의 경우 Caretaker가 있다면 삭제가 불가능하게 해야한다.
+        if(user.getRole1() == Role1.CARETAKER) userRelationService.deleteUserRelation(userId);
+        else if(userRelationService.isAnotherUserId(userId)) throw new User1Exception(CAREGIVER_IS_NOT_DELETE);
 
         // 종속관계 제거를 위한 userAccount, userSetting 분기
         var userSettingId = getUserSettingId(userId);
         var userAccountId = getUserAccountId(userId);
         userRepository.deleteById(user.getUserId());
         userSettingService.deleteUserSetting(userSettingId);
-
-        //Caretaker인 경우 user_relation도 삭제해야 한다.
-        if(user.getRole1() == Role1.CARETAKER) userRelationService.deleteUserRelation(userId);
-
-        // TODO: <예외처리> Caregiver의 경우 Caretaker가 있다면 삭제가 불가능하게 해야한다.
 
         userAccountService.deleteUserAccount(userAccountId);
     }
@@ -97,7 +99,7 @@ public class UserService1 {
     public User1 updateUser(UpdateUserRequest request) {
         var user = userRepository
                 .findById(request.getUserId())
-                .orElseThrow(() -> new RuntimeException(request.getUserId() + "를 찾을 수 없음."));
+                .orElseThrow(() -> new User1Exception(USER_ID_NOT_FOUND));
 
         // null이 아닌 값만 setter로 수정한다.
         if(request.getName() != null) user.setName(request.getName());
@@ -122,14 +124,14 @@ public class UserService1 {
     public User1 getUser(int userId) {
         var user = userRepository
                 .findById(userId)
-                .orElseThrow(() -> new RuntimeException(userId + "를 찾을 수 없음."));
+                .orElseThrow(() -> new User1Exception(USER_ID_NOT_FOUND));
         return user;
     }
 
     public User1 getUser(UserAccount userAccount) {
         var user = userRepository
                 .findByUserAccount(userAccount)
-                .orElseThrow(() -> new RuntimeException(userAccount.getUserAccountId() + "(userAccountId) 를 찾을 수 없음."));
+                .orElseThrow(() -> new User1Exception(USER_ACCOUNT_NOT_FOUND));
         return user;
     }
 
@@ -142,7 +144,7 @@ public class UserService1 {
     public int getUserAccountId(int userId) {
         var user = userRepository
                 .findById(userId)
-                .orElseThrow(() -> new RuntimeException(userId + "를 찾을 수 없음."));
+                .orElseThrow(() -> new User1Exception(USER_ID_NOT_FOUND));
         return user.getUserAccount().getUserAccountId();
     }
 
@@ -155,7 +157,7 @@ public class UserService1 {
     public int getUserSettingId(int userId) {
         var user = userRepository
                 .findById(userId)
-                .orElseThrow(() -> new RuntimeException(userId + "를 찾을 수 없음."));
+                .orElseThrow(() -> new User1Exception(USER_ID_NOT_FOUND));
         return user.getUserSetting().getUserSettingId();
     }
 
@@ -173,7 +175,7 @@ public class UserService1 {
 
         var user = userRepository
                 .findByUserAccount(userAccount)
-                .orElseThrow(() -> new RuntimeException("User1: 로그인 실패"));
+                .orElseThrow(() -> new User1Exception(USER_ACCOUNT_NOT_FOUND));
         return user;
     }
 }

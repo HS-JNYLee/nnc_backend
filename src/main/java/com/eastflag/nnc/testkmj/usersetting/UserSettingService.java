@@ -1,8 +1,12 @@
 package com.eastflag.nnc.testkmj.usersetting;
 
+import com.eastflag.nnc.testkmj.error.User1Exception;
 import com.eastflag.nnc.testkmj.request.UpdateUserSettingRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import static com.eastflag.nnc.testkmj.error.ErrorCode.USER_ACCOUNT_EMAIL_NOT_FOUND;
+import static com.eastflag.nnc.testkmj.error.ErrorCode.USER_SETTING_ID_NOT_FOUND;
 
 /**
  * 유저 설정 관리 Service 클래스
@@ -51,7 +55,7 @@ public class UserSettingService {
     public UserSetting updateUserSetting(int userSettingId, UpdateUserSettingRequest request) {
         var userSetting = userSettingRepository
                 .findById(userSettingId)
-                .orElseThrow(() -> new RuntimeException(userSettingId + "를 찾을 수 없음."));
+                .orElseThrow(() -> new User1Exception(USER_SETTING_ID_NOT_FOUND));
 
         // null이 아닌 값만 setter로 수정한다.
         if(request.getVoiceGuide() != null) userSetting.setVoiceGuide(request.getVoiceGuide());
@@ -74,7 +78,7 @@ public class UserSettingService {
     public UserSetting getUserSetting(int userSettingId) {
         var userSetting = userSettingRepository
                 .findById(userSettingId)
-                .orElseThrow(() -> new RuntimeException(userSettingId + "를 찾을 수 없음."));
+                .orElseThrow(() -> new User1Exception(USER_SETTING_ID_NOT_FOUND));
         return userSetting;
     }
 }

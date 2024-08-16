@@ -1,9 +1,13 @@
 package com.eastflag.nnc.testkmj.useraccount;
 
+import com.eastflag.nnc.testkmj.error.User1Exception;
 import com.eastflag.nnc.testkmj.request.CreateUserRequest;
 import com.eastflag.nnc.testkmj.request.UpdateUserRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import static com.eastflag.nnc.testkmj.error.ErrorCode.USER_ACCOUNT_EMAIL_NOT_FOUND;
+import static com.eastflag.nnc.testkmj.error.ErrorCode.USER_ACCOUNT_ID_NOT_FOUND;
 
 /**
  * 유저 계정 관리 Service 클래스
@@ -55,7 +59,7 @@ public class UserAccountService {
     public UserAccount updateUserAccount(int userAccountId, UpdateUserRequest request) {
         var userAccount = userAccountRepository
                 .findById(userAccountId)
-                .orElseThrow(() -> new RuntimeException(userAccountId + "를 찾을 수 없음."));
+                .orElseThrow(() -> new User1Exception(USER_ACCOUNT_ID_NOT_FOUND));
 
         // null이 아닌 값만 setter로 수정한다.
         if(request.getEmail() != null) userAccount.setEmail(request.getEmail());
@@ -80,7 +84,7 @@ public class UserAccountService {
     public UserAccount getUserAccount(int userAccountId) {
         var userAccount = userAccountRepository
                 .findById(userAccountId)
-                .orElseThrow(() -> new RuntimeException(userAccountId + "를 찾을 수 없음."));
+                .orElseThrow(() -> new User1Exception(USER_ACCOUNT_ID_NOT_FOUND));
         return userAccount;
     }
 
@@ -93,7 +97,7 @@ public class UserAccountService {
     public UserAccount getUserAccount(String userAccountEmail) {
         var userAccount = userAccountRepository
                 .findByEmail(userAccountEmail)
-                .orElseThrow(() -> new RuntimeException(userAccountEmail + "를 찾을 수 없음."));
+                .orElseThrow(() -> new User1Exception(USER_ACCOUNT_EMAIL_NOT_FOUND));
         return userAccount;
     }
 
