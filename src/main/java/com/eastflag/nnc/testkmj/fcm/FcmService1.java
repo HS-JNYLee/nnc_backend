@@ -1,11 +1,11 @@
 package com.eastflag.nnc.testkmj.fcm;
 
-import com.eastflag.nnc.testkmj.error.User1Exception;
+import com.eastflag.nnc.testkmj.error.BaseException;
 import com.eastflag.nnc.testkmj.userrelation.UserRelationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import static com.eastflag.nnc.testkmj.error.ErrorCode.FCM_USER_ID_NOT_FOUND;
+import static com.eastflag.nnc.testkmj.error.errorcode.FcmErrorCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -38,7 +38,7 @@ public class FcmService1 {
     public Fcm1 updateFcm(FcmRequest1 request) {
         var fcm = fcmRepository
                 .findByUserId(request.getUserId())
-                .orElseThrow(() -> new User1Exception(FCM_USER_ID_NOT_FOUND));
+                .orElseThrow(() -> new BaseException(FCM_USER_ID_NOT_FOUND));
 
         fcm.setFcmToken(request.getFcmToken());
 

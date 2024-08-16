@@ -1,12 +1,11 @@
 package com.eastflag.nnc.testkmj.userrelation;
 
-import com.eastflag.nnc.common.CommonResponse;
-import com.eastflag.nnc.testkmj.error.User1Exception;
+import com.eastflag.nnc.testkmj.error.BaseException;
 import com.eastflag.nnc.testkmj.request.UpdateUserRelationRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import static com.eastflag.nnc.testkmj.error.ErrorCode.*;
+import static com.eastflag.nnc.testkmj.error.errorcode.UserRelationErrorCode.*;
 
 /**
  * 유저 관계 Service 클래스
@@ -46,7 +45,7 @@ public class UserRelationService {
     public UserRelation updateUserRelation(UpdateUserRelationRequest request) {
         var userRelation = userRelationRepository
                 .findByCaretakerId(request.getCaretakerId())
-                .orElseThrow(() -> new User1Exception(CARETAKER_ID_NOT_FOUND));
+                .orElseThrow(() -> new BaseException(CARETAKER_ID_NOT_FOUND));
 
         userRelation.setCaregiverId(request.getCaregiverId());
         userRelation.setRelation(request.getRelation());
@@ -64,7 +63,7 @@ public class UserRelationService {
         // ※ userId가 Caregiver인 경우는 deleteUser()에서 관리한다.
         var userRelation = userRelationRepository
                 .findByCaretakerId(userId)
-                .orElseThrow(() -> new User1Exception(CARETAKER_ID_NOT_FOUND));
+                .orElseThrow(() -> new BaseException(CARETAKER_ID_NOT_FOUND));
 
         userRelationRepository.deleteById(userRelation.getUserRelationId());
     }
@@ -72,7 +71,7 @@ public class UserRelationService {
     public UserRelation getUserRelation(int userId) {
         var userRelation = userRelationRepository.findByCaretakerId(userId)
                 .orElseGet(() -> userRelationRepository.findByCaregiverId(userId)
-                .orElseThrow(() -> new User1Exception(RELATION_USER_ID_NOT_FOUND)));
+                .orElseThrow(() -> new BaseException(RELATION_USER_ID_NOT_FOUND)));
         return userRelation;
     }
 
