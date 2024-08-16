@@ -19,7 +19,7 @@ import static com.eastflag.nnc.testkmj.error.ErrorCode.*;
 
 @Log4j2
 @RestControllerAdvice
-@ControllerAdvice(assignableTypes = UserController1.class)
+@ControllerAdvice
 public class User1GlobalExceptionHandler {
     private final static Logger LOG = Logger.getGlobal();
 
