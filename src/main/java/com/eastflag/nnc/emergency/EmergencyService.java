@@ -28,11 +28,11 @@ public class EmergencyService {
     }
 
     public CommonResponse addEmergency(Emergency emergency) {
-        emergencyRepository.save(emergency);
+        var returnEmergency = emergencyRepository.save(emergency);
         return CommonResponse.builder()
                 .code(200)
                 .message(ResponseMessage.SUCCESS)
-                .data(emergency)
+                .data(returnEmergency)
                 .build();
     }
 
