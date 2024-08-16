@@ -32,8 +32,8 @@ public class UserController1 {
     public CommonResponse createUser(
             @RequestBody CreateUserRequest request
     ) {
-        userService.createUser(request);
-        return CommonResponse.builder().code(200).message(request.getName()+"(name) 생성 성공").build();
+        var user1 = userService.createUser(request);
+        return CommonResponse.builder().code(200).message(request.getName()+"(name) 생성 성공").data(user1).build();
     }
 
     /**
@@ -60,8 +60,8 @@ public class UserController1 {
     public CommonResponse updateUser(
             @RequestBody UpdateUserRequest request
     ) {
-        userService.updateUser(request);
-        return CommonResponse.builder().code(200).message(request.getUserId() + ": 객제 전달 성공").build();
+        var user1 = userService.updateUser(request);
+        return CommonResponse.builder().code(200).message(request.getUserId() + ": 객제 전달 성공").data(user1).build();
     }
 
     /**
@@ -75,8 +75,8 @@ public class UserController1 {
             @RequestBody UpdateUserSettingRequest request
     ){
         var userSettingId = userService.getUserSettingId(request.getUserId());
-        userSettingService.updateUserSetting(userSettingId, request);
-        return CommonResponse.builder().code(200).message(request.getUserId() + ": 객제 전달 성공").build();
+        var userSetting = userSettingService.updateUserSetting(userSettingId, request);
+        return CommonResponse.builder().code(200).message(request.getUserId() + ": 객제 전달 성공").data(userSetting).build();
     }
 
     /**
