@@ -20,6 +20,6 @@ public class Fcm1 {
     @JoinColumn(name = "user_id")
     private int userId;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String fcmToken;
 }
