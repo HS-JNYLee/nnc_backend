@@ -2,10 +2,12 @@ package com.eastflag.nnc.pronearea;
 
 import com.eastflag.nnc.common.CommonResponse;
 import com.eastflag.nnc.common.ResponseMessage;
+import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,10 +22,11 @@ public class AccidentProneAreaService {
 
     public CommonResponse findAll(String routeList) {
         List<AccidentProneArea> accidentProneAreas = accidentProneAreaRepository.findAll();
-        List<Coordinate> coordinates = gson.fromJson(routeList, List.class);
+        Type coordinatesType = new TypeToken<Coordinates>() {}.getType();
+        Coordinates coordinates = gson.fromJson(routeList, coordinatesType);
 
         ArrayList<AccidentProneArea> result = new ArrayList<>();
-        for(Coordinate coordinate : coordinates) {
+        for(Coordinate coordinate : coordinates.getCoordinates()) {
             for(AccidentProneArea accidentProneArea : accidentProneAreas) {
                 double distance = DistanceCalculator.calculate(coordinate.getLongitude(),coordinate.getLatitude(),
                         accidentProneArea.getLongitude(), accidentProneArea.getLatitude()) * 1000;
