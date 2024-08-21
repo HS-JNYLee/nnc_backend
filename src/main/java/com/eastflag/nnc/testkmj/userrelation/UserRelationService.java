@@ -1,8 +1,11 @@
 package com.eastflag.nnc.testkmj.userrelation;
 
+import com.eastflag.nnc.testkmj.error.BaseException;
 import com.eastflag.nnc.testkmj.request.UpdateUserRelationRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import static com.eastflag.nnc.testkmj.error.errorcode.UserRelationErrorCode.*;
 
 /**
  * 유저 관계 Service 클래스
@@ -40,11 +43,9 @@ public class UserRelationService {
      * @param request UserRelationController.updateUserRelation에서 가져온 정보
      */
     public UserRelation updateUserRelation(UpdateUserRelationRequest request) {
-        // TODO: <예외처리 >userId가 Caregiver인 경우
-
         var userRelation = userRelationRepository
                 .findByCaretakerId(request.getCaretakerId())
-                .orElseThrow(() -> new RuntimeException(request.getCaretakerId() + "를 찾을 수 없음."));
+                .orElseThrow(() -> new BaseException(CARETAKER_ID_NOT_FOUND));
 
         userRelation.setCaregiverId(request.getCaregiverId());
         userRelation.setRelation(request.getRelation());
@@ -59,19 +60,18 @@ public class UserRelationService {
      * 사용자 계정이 삭제될 때 호출된다.
      */
     public void deleteUserRelation(int userId) {
-        // TODO: <예외처리 >userId가 Caregiver인 경우
-
+        // ※ userId가 Caregiver인 경우는 deleteUser()에서 관리한다.
         var userRelation = userRelationRepository
                 .findByCaretakerId(userId)
-                .orElseThrow(() -> new RuntimeException(userId + "를 찾을 수 없음."));
+                .orElseThrow(() -> new BaseException(CARETAKER_ID_NOT_FOUND));
 
         userRelationRepository.deleteById(userRelation.getUserRelationId());
     }
 
     public UserRelation getUserRelation(int userId) {
-        var userRelation = userRelationRepository.findByCaretakerId(userId).orElseGet(() -> userRelationRepository
-                .findByCaregiverId(userId)
-                .orElseThrow(() -> new RuntimeException(userId + "에 대한 관계 설정이 없음")));
+        var userRelation = userRelationRepository.findByCaretakerId(userId)
+                .orElseGet(() -> userRelationRepository.findByCaregiverId(userId)
+                .orElseThrow(() -> new BaseException(RELATION_USER_ID_NOT_FOUND)));
         return userRelation;
     }
 
@@ -83,5 +83,21 @@ public class UserRelationService {
 
         if(userId == caretakerId) return caregiverId;
         else return caretakerId;
+    }
+
+    // 유저 관계가 없는 것을 알려주는 함수
+    public UserRelation findUserRelation(int userId) {
+        var userRelation = userRelationRepository.findByCaretakerId(userId).orElseGet(() -> userRelationRepository
+                .findByCaregiverId(userId)
+                .orElse(null));
+        return userRelation;
+    }
+
+    // 상대 유저가 없는 것을 알려주는 함수
+    public boolean isAnotherUserId(int userId) {
+        var userRelation = findUserRelation(userId);
+
+        if(userRelation != null) return true;
+        else return false;
     }
 }

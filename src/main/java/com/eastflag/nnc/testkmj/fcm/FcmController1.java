@@ -1,6 +1,7 @@
 package com.eastflag.nnc.testkmj.fcm;
 
 import com.eastflag.nnc.common.CommonResponse;
+import com.eastflag.nnc.testkmj.request.AnotherUserSendMessageRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,13 +26,5 @@ public class FcmController1 {
     ) {
         fcmService.updateFcm(request);
         return CommonResponse.builder().code(200).message(request.getUserId()+"(name) token 변경 성공").build();
-    }
-
-    @PostMapping("/sendMessage")
-    public CommonResponse sendMessage(
-            @RequestBody AnotherUserSendMessageRequest request
-    ){
-        fcmService.anotherUserSendMessage(request);
-        return CommonResponse.builder().code(200).message(request.getUserId()+"(name) 메세지 전달 성공").build();
     }
 }
