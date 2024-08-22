@@ -14,7 +14,7 @@ public class AccidentProneAreaController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<CommonResponse> findAll(@RequestBody String query) {
-        return ResponseEntity.ok(accidentProneAreaService.findAll(query));
+    public ResponseEntity<CommonResponse> findAll(@RequestBody Coordinates coordinates) {
+        return ResponseEntity.ok(accidentProneAreaService.findAll(coordinates));
     }
 }
