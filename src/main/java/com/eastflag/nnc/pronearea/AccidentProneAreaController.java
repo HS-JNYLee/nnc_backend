@@ -1,6 +1,7 @@
 package com.eastflag.nnc.pronearea;
 
 import com.eastflag.nnc.common.CommonResponse;
+import com.eastflag.nnc.pronearea.dto.Coordinates;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,7 @@ public class AccidentProneAreaController {
 
     @PostMapping("/")
     public ResponseEntity<CommonResponse> findAll(@RequestBody Coordinates coordinates) {
+        System.out.println(coordinates);
         return ResponseEntity.ok(accidentProneAreaService.findAll(coordinates));
     }
 }
