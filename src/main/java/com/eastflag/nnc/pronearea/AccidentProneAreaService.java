@@ -20,13 +20,13 @@ public class AccidentProneAreaService {
         this.accidentProneAreaRepository = accidentProneAreaRepository;
     }
 
-    public CommonResponse findAll(String routeList) {
+    public CommonResponse findAll(String query) {
         ArrayList<AccidentProneArea> result = new ArrayList<>();
-        System.out.println("query : " + routeList);
+        System.out.println("query : " + query);
         try {
             List<AccidentProneArea> accidentProneAreas = accidentProneAreaRepository.findAll();
             Type coordinatesType = new TypeToken<Coordinates>() {}.getType();
-            Coordinates coordinates = gson.fromJson(routeList, coordinatesType);
+            Coordinates coordinates = gson.fromJson(query, coordinatesType);
 
             System.out.println("coordinates : " + coordinates.toString());
             for(Coordinate coordinate : coordinates.getCoordinates()) {
