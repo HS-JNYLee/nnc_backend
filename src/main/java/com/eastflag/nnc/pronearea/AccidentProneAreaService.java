@@ -20,27 +20,34 @@ public class AccidentProneAreaService {
         this.accidentProneAreaRepository = accidentProneAreaRepository;
     }
 
-    public CommonResponse findAll(String routeList) {
-        List<AccidentProneArea> accidentProneAreas = accidentProneAreaRepository.findAll();
-        Type coordinatesType = new TypeToken<Coordinates>() {}.getType();
-        Coordinates coordinates = gson.fromJson(routeList, coordinatesType);
-
+    public CommonResponse findAll(String query) {
         ArrayList<AccidentProneArea> result = new ArrayList<>();
-        for(Coordinate coordinate : coordinates.getCoordinates()) {
-            for(AccidentProneArea accidentProneArea : accidentProneAreas) {
-                double distance = DistanceCalculator.calculate(coordinate.getLongitude(),coordinate.getLatitude(),
-                        accidentProneArea.getLongitude(), accidentProneArea.getLatitude()) * 1000;
+        System.out.println("query : " + query);
+        try {
+            List<AccidentProneArea> accidentProneAreas = accidentProneAreaRepository.findAll();
+            Type coordinatesType = new TypeToken<Coordinates>() {}.getType();
+            Coordinates coordinates = gson.fromJson(query, coordinatesType);
 
-                if(distance < 30 && !result.contains(accidentProneArea)){
-                    result.add(accidentProneArea);
+            System.out.println("coordinates : " + coordinates.toString());
+            for(Coordinate coordinate : coordinates.getCoordinates()) {
+                for(AccidentProneArea accidentProneArea : accidentProneAreas) {
+                    double distance = DistanceCalculator.calculate(coordinate.getLongitude(),coordinate.getLatitude(),
+                            accidentProneArea.getLongitude(), accidentProneArea.getLatitude()) * 1000;
+
+                    if(distance < 30 && !result.contains(accidentProneArea)){
+                        result.add(accidentProneArea);
+                    }
                 }
             }
-        }
 
+            System.out.println("result : " + result);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         return CommonResponse.builder()
-            .code(200)
-            .message(ResponseMessage.SUCCESS)
-            .data(result)
-            .build();
+                .code(200)
+                .message(ResponseMessage.SUCCESS)
+                .data(result)
+                .build();
     }
 }
