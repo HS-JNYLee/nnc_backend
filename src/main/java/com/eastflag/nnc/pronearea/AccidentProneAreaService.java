@@ -20,15 +20,12 @@ public class AccidentProneAreaService {
         this.accidentProneAreaRepository = accidentProneAreaRepository;
     }
 
-    public CommonResponse findAll(String query) {
+    public CommonResponse findAll(Coordinates coordinates) {
         ArrayList<AccidentProneArea> result = new ArrayList<>();
-        System.out.println("query : " + query);
+        System.out.println("coordinates : " + coordinates);
         try {
             List<AccidentProneArea> accidentProneAreas = accidentProneAreaRepository.findAll();
-            Type coordinatesType = new TypeToken<Coordinates>() {}.getType();
-            Coordinates coordinates = gson.fromJson(query, coordinatesType);
 
-            System.out.println("coordinates : " + coordinates.toString());
             for(Coordinate coordinate : coordinates.getCoordinates()) {
                 for(AccidentProneArea accidentProneArea : accidentProneAreas) {
                     double distance = DistanceCalculator.calculate(coordinate.getLongitude(),coordinate.getLatitude(),
