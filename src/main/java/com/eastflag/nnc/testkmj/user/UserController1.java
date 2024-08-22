@@ -10,6 +10,7 @@ import com.eastflag.nnc.testkmj.useraccount.UserAccountService;
 import com.eastflag.nnc.testkmj.usersetting.UserSettingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import retrofit2.http.GET;
 
 import static com.eastflag.nnc.testkmj.error.errorcode.User1ErrorCode.NOT_CAREGIVER;
 
@@ -160,5 +161,33 @@ public class UserController1 {
 
         if(user == null) return CommonResponse.builder().code(401).message(request.getEmail() + "로그인 실패").data(new User1()).build();
         else return CommonResponse.builder().code(200).message(request.getEmail() + ": 로그인 성공").data(user).build();
+    }
+
+    /**
+     * 계정 생성 전화번호 인증
+     *
+     * @param telNum 존재하는지 확인 할 연락처
+     * @return 존재하는 경우 200 존재하지 않는 경우 201
+     */
+    @GET("/signup/{telNum}")
+    public CommonResponse verificatonTelNum(
+            @PathVariable String telNum
+    ) {
+        userService.getUser(telNum);
+        return CommonResponse.builder().code(200).message(telNum + "은 존재하는 전화번호입니다.").build();
+    }
+
+    /**
+     * 계정 생성 이메일 인증
+     *
+     * @param email 존재하는지 확인 할 이메일
+     * @return 존재하는 경우 200 존재하지 않는 경우 201
+     */
+    @GET("/signup/{email}")
+    public CommonResponse verificatonEmail(
+            @PathVariable String email
+    ){
+        userAccountService.getUserAccount(email);
+        return CommonResponse.builder().code(200).message(email + "은 존재하는 이메일입니다.").build();
     }
 }

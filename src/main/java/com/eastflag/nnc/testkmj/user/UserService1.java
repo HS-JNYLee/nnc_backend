@@ -134,6 +134,12 @@ public class UserService1 {
         return user;
     }
 
+    public User1 getUser(String telNum) {
+        var user = userRepository.findByTelNum(telNum)
+                .orElseThrow(() -> new BaseException(NO_TELNUM));
+        return user;
+    }
+
     /**
      * user1.userId를 통해 user_account_id를 조회하는 함수
      *
