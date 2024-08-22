@@ -169,7 +169,7 @@ public class UserController1 {
      * @param telNum 존재하는지 확인 할 연락처
      * @return 존재하는 경우 200 존재하지 않는 경우 201
      */
-    @GET("/signup/{telNum}")
+    @GetMapping("/signup/{telNum}")
     public CommonResponse verificatonTelNum(
             @PathVariable String telNum
     ) {
@@ -183,7 +183,7 @@ public class UserController1 {
      * @param email 존재하는지 확인 할 이메일
      * @return 존재하는 경우 200 존재하지 않는 경우 201
      */
-    @GET("/signup/{email}")
+    @GetMapping("/signup/{email}")
     public CommonResponse verificatonEmail(
             @PathVariable String email
     ){
