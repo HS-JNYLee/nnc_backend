@@ -25,7 +25,6 @@ public class AccidentProneAreaService {
         System.out.println("coordinates : " + coordinates);
         try {
             List<AccidentProneArea> accidentProneAreas = accidentProneAreaRepository.findAll();
-
             for(Coordinate coordinate : coordinates.getCoordinates()) {
                 for(AccidentProneArea accidentProneArea : accidentProneAreas) {
                     double distance = DistanceCalculator.calculate(coordinate.getLongitude(),coordinate.getLatitude(),

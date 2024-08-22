@@ -1,21 +1,17 @@
 package com.eastflag.nnc.pronearea;
 
+import lombok.Getter;
+import lombok.Setter;
+
+import java.io.Serializable;
 import java.util.List;
 
-class Coordinates {
+@Setter
+@Getter
+class Coordinates implements Serializable {
     private List<Coordinate> coordinates;
 
-    // Constructor
     public Coordinates(List<Coordinate> coordinates) {
-        this.coordinates = coordinates;
-    }
-
-    // Getters and Setters
-    public List<Coordinate> getCoordinates() {
-        return coordinates;
-    }
-
-    public void setCoordinates(List<Coordinate> coordinates) {
         this.coordinates = coordinates;
     }
 
