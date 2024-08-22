@@ -1,6 +1,7 @@
 package com.eastflag.nnc.testkmj.user;
 
 import com.eastflag.nnc.common.CommonResponse;
+import com.eastflag.nnc.testkmj.error.BaseException;
 import com.eastflag.nnc.testkmj.request.CreateUserRequest;
 import com.eastflag.nnc.testkmj.request.LoginRequest;
 import com.eastflag.nnc.testkmj.request.UpdateUserRequest;
@@ -9,6 +10,8 @@ import com.eastflag.nnc.testkmj.useraccount.UserAccountService;
 import com.eastflag.nnc.testkmj.usersetting.UserSettingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import static com.eastflag.nnc.testkmj.error.errorcode.User1ErrorCode.NOT_CAREGIVER;
 
 /**
  * User1, UserAccount, UserSetting과 관련된 API가 관리되는 Controller
@@ -119,7 +122,12 @@ public class UserController1 {
             @PathVariable String caregiverEmail
     ){
         var userAccount = userAccountService.getUserAccount(caregiverEmail);
-        var caregiverUserId = userService.getUser(userAccount).getUserId();
+        var caregiverUser1 =  userService.getUser(userAccount);
+
+        // 보호자 계정이 아님
+        if(caregiverUser1.getRole1() != Role1.CAREGIVER) throw new BaseException(NOT_CAREGIVER);
+
+        var caregiverUserId = caregiverUser1.getUserId();
         // TODO: 보호자 승인 허가 전송하는 팝업 알림 전송
         // TODO: ※ (2024-08-12) 현재는 다이렉트로 전달 중인데, 완성 후에는 .data(userAccountId)생략할 것
         return CommonResponse.builder().code(200).message(caregiverUserId + ": 허가 요청 알림 전달 성공").data(caregiverUserId).build();
