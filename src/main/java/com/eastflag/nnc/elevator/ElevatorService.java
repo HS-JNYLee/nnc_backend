@@ -2,7 +2,6 @@ package com.eastflag.nnc.elevator;
 
 import com.eastflag.nnc.common.CommonResponse;
 import com.eastflag.nnc.common.ResponseMessage;
-import com.eastflag.nnc.emergency.EmergencyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +30,7 @@ public class ElevatorService {
         int id = elevatorRepository.save(elevator).getElevatorId();
         return CommonResponse.builder()
                 .code(200)
-                .message(elevatorResponseMessage.SUCCESS)
+                .message(ResponseMessage.SUCCESS)
                 .data(id)
                 .build();
     }
