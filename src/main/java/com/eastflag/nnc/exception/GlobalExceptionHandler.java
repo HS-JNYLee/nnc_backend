@@ -1,4 +1,4 @@
-package com.eastflag.nnc.testkmj.error;
+package com.eastflag.nnc.exception;
 
 import com.eastflag.nnc.common.CommonResponse;
 import lombok.extern.log4j.Log4j2;
@@ -14,16 +14,16 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import static com.eastflag.nnc.testkmj.error.errorcode.BaseErrorCode.DATA_BASE_ERROR;
-import static com.eastflag.nnc.testkmj.error.errorcode.BaseErrorCode.INTERNAL_SERVER_ERROR;
+import static com.eastflag.nnc.exception.errorcode.BaseErrorCode.DATA_BASE_ERROR;
+import static com.eastflag.nnc.exception.errorcode.BaseErrorCode.INTERNAL_SERVER_ERROR;
 
 @Log4j2
 @RestControllerAdvice
 @ControllerAdvice
-public class GlobalExceptionHandler1 {
+public class GlobalExceptionHandler {
     private final static Logger LOG = Logger.getGlobal();
 
-    @ExceptionHandler({ BaseException.class })
+    @ExceptionHandler(BaseException.class)
     protected ResponseEntity handleCustomException(BaseException ex) {
         var code = ex.getErrorCode().getStatus();
         var message = ex.getErrorCode().getMessage();
@@ -36,7 +36,7 @@ public class GlobalExceptionHandler1 {
         return ResponseEntity.ok(CommonResponse.builder().code(code).message(message).build());
     }
 
-    @ExceptionHandler({ Exception.class })
+    @ExceptionHandler(Exception.class)
     protected ResponseEntity handleServerException(Exception ex) {
         var code = INTERNAL_SERVER_ERROR.getStatus();
         var message = INTERNAL_SERVER_ERROR.getMessage();
@@ -50,7 +50,7 @@ public class GlobalExceptionHandler1 {
         return ResponseEntity.ok(CommonResponse.builder().code(code).message(message).build());
     }
 
-    @ExceptionHandler({DataAccessException.class})
+    @ExceptionHandler(DataAccessException.class)
     protected ResponseEntity handleDataAccessException(DataAccessException ex){
         var code = DATA_BASE_ERROR.getStatus();
         var message = DATA_BASE_ERROR.getMessage();

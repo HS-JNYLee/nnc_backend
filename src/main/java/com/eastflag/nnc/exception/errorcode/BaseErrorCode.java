@@ -1,4 +1,4 @@
-package com.eastflag.nnc.testkmj.error.errorcode;
+package com.eastflag.nnc.exception.errorcode;
 
 public interface BaseErrorCode {
     ErrorMessage ERROR_NOT_FOUND = new ErrorMessage(404, "에러 원인 불명");

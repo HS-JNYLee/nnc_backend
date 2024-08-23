@@ -1,4 +1,4 @@
-package com.eastflag.nnc.testkmj.error.errorcode;
+package com.eastflag.nnc.exception.errorcode;
 
 public interface UserRelationErrorCode {
     ErrorMessage RELATION_USER_ID_NOT_FOUND = new ErrorMessage(404, "관계가 존재하지 않는 UserId입니다.");

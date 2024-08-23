@@ -1,11 +1,9 @@
 package com.eastflag.nnc.testkmj.userrelation;
 
-import com.eastflag.nnc.testkmj.error.BaseException;
+import com.eastflag.nnc.exception.BaseException;
 import com.eastflag.nnc.testkmj.request.UpdateUserRelationRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import static com.eastflag.nnc.testkmj.error.errorcode.UserRelationErrorCode.*;
 
 /**
  * 유저 관계 Service 클래스

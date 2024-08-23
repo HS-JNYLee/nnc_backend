@@ -1,7 +1,7 @@
 package com.eastflag.nnc.testkmj.user;
 
 import com.eastflag.nnc.common.CommonResponse;
-import com.eastflag.nnc.testkmj.error.BaseException;
+import com.eastflag.nnc.exception.BaseException;
 import com.eastflag.nnc.testkmj.request.CreateUserRequest;
 import com.eastflag.nnc.testkmj.request.LoginRequest;
 import com.eastflag.nnc.testkmj.request.UpdateUserRequest;
@@ -11,7 +11,7 @@ import com.eastflag.nnc.testkmj.usersetting.UserSettingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import static com.eastflag.nnc.testkmj.error.errorcode.User1ErrorCode.NOT_CAREGIVER;
+import static com.eastflag.nnc.exception.errorcode.User1ErrorCode.NOT_CAREGIVER;
 
 /**
  * User1, UserAccount, UserSetting과 관련된 API가 관리되는 Controller

@@ -1,7 +1,7 @@
 package com.eastflag.nnc.testkmj.user;
 
 import com.eastflag.nnc.fcm.FcmService;
-import com.eastflag.nnc.testkmj.error.BaseException;
+import com.eastflag.nnc.exception.BaseException;
 import com.eastflag.nnc.testkmj.userrelation.UserRelationService;
 import com.eastflag.nnc.testkmj.request.CreateUserRequest;
 import com.eastflag.nnc.testkmj.request.UpdateUserRequest;
@@ -11,8 +11,6 @@ import com.eastflag.nnc.testkmj.usersetting.UserSetting;
 import com.eastflag.nnc.testkmj.usersetting.UserSettingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import static com.eastflag.nnc.testkmj.error.errorcode.User1ErrorCode.*;
 
 /**
  * 유저 관리 Service 클래스

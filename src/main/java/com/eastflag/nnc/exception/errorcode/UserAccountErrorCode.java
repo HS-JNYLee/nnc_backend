@@ -1,4 +1,4 @@
-package com.eastflag.nnc.testkmj.error.errorcode;
+package com.eastflag.nnc.exception.errorcode;
 
 public interface UserAccountErrorCode {
     ErrorMessage USER_ACCOUNT_ID_NOT_FOUND = new ErrorMessage(404, "존재하지 않는 UserAccountId입니다.");

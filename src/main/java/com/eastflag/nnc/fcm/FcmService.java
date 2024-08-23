@@ -2,30 +2,22 @@ package com.eastflag.nnc.fcm;
 
 import com.eastflag.nnc.common.CommonResponse;
 import com.eastflag.nnc.common.ResponseMessage;
-import com.eastflag.nnc.testkmj.error.BaseException;
+import com.eastflag.nnc.exception.BaseException;
 import com.eastflag.nnc.testkmj.userrelation.UserRelationService;
-import com.google.api.core.ApiService;
 import com.google.auth.oauth2.GoogleCredentials;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import okhttp3.ResponseBody;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import static com.eastflag.nnc.testkmj.error.errorcode.FcmErrorCode.FCM_USER_ID_NOT_FOUND;
+import static com.eastflag.nnc.exception.errorcode.FcmErrorCode.FCM_USER_ID_NOT_FOUND;
 
 @Log4j2
 @Service

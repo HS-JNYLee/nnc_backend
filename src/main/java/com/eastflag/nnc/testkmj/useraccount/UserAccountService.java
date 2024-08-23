@@ -1,12 +1,10 @@
 package com.eastflag.nnc.testkmj.useraccount;
 
-import com.eastflag.nnc.testkmj.error.BaseException;
+import com.eastflag.nnc.exception.BaseException;
 import com.eastflag.nnc.testkmj.request.CreateUserRequest;
 import com.eastflag.nnc.testkmj.request.UpdateUserRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import static com.eastflag.nnc.testkmj.error.errorcode.UserAccountErrorCode.*;
 
 /**
  * 유저 계정 관리 Service 클래스

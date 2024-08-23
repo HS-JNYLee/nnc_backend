@@ -1,11 +1,9 @@
 package com.eastflag.nnc.testkmj.usersetting;
 
-import com.eastflag.nnc.testkmj.error.BaseException;
+import com.eastflag.nnc.exception.BaseException;
 import com.eastflag.nnc.testkmj.request.UpdateUserSettingRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import static com.eastflag.nnc.testkmj.error.errorcode.UserSettingErrorCode.*;
 
 /**
  * 유저 설정 관리 Service 클래스

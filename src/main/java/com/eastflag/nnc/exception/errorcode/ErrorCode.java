@@ -1,4 +1,4 @@
-package com.eastflag.nnc.testkmj.error.errorcode;
+package com.eastflag.nnc.exception.errorcode;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
