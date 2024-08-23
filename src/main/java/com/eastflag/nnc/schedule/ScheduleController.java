@@ -27,7 +27,7 @@ public class ScheduleController {
 
     // 사용자의 전체 일정 반환
     @GetMapping("/allschedule/{userid}")
-    public CommonResponse getAllSchedules(int userid){
+    public CommonResponse getAllSchedules(@PathVariable(name = "userid") int userid){
         List<Schedule> res = this.scheduleDaoService.getAllSchedule(userid);
 
         //if(res.isEmpty()) throw new ControlledException(NO_SCHEDULE);
