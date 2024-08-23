@@ -1,14 +1,11 @@
 package com.eastflag.nnc.schedule;
 
 import com.eastflag.nnc.common.CommonResponse;
-import com.eastflag.nnc.exception.ControlledException;
 import org.springframework.web.bind.annotation.*;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-
-import static com.eastflag.nnc.exception.errorcode.ScheduleException.*;
 
 @RestController
 @RequestMapping("/api/v1/schedules")
@@ -30,12 +27,12 @@ public class ScheduleController {
 
     // 사용자의 전체 일정 반환
     @GetMapping("/allschedule/{userid}")
-    public List<Schedule> getAllSchedules(int userid){
+    public CommonResponse getAllSchedules(int userid){
         List<Schedule> res = this.scheduleDaoService.getAllSchedule(userid);
 
         //if(res.isEmpty()) throw new ControlledException(NO_SCHEDULE);
 
-        return res;
+        return CommonResponse.builder().code(200).message("Find Success").data(res).build();
     }
 
     // userid와 scheduleid와 같은 schedule를 response
@@ -48,7 +45,8 @@ public class ScheduleController {
 
     // userid와 datetime이 같은 schedule를 response (리스트로 반환)
     @GetMapping("/find/usingdatetime/{userid}/{datetime}")
-    public List<Schedule> getScheduleByDateTime(@PathVariable(name = "userid") int userid, @PathVariable(name = "datetime") String dateTime) throws UnsupportedEncodingException {
+    public CommonResponse getScheduleByDateTime(@PathVariable(name = "userid") int userid, @PathVariable(name = "datetime") String dateTime)
+            throws UnsupportedEncodingException {
         List<Schedule> res;
 
         dateTime = URLDecoder.decode(dateTime, StandardCharsets.UTF_8.name());
@@ -57,7 +55,7 @@ public class ScheduleController {
         // 해당 날짜를 포함하는 일정이 없는 경우
         //if(res.isEmpty()) throw new ControlledException(NO_SCHEDULE_IN_DATETIME);
 
-        return res;
+        return CommonResponse.builder().code(200).message("Find Success").data(res).build();
     }
 
     @PatchMapping("/modify")
