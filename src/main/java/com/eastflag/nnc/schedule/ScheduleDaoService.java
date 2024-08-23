@@ -1,10 +1,10 @@
 package com.eastflag.nnc.schedule;
 
+import com.eastflag.nnc.exception.ControlledException;
 import com.eastflag.nnc.fcm.FcmService;
 import com.eastflag.nnc.fcm.Message;
 import com.eastflag.nnc.fcm.MessageWrapper;
 import com.eastflag.nnc.fcm.Notification;
-import com.eastflag.nnc.schedule.scheduleexception.ScheduleNotFoundException;
 import com.eastflag.nnc.fcm.Fcm;
 import com.eastflag.nnc.fcm.FcmRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +26,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+
+import static com.eastflag.nnc.exception.errorcode.ScheduleException.SCHEDULE_ID_NOT_FOUND;
 
 @Service
 @Component
@@ -67,7 +69,7 @@ public class ScheduleDaoService {
     public Schedule findScheduleByScheduleID(int scheduleID){
 
         return sdl.findById(scheduleID)
-                .orElseThrow(() -> new ScheduleNotFoundException("Not Found Schedule ID"));
+                .orElseThrow(() -> new ControlledException(SCHEDULE_ID_NOT_FOUND));
     }
 
     // 값을 찾는 로직 - Datetime 이용

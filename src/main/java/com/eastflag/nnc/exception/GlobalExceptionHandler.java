@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import static com.eastflag.nnc.exception.errorcode.BasicErrorCode.DATA_BASE_ERROR;
-import static com.eastflag.nnc.exception.errorcode.BasicErrorCode.INTERNAL_SERVER_ERROR;
+import static com.eastflag.nnc.exception.errorcode.BasicErrorCode.*;
 
 @Log4j2
 @RestControllerAdvice
@@ -63,6 +63,20 @@ public class GlobalExceptionHandler {
         return ResponseEntity.ok(CommonResponse.builder().code(code).message(message).build());
     }
 
+    @ExceptionHandler(UnsupportedEncodingException.class)
+    protected ResponseEntity<CommonResponse> handleUnsupportedEncodingException(UnsupportedEncodingException ex) {
+        var code = UNSUPPORTED_ENCODING.getStatus();
+        var message = UNSUPPORTED_ENCODING.getMessage();
+
+        log.error("error code: " + code + " message: " + message);
+        log.error("explain: " + ex.getMessage());
+
+        LOG.info("error code: " + code + " message: " + message);
+        LOG.info("explain: " + ex.getMessage());
+
+        return ResponseEntity.ok(CommonResponse.builder().code(code).message(message).build());
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<CommonResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
         log.error("MethodArgumentNotValidException: {}", ex.getMessage());
@@ -74,12 +88,7 @@ public class GlobalExceptionHandler {
                 .map(e -> e.getDefaultMessage())
                 .collect(Collectors.toList());
 
-        var result = CommonResponse.builder()
-                .code(400)
-                .message(errors.toString())
-                .build();
-
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(CommonResponse.builder().code(400).message(errors.toString()).build());
     }
 
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
@@ -87,11 +96,7 @@ public class GlobalExceptionHandler {
         log.error("SQLIntegrityConstraintViolationException: {}", ex.getMessage());
 
         LOG.info("SQLIntegrityConstraintViolationException: " + ex.getMessage());
-        var result = CommonResponse.builder()
-                .code(500)
-                .message(ex.getMessage())
-                .build();
 
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(CommonResponse.builder().code(500).message(ex.getMessage()).build());
     }
 }

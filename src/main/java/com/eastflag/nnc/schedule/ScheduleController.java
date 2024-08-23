@@ -1,12 +1,14 @@
 package com.eastflag.nnc.schedule;
 
 import com.eastflag.nnc.common.CommonResponse;
-import com.eastflag.nnc.schedule.scheduleexception.ScheduleNotFoundException;
+import com.eastflag.nnc.exception.ControlledException;
 import org.springframework.web.bind.annotation.*;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+
+import static com.eastflag.nnc.exception.errorcode.ScheduleException.*;
 
 @RestController
 @RequestMapping("/api/v1/schedules")
@@ -32,7 +34,7 @@ public class ScheduleController {
         List<Schedule> res = this.scheduleDaoService.getAllSchedule(userid);
 
         if(res.isEmpty()){
-            throw new ScheduleNotFoundException("Schedule is Not Exist");
+            throw new ControlledException(NO_SCHEDULE);
         }
 
         return res;
@@ -40,7 +42,7 @@ public class ScheduleController {
 
     // userid와 scheduleid와 같은 schedule를 response
     @GetMapping("/find/usingscheduleid/{scheduleid}")
-    public CommonResponse getScheduleByScheduleID(@PathVariable(name = "scheduleid") int scheduleid) throws ScheduleNotFoundException {
+    public CommonResponse getScheduleByScheduleID(@PathVariable(name = "scheduleid") int scheduleid) {
         Schedule res = this.scheduleDaoService.findScheduleByScheduleID(scheduleid);
 
         return CommonResponse.builder().code(200).message("Find Success").data(res).build();
@@ -48,15 +50,18 @@ public class ScheduleController {
 
     // userid와 datetime이 같은 schedule를 response (리스트로 반환)
     @GetMapping("/find/usingdatetime/{userid}/{datetime}")
-    public List<Schedule> getScheduleByDateTime(@PathVariable(name = "userid") int userid, @PathVariable(name = "datetime") String dateTime) throws ScheduleNotFoundException, UnsupportedEncodingException {
+    public List<Schedule> getScheduleByDateTime(@PathVariable(name = "userid") int userid, @PathVariable(name = "datetime") String dateTime) {
+        List<Schedule> res;
 
-        dateTime = URLDecoder.decode(dateTime, StandardCharsets.UTF_8.name());
-
-        List<Schedule> res = this.scheduleDaoService.getScheduleByDateTime(userid, dateTime);
-
-        if(res.isEmpty()){// 해당 날짜를 포함하는 일정이 없는 경우
-            throw new ScheduleNotFoundException("Schedule Not Found in this DateTime");
+        try {
+            dateTime = URLDecoder.decode(dateTime, StandardCharsets.UTF_8.name());
+            res = this.scheduleDaoService.getScheduleByDateTime(userid, dateTime);
+        }catch (UnsupportedEncodingException e) {
+            throw new ControlledException(NO_SCHEDULE);
         }
+
+        // 해당 날짜를 포함하는 일정이 없는 경우
+        if(res.isEmpty()) throw new ControlledException(NO_SCHEDULE_IN_DATETIME);
 
         return res;
     }
