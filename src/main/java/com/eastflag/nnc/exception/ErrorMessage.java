@@ -1,4 +1,4 @@
-package com.eastflag.nnc.exception.errorcode;
+package com.eastflag.nnc.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

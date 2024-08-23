@@ -2,7 +2,7 @@ package com.eastflag.nnc.fcm;
 
 import com.eastflag.nnc.common.CommonResponse;
 import com.eastflag.nnc.common.ResponseMessage;
-import com.eastflag.nnc.exception.BaseException;
+import com.eastflag.nnc.exception.ControlledException;
 import com.eastflag.nnc.user1.userrelation.UserRelationService;
 import com.google.auth.oauth2.GoogleCredentials;
 import lombok.RequiredArgsConstructor;
@@ -83,7 +83,7 @@ public class FcmService {
     public Fcm updateFcm(FcmRequest request) {
         var fcm = fcmRepository
                 .findByUserId(request.getUserId())
-                .orElseThrow(() -> new BaseException(FCM_USER_ID_NOT_FOUND));
+                .orElseThrow(() -> new ControlledException(FCM_USER_ID_NOT_FOUND));
 
         fcm.setFcmToken(request.getFcmToken());
 

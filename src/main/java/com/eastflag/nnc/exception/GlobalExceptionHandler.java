@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import static com.eastflag.nnc.exception.errorcode.BaseErrorCode.DATA_BASE_ERROR;
-import static com.eastflag.nnc.exception.errorcode.BaseErrorCode.INTERNAL_SERVER_ERROR;
+import static com.eastflag.nnc.exception.errorcode.BasicErrorCode.DATA_BASE_ERROR;
+import static com.eastflag.nnc.exception.errorcode.BasicErrorCode.INTERNAL_SERVER_ERROR;
 
 @Log4j2
 @RestControllerAdvice
@@ -23,8 +23,8 @@ import static com.eastflag.nnc.exception.errorcode.BaseErrorCode.INTERNAL_SERVER
 public class GlobalExceptionHandler {
     private final static Logger LOG = Logger.getGlobal();
 
-    @ExceptionHandler(BaseException.class)
-    protected ResponseEntity handleCustomException(BaseException ex) {
+    @ExceptionHandler(ControlledException.class)
+    protected ResponseEntity handleCustomException(ControlledException ex) {
         var code = ex.getErrorCode().getStatus();
         var message = ex.getErrorCode().getMessage();
 

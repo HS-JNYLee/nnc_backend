@@ -1,6 +1,6 @@
 package com.eastflag.nnc.user1.useraccount;
 
-import com.eastflag.nnc.exception.BaseException;
+import com.eastflag.nnc.exception.ControlledException;
 import com.eastflag.nnc.user1.request.CreateUserRequest;
 import com.eastflag.nnc.user1.request.UpdateUserRequest;
 import lombok.RequiredArgsConstructor;
@@ -58,7 +58,7 @@ public class UserAccountService {
     public UserAccount updateUserAccount(int userAccountId, UpdateUserRequest request) {
         var userAccount = userAccountRepository
                 .findById(userAccountId)
-                .orElseThrow(() -> new BaseException(USER_ACCOUNT_ID_NOT_FOUND));
+                .orElseThrow(() -> new ControlledException(USER_ACCOUNT_ID_NOT_FOUND));
 
         // null이 아닌 값만 setter로 수정한다.
         if(request.getEmail() != null) userAccount.setEmail(request.getEmail());
@@ -83,7 +83,7 @@ public class UserAccountService {
     public UserAccount getUserAccount(int userAccountId) {
         var userAccount = userAccountRepository
                 .findById(userAccountId)
-                .orElseThrow(() -> new BaseException(USER_ACCOUNT_ID_NOT_FOUND));
+                .orElseThrow(() -> new ControlledException(USER_ACCOUNT_ID_NOT_FOUND));
         return userAccount;
     }
 
@@ -96,7 +96,7 @@ public class UserAccountService {
     public UserAccount getUserAccount(String userAccountEmail) {
         var userAccount = userAccountRepository
                 .findByEmail(userAccountEmail)
-                .orElseThrow(() -> new BaseException(USER_ACCOUNT_EMAIL_NOT_FOUND));
+                .orElseThrow(() -> new ControlledException(USER_ACCOUNT_EMAIL_NOT_FOUND));
         return userAccount;
     }
 

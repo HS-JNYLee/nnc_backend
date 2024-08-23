@@ -1,7 +1,7 @@
 package com.eastflag.nnc.user1.user;
 
 import com.eastflag.nnc.common.CommonResponse;
-import com.eastflag.nnc.exception.BaseException;
+import com.eastflag.nnc.exception.ControlledException;
 import com.eastflag.nnc.user1.request.CreateUserRequest;
 import com.eastflag.nnc.user1.request.LoginRequest;
 import com.eastflag.nnc.user1.request.UpdateUserRequest;
@@ -125,7 +125,7 @@ public class UserController1 {
         var caregiverUser1 =  userService.getUser(userAccount);
 
         // 보호자 계정이 아님
-        if(caregiverUser1.getRole1() != Role1.CAREGIVER) throw new BaseException(NOT_CAREGIVER);
+        if(caregiverUser1.getRole1() != Role1.CAREGIVER) throw new ControlledException(NOT_CAREGIVER);
 
         var caregiverUserId = caregiverUser1.getUserId();
         // TODO: 보호자 승인 허가 전송하는 팝업 알림 전송

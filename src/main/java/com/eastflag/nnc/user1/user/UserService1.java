@@ -1,7 +1,7 @@
 package com.eastflag.nnc.user1.user;
 
 import com.eastflag.nnc.fcm.FcmService;
-import com.eastflag.nnc.exception.BaseException;
+import com.eastflag.nnc.exception.ControlledException;
 import com.eastflag.nnc.user1.userrelation.UserRelationService;
 import com.eastflag.nnc.user1.request.CreateUserRequest;
 import com.eastflag.nnc.user1.request.UpdateUserRequest;
@@ -73,12 +73,12 @@ public class UserService1 {
     public void deleteUser(int userId) {
         var user = userRepository
                 .findById(userId)
-                .orElseThrow(() -> new BaseException(USER_ID_NOT_FOUND));
+                .orElseThrow(() -> new ControlledException(USER_ID_NOT_FOUND));
 
         // Caretaker인 경우 user_relation도 삭제해야 한다.
         // Caregiver의 경우 Caretaker가 있다면 삭제가 불가능하게 해야한다.
         if(user.getRole1() == Role1.CARETAKER) userRelationService.deleteUserRelation(userId);
-        else if(userRelationService.isAnotherUserId(userId)) throw new BaseException(CAREGIVER_IS_NOT_DELETE);
+        else if(userRelationService.isAnotherUserId(userId)) throw new ControlledException(CAREGIVER_IS_NOT_DELETE);
 
         // 종속관계 제거를 위한 userAccount, userSetting 분기
         var userSettingId = getUserSettingId(userId);
@@ -98,7 +98,7 @@ public class UserService1 {
     public User1 updateUser(UpdateUserRequest request) {
         var user = userRepository
                 .findById(request.getUserId())
-                .orElseThrow(() -> new BaseException(USER_ID_NOT_FOUND));
+                .orElseThrow(() -> new ControlledException(USER_ID_NOT_FOUND));
 
         // null이 아닌 값만 setter로 수정한다.
         if(request.getName() != null) user.setName(request.getName());
@@ -123,20 +123,20 @@ public class UserService1 {
     public User1 getUser(int userId) {
         var user = userRepository
                 .findById(userId)
-                .orElseThrow(() -> new BaseException(USER_ID_NOT_FOUND));
+                .orElseThrow(() -> new ControlledException(USER_ID_NOT_FOUND));
         return user;
     }
 
     public User1 getUser(UserAccount userAccount) {
         var user = userRepository
                 .findByUserAccount(userAccount)
-                .orElseThrow(() -> new BaseException(USER_ACCOUNT_NOT_FOUND));
+                .orElseThrow(() -> new ControlledException(USER_ACCOUNT_NOT_FOUND));
         return user;
     }
 
     public User1 getUser(String telNum) {
         var user = userRepository.findByTelNum(telNum)
-                .orElseThrow(() -> new BaseException(NO_TELNUM));
+                .orElseThrow(() -> new ControlledException(NO_TELNUM));
         return user;
     }
 
@@ -149,7 +149,7 @@ public class UserService1 {
     public int getUserAccountId(int userId) {
         var user = userRepository
                 .findById(userId)
-                .orElseThrow(() -> new BaseException(USER_ID_NOT_FOUND));
+                .orElseThrow(() -> new ControlledException(USER_ID_NOT_FOUND));
         return user.getUserAccount().getUserAccountId();
     }
 
@@ -162,7 +162,7 @@ public class UserService1 {
     public int getUserSettingId(int userId) {
         var user = userRepository
                 .findById(userId)
-                .orElseThrow(() -> new BaseException(USER_ID_NOT_FOUND));
+                .orElseThrow(() -> new ControlledException(USER_ID_NOT_FOUND));
         return user.getUserSetting().getUserSettingId();
     }
 
@@ -180,7 +180,7 @@ public class UserService1 {
 
         var user = userRepository
                 .findByUserAccount(userAccount)
-                .orElseThrow(() -> new BaseException(USER_ACCOUNT_NOT_FOUND));
+                .orElseThrow(() -> new ControlledException(USER_ACCOUNT_NOT_FOUND));
         return user;
     }
 }

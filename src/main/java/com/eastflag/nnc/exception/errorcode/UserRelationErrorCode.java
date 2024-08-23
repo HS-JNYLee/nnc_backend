@@ -1,5 +1,7 @@
 package com.eastflag.nnc.exception.errorcode;
 
+import com.eastflag.nnc.exception.ErrorMessage;
+
 public interface UserRelationErrorCode {
     ErrorMessage RELATION_USER_ID_NOT_FOUND = new ErrorMessage(404, "관계가 존재하지 않는 UserId입니다.");
     ErrorMessage CARETAKER_ID_NOT_FOUND = new ErrorMessage(404, "존재하지 않는 사용자Id입니다.");

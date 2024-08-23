@@ -1,5 +1,7 @@
 package com.eastflag.nnc.exception.errorcode;
 
+import com.eastflag.nnc.exception.ErrorMessage;
+
 public interface User1ErrorCode {
     ErrorMessage USER_ID_NOT_FOUND = new ErrorMessage(404, "존재하지 않는 UserId");
     ErrorMessage USER_ACCOUNT_NOT_FOUND = new ErrorMessage(404, "존재하지 않는 UserAccount입니다.");
