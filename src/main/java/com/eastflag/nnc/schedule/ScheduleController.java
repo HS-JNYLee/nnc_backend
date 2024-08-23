@@ -33,9 +33,7 @@ public class ScheduleController {
     public List<Schedule> getAllSchedules(int userid){
         List<Schedule> res = this.scheduleDaoService.getAllSchedule(userid);
 
-        if(res.isEmpty()){
-            throw new ControlledException(NO_SCHEDULE);
-        }
+        //if(res.isEmpty()) throw new ControlledException(NO_SCHEDULE);
 
         return res;
     }
@@ -50,18 +48,14 @@ public class ScheduleController {
 
     // userid와 datetime이 같은 schedule를 response (리스트로 반환)
     @GetMapping("/find/usingdatetime/{userid}/{datetime}")
-    public List<Schedule> getScheduleByDateTime(@PathVariable(name = "userid") int userid, @PathVariable(name = "datetime") String dateTime) {
+    public List<Schedule> getScheduleByDateTime(@PathVariable(name = "userid") int userid, @PathVariable(name = "datetime") String dateTime) throws UnsupportedEncodingException {
         List<Schedule> res;
 
-        try {
-            dateTime = URLDecoder.decode(dateTime, StandardCharsets.UTF_8.name());
-            res = this.scheduleDaoService.getScheduleByDateTime(userid, dateTime);
-        }catch (UnsupportedEncodingException e) {
-            throw new ControlledException(NO_SCHEDULE);
-        }
+        dateTime = URLDecoder.decode(dateTime, StandardCharsets.UTF_8.name());
+        res = this.scheduleDaoService.getScheduleByDateTime(userid, dateTime);
 
         // 해당 날짜를 포함하는 일정이 없는 경우
-        if(res.isEmpty()) throw new ControlledException(NO_SCHEDULE_IN_DATETIME);
+        //if(res.isEmpty()) throw new ControlledException(NO_SCHEDULE_IN_DATETIME);
 
         return res;
     }

@@ -27,7 +27,7 @@ import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import static com.eastflag.nnc.exception.errorcode.ScheduleException.SCHEDULE_ID_NOT_FOUND;
+import static com.eastflag.nnc.exception.errorcode.ScheduleException.*;
 
 @Service
 @Component
@@ -62,7 +62,9 @@ public class ScheduleDaoService {
 
     public List<Schedule> getAllSchedule(int user_id){
 
-        return sdl.findScheduleByUserId(user_id);
+        return sdl
+                .findScheduleByUserId(user_id)
+                .orElseThrow(() -> new ControlledException(NO_SCHEDULE));
     }
 
     // 값을 찾는 로직 - shceduleID 이용
@@ -80,7 +82,9 @@ public class ScheduleDaoService {
 
         Predicate<Schedule> findDate = sc-> check.getTime() >= Timestamp.valueOf(sc.getDateBegin()).getTime() && check.getTime() <= Timestamp.valueOf(sc.getDateEnd()).getTime();
 
-        List<Schedule> target = sdl.findScheduleByUserId(userID);
+        List<Schedule> target = sdl
+                .findScheduleByUserId(userID)
+                .orElseThrow(() -> new ControlledException(NO_SCHEDULE));
 
         target = target.stream().filter(findDate).collect(Collectors.toList());
 
@@ -119,7 +123,9 @@ public class ScheduleDaoService {
 
         System.out.println("Schedule System Called!!  :  " + now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 
-        List<Schedule> schedules = sdl.findScheduleByDateBegin(formattedDateTime);
+        List<Schedule> schedules = sdl
+                .findScheduleByDateBegin(formattedDateTime)
+                .orElseThrow(() -> new ControlledException(NO_SCHEDULE_IN_DATETIME));
 
         for(Schedule res:schedules){
             log.info("userID : " + res.getUserId() + ", Title : " +  res.getTitle());
