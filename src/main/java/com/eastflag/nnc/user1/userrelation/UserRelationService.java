@@ -1,7 +1,7 @@
-package com.eastflag.nnc.testkmj.userrelation;
+package com.eastflag.nnc.user1.userrelation;
 
 import com.eastflag.nnc.exception.BaseException;
-import com.eastflag.nnc.testkmj.request.UpdateUserRelationRequest;
+import com.eastflag.nnc.user1.request.UpdateUserRelationRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

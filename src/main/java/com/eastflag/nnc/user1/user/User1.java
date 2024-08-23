@@ -1,7 +1,7 @@
-package com.eastflag.nnc.testkmj.user;
+package com.eastflag.nnc.user1.user;
 
-import com.eastflag.nnc.testkmj.useraccount.UserAccount;
-import com.eastflag.nnc.testkmj.usersetting.UserSetting;
+import com.eastflag.nnc.user1.useraccount.UserAccount;
+import com.eastflag.nnc.user1.usersetting.UserSetting;
 import jakarta.persistence.*;
 import lombok.*;
 

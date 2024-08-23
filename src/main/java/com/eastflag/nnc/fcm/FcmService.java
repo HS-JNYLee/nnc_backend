@@ -3,7 +3,7 @@ package com.eastflag.nnc.fcm;
 import com.eastflag.nnc.common.CommonResponse;
 import com.eastflag.nnc.common.ResponseMessage;
 import com.eastflag.nnc.exception.BaseException;
-import com.eastflag.nnc.testkmj.userrelation.UserRelationService;
+import com.eastflag.nnc.user1.userrelation.UserRelationService;
 import com.google.auth.oauth2.GoogleCredentials;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

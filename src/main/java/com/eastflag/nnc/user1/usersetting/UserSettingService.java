@@ -1,7 +1,7 @@
-package com.eastflag.nnc.testkmj.usersetting;
+package com.eastflag.nnc.user1.usersetting;
 
 import com.eastflag.nnc.exception.BaseException;
-import com.eastflag.nnc.testkmj.request.UpdateUserSettingRequest;
+import com.eastflag.nnc.user1.request.UpdateUserSettingRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

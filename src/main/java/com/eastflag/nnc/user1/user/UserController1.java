@@ -1,13 +1,13 @@
-package com.eastflag.nnc.testkmj.user;
+package com.eastflag.nnc.user1.user;
 
 import com.eastflag.nnc.common.CommonResponse;
 import com.eastflag.nnc.exception.BaseException;
-import com.eastflag.nnc.testkmj.request.CreateUserRequest;
-import com.eastflag.nnc.testkmj.request.LoginRequest;
-import com.eastflag.nnc.testkmj.request.UpdateUserRequest;
-import com.eastflag.nnc.testkmj.request.UpdateUserSettingRequest;
-import com.eastflag.nnc.testkmj.useraccount.UserAccountService;
-import com.eastflag.nnc.testkmj.usersetting.UserSettingService;
+import com.eastflag.nnc.user1.request.CreateUserRequest;
+import com.eastflag.nnc.user1.request.LoginRequest;
+import com.eastflag.nnc.user1.request.UpdateUserRequest;
+import com.eastflag.nnc.user1.request.UpdateUserSettingRequest;
+import com.eastflag.nnc.user1.useraccount.UserAccountService;
+import com.eastflag.nnc.user1.usersetting.UserSettingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

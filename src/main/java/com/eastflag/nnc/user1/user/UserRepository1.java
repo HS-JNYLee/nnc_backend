@@ -1,6 +1,6 @@
-package com.eastflag.nnc.testkmj.user;
+package com.eastflag.nnc.user1.user;
 
-import com.eastflag.nnc.testkmj.useraccount.UserAccount;
+import com.eastflag.nnc.user1.useraccount.UserAccount;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

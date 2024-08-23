@@ -1,4 +1,4 @@
-package com.eastflag.nnc.testkmj.user;
+package com.eastflag.nnc.user1.user;
 
 /**
  * User1의 역할 및 권한을 명시하는 enum

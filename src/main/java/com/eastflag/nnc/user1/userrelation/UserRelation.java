@@ -1,4 +1,4 @@
-package com.eastflag.nnc.testkmj.userrelation;
+package com.eastflag.nnc.user1.userrelation;
 
 import jakarta.persistence.*;
 import lombok.*;
