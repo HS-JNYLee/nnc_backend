@@ -1,11 +1,14 @@
 package com.eastflag.nnc.schedule;
 
 import com.eastflag.nnc.common.CommonResponse;
+import com.eastflag.nnc.exception.ControlledException;
 import org.springframework.web.bind.annotation.*;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+
+import static com.eastflag.nnc.exception.errorcode.ScheduleException.NO_SCHEDULE;
 
 @RestController
 @RequestMapping("/api/v1/schedules")
@@ -30,7 +33,7 @@ public class ScheduleController {
     public CommonResponse getAllSchedules(@PathVariable(name = "userid") int userid){
         List<Schedule> res = this.scheduleDaoService.getAllSchedule(userid);
 
-        //if(res.isEmpty()) throw new ControlledException(NO_SCHEDULE);
+        if(res.isEmpty()) throw new ControlledException(NO_SCHEDULE);
 
         return CommonResponse.builder().code(200).message("Find Success").data(res).build();
     }
