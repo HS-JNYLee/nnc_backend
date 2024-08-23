@@ -6,6 +6,8 @@ import com.eastflag.nnc.user1.request.UpdateUserRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import static com.eastflag.nnc.exception.errorcode.UserAccountErrorCode.*;
+
 /**
  * 유저 계정 관리 Service 클래스
  *

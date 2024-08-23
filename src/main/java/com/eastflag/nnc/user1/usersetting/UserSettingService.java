@@ -5,6 +5,8 @@ import com.eastflag.nnc.user1.request.UpdateUserSettingRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import static com.eastflag.nnc.exception.errorcode.UserSettingErrorCode.USER_SETTING_ID_NOT_FOUND;
+
 /**
  * 유저 설정 관리 Service 클래스
  *

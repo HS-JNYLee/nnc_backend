@@ -5,6 +5,9 @@ import com.eastflag.nnc.user1.request.UpdateUserRelationRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import static com.eastflag.nnc.exception.errorcode.UserRelationErrorCode.CARETAKER_ID_NOT_FOUND;
+import static com.eastflag.nnc.exception.errorcode.UserRelationErrorCode.RELATION_USER_ID_NOT_FOUND;
+
 /**
  * 유저 관계 Service 클래스
  *

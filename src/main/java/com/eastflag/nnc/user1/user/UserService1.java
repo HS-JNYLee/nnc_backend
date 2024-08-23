@@ -12,6 +12,8 @@ import com.eastflag.nnc.user1.usersetting.UserSettingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import static com.eastflag.nnc.exception.errorcode.User1ErrorCode.*;
+
 /**
  * 유저 관리 Service 클래스
  *
