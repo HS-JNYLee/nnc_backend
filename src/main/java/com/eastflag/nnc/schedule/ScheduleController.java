@@ -8,7 +8,8 @@ import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-import static com.eastflag.nnc.exception.errorcode.ScheduleException.NO_SCHEDULE;
+import static com.eastflag.nnc.exception.errorcode.BasicErrorCode.NOT_DATETIME;
+import static com.eastflag.nnc.exception.errorcode.ScheduleException.*;
 
 @RestController
 @RequestMapping("/api/v1/schedules")
@@ -52,11 +53,12 @@ public class ScheduleController {
             throws UnsupportedEncodingException {
         List<Schedule> res;
 
-        dateTime = URLDecoder.decode(dateTime, StandardCharsets.UTF_8.name());
+        // TODO: dateTime에 대한 서식 에러처리가 되지 않아서 추가로 핸들링 해야한다.
+        if(!scheduleDaoService.isValidDateTime(dateTime)) throw new ControlledException(NOT_DATETIME);
+        dateTime = URLDecoder.decode(dateTime, StandardCharsets.UTF_8);
         res = this.scheduleDaoService.getScheduleByDateTime(userid, dateTime);
 
-        // 해당 날짜를 포함하는 일정이 없는 경우
-        //if(res.isEmpty()) throw new ControlledException(NO_SCHEDULE_IN_DATETIME);
+        if(res.isEmpty()) throw new ControlledException(NO_SCHEDULE_IN_DATETIME);
 
         return CommonResponse.builder().code(200).message("Find Success").data(res).build();
     }
@@ -70,5 +72,4 @@ public class ScheduleController {
     public CommonResponse removeSchedule(@PathVariable(name = "scheduleid") int scheduleid){
         return CommonResponse.builder().code(200).message("Delete Complete").data(this.scheduleDaoService.removeSchedule(scheduleid)).build();
     }
-
 }

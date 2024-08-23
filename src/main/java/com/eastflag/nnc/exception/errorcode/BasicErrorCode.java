@@ -7,4 +7,5 @@ public interface BasicErrorCode {
     ErrorMessage DATA_BASE_ERROR = new ErrorMessage(404, "데이터베이스 접근 오류");
     ErrorMessage INTERNAL_SERVER_ERROR = new ErrorMessage(500, "서버 에러");
     ErrorMessage UNSUPPORTED_ENCODING = new ErrorMessage(415, "잘못된 형식으로 인코딩이 되었습니다.");
+    ErrorMessage NOT_DATETIME = new ErrorMessage(1001, "DateTime 형식이 아닙니다.");
 }

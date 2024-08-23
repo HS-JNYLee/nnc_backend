@@ -19,9 +19,11 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp ;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -146,6 +148,23 @@ public class ScheduleDaoService {
                                     .build()
                             ).build()));
             }
+        }
+    }
+
+    /**
+     * 뤼튼 발 DateTime 형식 검사 함수
+     * @param dateTime 전달 받은 dateTime 문자열
+     * @return dateTime(String)이 DateTime 형식으로 전달되었는지에 대한 참 거짓 
+     */
+    boolean isValidDateTime(String dateTime) {
+        String pattern = "yyyy-MM-dd HH:mm:ss";
+        
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+            LocalDateTime.parse(dateTime, formatter);
+            return true;
+        } catch (DateTimeParseException e) {
+            return false;
         }
     }
 }
