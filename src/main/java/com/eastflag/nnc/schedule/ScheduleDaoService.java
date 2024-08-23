@@ -5,8 +5,8 @@ import com.eastflag.nnc.fcm.Message;
 import com.eastflag.nnc.fcm.MessageWrapper;
 import com.eastflag.nnc.fcm.Notification;
 import com.eastflag.nnc.schedule.scheduleexception.ScheduleNotFoundException;
-import com.eastflag.nnc.testkmj.fcm.Fcm1;
-import com.eastflag.nnc.testkmj.fcm.FcmRepository1;
+import com.eastflag.nnc.fcm.Fcm;
+import com.eastflag.nnc.fcm.FcmRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,7 +48,7 @@ public class ScheduleDaoService {
 //    }
     private final Logger log = LoggerFactory.getLogger(this.getClass().getSimpleName());
     private final ScheduleRepository sdl;
-    private final FcmRepository1 fcmRepository1;
+    private final FcmRepository fcmRepository;
     private final FcmService fcmService;
 
     public Schedule saveSchedule(Schedule schedule){
@@ -121,7 +121,7 @@ public class ScheduleDaoService {
 
         for(Schedule res:schedules){
             log.info("userID : " + res.getUserId() + ", Title : " +  res.getTitle());
-            Optional<Fcm1> getFcm = fcmRepository1.findByUserId(res.getUserId());
+            Optional<Fcm> getFcm = fcmRepository.findByUserId(res.getUserId());
 
             if(getFcm.isPresent()){
                 String token = getFcm.get().getFcmToken();

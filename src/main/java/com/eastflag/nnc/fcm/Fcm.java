@@ -1,4 +1,4 @@
-package com.eastflag.nnc.testkmj.fcm;
+package com.eastflag.nnc.fcm;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -11,7 +11,7 @@ import lombok.*;
 @Getter
 @Setter
 @Table(name = "fcm1")
-public class Fcm1 {
+public class Fcm {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int FcmId;

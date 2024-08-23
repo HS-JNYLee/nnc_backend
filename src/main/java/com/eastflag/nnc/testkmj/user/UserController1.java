@@ -10,7 +10,6 @@ import com.eastflag.nnc.testkmj.useraccount.UserAccountService;
 import com.eastflag.nnc.testkmj.usersetting.UserSettingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import retrofit2.http.GET;
 
 import static com.eastflag.nnc.testkmj.error.errorcode.User1ErrorCode.NOT_CAREGIVER;
 

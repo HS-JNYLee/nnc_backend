@@ -2,11 +2,14 @@ package com.eastflag.nnc.fcm;
 
 import com.eastflag.nnc.common.CommonResponse;
 import com.eastflag.nnc.common.ResponseMessage;
+import com.eastflag.nnc.testkmj.error.BaseException;
+import com.eastflag.nnc.testkmj.userrelation.UserRelationService;
 import com.google.api.core.ApiService;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import okhttp3.ResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +25,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.eastflag.nnc.testkmj.error.errorcode.FcmErrorCode.FCM_USER_ID_NOT_FOUND;
+
 @Log4j2
 @Service
+@RequiredArgsConstructor
 public class FcmService {
+    private final FcmRepository fcmRepository;
+    private final UserRelationService userRelationService;
 
     public CommonResponse postMessageCareGiver(MessageWrapper message) throws IOException {
         String token = getAccessToken();
@@ -56,5 +64,39 @@ public class FcmService {
                 .build()
                 .create(FcmInterface.class)
                 .postCareGiver(token, message).execute();
+    }
+
+    public Fcm createFcm(FcmRequest request) {
+        var fcm = Fcm.builder()
+                .userId(request.getUserId())
+                .fcmToken(request.getFcmToken())
+                .build();
+
+        fcmRepository.save(fcm);
+
+        return fcm;
+    }
+
+    public Fcm createFcm(int userId, String fcmToken) {
+        var fcm = Fcm.builder()
+                .userId(userId)
+                .fcmToken(fcmToken)
+                .build();
+
+        fcmRepository.save(fcm);
+
+        return fcm;
+    }
+
+    public Fcm updateFcm(FcmRequest request) {
+        var fcm = fcmRepository
+                .findByUserId(request.getUserId())
+                .orElseThrow(() -> new BaseException(FCM_USER_ID_NOT_FOUND));
+
+        fcm.setFcmToken(request.getFcmToken());
+
+        fcmRepository.save(fcm);
+
+        return fcm;
     }
 }

@@ -1,7 +1,7 @@
 package com.eastflag.nnc.testkmj.user;
 
+import com.eastflag.nnc.fcm.FcmService;
 import com.eastflag.nnc.testkmj.error.BaseException;
-import com.eastflag.nnc.testkmj.fcm.FcmService1;
 import com.eastflag.nnc.testkmj.userrelation.UserRelationService;
 import com.eastflag.nnc.testkmj.request.CreateUserRequest;
 import com.eastflag.nnc.testkmj.request.UpdateUserRequest;
@@ -27,7 +27,7 @@ public class UserService1 {
     private final UserAccountService userAccountService;
     private final UserSettingService userSettingService;
     private final UserRelationService userRelationService;
-    private final FcmService1 fcmService;
+    private final FcmService fcmService;
 
     /**
      * 유저 Entity를 DataBase에서 생성하는 함수

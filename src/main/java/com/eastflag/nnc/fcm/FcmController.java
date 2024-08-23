@@ -20,4 +20,21 @@ public class FcmController {
     public ResponseEntity<CommonResponse> fcm(@RequestBody MessageWrapper messageWrapper) throws IOException {
         return ResponseEntity.ok(fcmService.postMessageCareGiver(messageWrapper));
     }
+
+    // TODO: 회원가입 시 Fcm을 생성할 것이므로 잠성 이용 금지
+    @PostMapping("/createFcm")
+    public CommonResponse createFcm(
+            @RequestBody FcmRequest request
+    ) {
+        fcmService.createFcm(request);
+        return CommonResponse.builder().code(200).message(request.getUserId()+"(name) token 생성 성공").build();
+    }
+
+    @PatchMapping("/updateFcm")
+    public CommonResponse updateFcm(
+            @RequestBody FcmRequest request
+    ) {
+        fcmService.updateFcm(request);
+        return CommonResponse.builder().code(200).message(request.getUserId()+"(name) token 변경 성공").build();
+    }
 }
