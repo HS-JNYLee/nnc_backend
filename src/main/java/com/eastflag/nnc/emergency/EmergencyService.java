@@ -2,12 +2,15 @@ package com.eastflag.nnc.emergency;
 
 import com.eastflag.nnc.common.CommonResponse;
 import com.eastflag.nnc.common.ResponseMessage;
+import com.eastflag.nnc.exception.ControlledException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
+import static com.eastflag.nnc.exception.errorcode.EmergencyErrorCode.*;
 
 @Service
 public class EmergencyService {
@@ -19,7 +22,9 @@ public class EmergencyService {
     }
 
     public CommonResponse getEmergencyByEmergencyId(int emergencyId) {
-        Emergency emergency = emergencyRepository.findByEmergencyId(emergencyId);
+        Emergency emergency = emergencyRepository
+                .findByEmergencyId(emergencyId)
+                .orElseThrow(() -> new ControlledException(EMERGENCY_ID_NOT_FOUND));
         return CommonResponse.builder()
                 .code(200)
                 .message(ResponseMessage.SUCCESS)
@@ -37,7 +42,9 @@ public class EmergencyService {
     }
 
     public CommonResponse deleteEmergency(int emergencyId) {
-        Integer index = emergencyRepository.deleteByEmergencyId(emergencyId);
+        Integer index = emergencyRepository
+                .deleteByEmergencyId(emergencyId)
+                .orElseThrow(() -> new ControlledException(EMERGENCY_ID_NOT_FOUND));
         return CommonResponse.builder()
                 .code(200)
                 .message(ResponseMessage.SUCCESS)
@@ -57,7 +64,9 @@ public class EmergencyService {
     }
 
     public CommonResponse getAllEmergency(Integer userId) {
-        List<Emergency> emergencies = emergencyRepository.findByUserId(userId);
+        List<Emergency> emergencies = emergencyRepository
+                .findByUserId(userId)
+                .orElseThrow(() -> new ControlledException(EMERGENCY_USER_ID_NOT_FOUND));
         return CommonResponse.builder()
                 .code(200)
                 .message(ResponseMessage.SUCCESS)
@@ -66,7 +75,10 @@ public class EmergencyService {
     }
 
     public CommonResponse getEmergencyByUserIdAndTelNum(int userId, String telNum) {
-        Optional<Emergency> emergency = emergencyRepository.findByUserIdAndTelNum(userId, telNum);
+        Emergency emergency = emergencyRepository
+                .findByUserIdAndTelNum(userId, telNum)
+                .orElseThrow(() -> new ControlledException(EMERGENCY_USER_ID_TELNUM_NOT_FOUND));
+
         return CommonResponse.builder()
                 .code(200)
                 .message(ResponseMessage.SUCCESS)
