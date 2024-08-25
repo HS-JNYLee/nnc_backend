@@ -22,9 +22,14 @@ public class Emergency {
 
     @Column(name = "user_id", nullable = false)
     @Schema(defaultValue = "1")
-    private Integer userId = 0;
+    private Integer userId;
 
-    @Column(name = "delete_yn", nullable = false, length = 1)
+    @Column(name = "bookmark_yn", columnDefinition = "CHAR(1) DEFAULT 'N'")
+    @Schema(defaultValue = "N")
+    private String bookmarkYn;
+
+    @Column(name = "delete_yn", nullable = false, length = 1, columnDefinition = "CHAR(1) DEFAULT 'N'")
+    @Schema(defaultValue = "N")
     private String deleteYn = "n";
 
     @Column(name = "name", nullable = false)
@@ -36,4 +41,7 @@ public class Emergency {
     @Column(name = "address")
     private String address;
 
+    @Lob
+    @Column(name = "file_data")
+    private byte[] fileData; // 새로 추가된 컬럼
 }
