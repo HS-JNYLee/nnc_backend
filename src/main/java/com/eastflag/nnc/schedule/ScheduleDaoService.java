@@ -135,7 +135,7 @@ public class ScheduleDaoService {
 
             if(getFcm.isPresent()){
                 String token = getFcm.get().getFcmToken();
-                fcmService.postMessageCareGiver(
+                fcmService.postMessage(
                     new MessageWrapper(
                         Message
                             .builder()
