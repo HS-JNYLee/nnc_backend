@@ -25,22 +25,8 @@ public class FcmController {
         return ResponseEntity.ok(fcmService.postMessage(messageWrapper));
     }
 
-    @PostMapping("/pos/{userId}")
-    public ResponseEntity<CommonResponse> sendPos(@PathVariable int userId, @RequestBody MessageWrapper messageWrapper) throws IOException {
-        var anotherUserId = userRelationService.getAnotherUserId(userId);
-        messageWrapper.getMessage().setToken(fcmService.getToken(anotherUserId));
-        return ResponseEntity.ok(fcmService.postMessage(messageWrapper));
-    }
-
-    @PostMapping("/navigation/{userId}")
-    public ResponseEntity<CommonResponse> sendNavigation(@PathVariable int userId, @RequestBody MessageWrapper messageWrapper) throws IOException {
-        var anotherUserId = userRelationService.getAnotherUserId(userId);
-        messageWrapper.getMessage().setToken(fcmService.getToken(anotherUserId));
-        return ResponseEntity.ok(fcmService.postMessage(messageWrapper));
-    }
-
-    @PostMapping("transportRoute/{userId}")
-    public ResponseEntity<CommonResponse> sendTransportRoute(@PathVariable int userId, @RequestBody MessageWrapper messageWrapper) throws IOException {
+    @PostMapping("/send/{userId}")
+    public ResponseEntity<CommonResponse> send(@PathVariable int userId, @RequestBody MessageWrapper messageWrapper) throws IOException {
         var anotherUserId = userRelationService.getAnotherUserId(userId);
         messageWrapper.getMessage().setToken(fcmService.getToken(anotherUserId));
         return ResponseEntity.ok(fcmService.postMessage(messageWrapper));
