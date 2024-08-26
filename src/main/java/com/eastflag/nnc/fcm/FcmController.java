@@ -1,6 +1,9 @@
 package com.eastflag.nnc.fcm;
 
 import com.eastflag.nnc.common.CommonResponse;
+import com.eastflag.nnc.fcm.request.FcmRequest;
+import com.eastflag.nnc.fcm.request.MessageWrapper;
+import com.eastflag.nnc.fcm.request.NavigationRequest;
 import com.eastflag.nnc.user1.userrelation.UserRelationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -24,6 +27,20 @@ public class FcmController {
 
     @PostMapping("/pos/{userId}")
     public ResponseEntity<CommonResponse> sendPos(@PathVariable int userId, @RequestBody MessageWrapper messageWrapper) throws IOException {
+        var anotherUserId = userRelationService.getAnotherUserId(userId);
+        messageWrapper.getMessage().setToken(fcmService.getToken(anotherUserId));
+        return ResponseEntity.ok(fcmService.postMessage(messageWrapper));
+    }
+
+    @PostMapping("/navigation/{userId}")
+    public ResponseEntity<CommonResponse> sendNavigation(@PathVariable int userId, @RequestBody MessageWrapper messageWrapper) throws IOException {
+        var anotherUserId = userRelationService.getAnotherUserId(userId);
+        messageWrapper.getMessage().setToken(fcmService.getToken(anotherUserId));
+        return ResponseEntity.ok(fcmService.postMessage(messageWrapper));
+    }
+
+    @PostMapping("transportRoute/{userId}")
+    public ResponseEntity<CommonResponse> sendTransportRoute(@PathVariable int userId, @RequestBody MessageWrapper messageWrapper) throws IOException {
         var anotherUserId = userRelationService.getAnotherUserId(userId);
         messageWrapper.getMessage().setToken(fcmService.getToken(anotherUserId));
         return ResponseEntity.ok(fcmService.postMessage(messageWrapper));

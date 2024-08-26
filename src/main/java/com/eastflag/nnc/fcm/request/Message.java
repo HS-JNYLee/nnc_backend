@@ -1,5 +1,6 @@
-package com.eastflag.nnc.fcm;
+package com.eastflag.nnc.fcm.request;
 
+import com.eastflag.nnc.fcm.FcmOptions;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 

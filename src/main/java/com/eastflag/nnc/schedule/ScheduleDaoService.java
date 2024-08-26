@@ -2,9 +2,9 @@ package com.eastflag.nnc.schedule;
 
 import com.eastflag.nnc.exception.ControlledException;
 import com.eastflag.nnc.fcm.FcmService;
-import com.eastflag.nnc.fcm.Message;
-import com.eastflag.nnc.fcm.MessageWrapper;
-import com.eastflag.nnc.fcm.Notification;
+import com.eastflag.nnc.fcm.request.Message;
+import com.eastflag.nnc.fcm.request.MessageWrapper;
+import com.eastflag.nnc.fcm.request.Notification;
 import com.eastflag.nnc.fcm.Fcm;
 import com.eastflag.nnc.fcm.FcmRepository;
 import lombok.RequiredArgsConstructor;

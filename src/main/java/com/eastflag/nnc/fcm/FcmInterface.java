@@ -1,5 +1,6 @@
 package com.eastflag.nnc.fcm;
 
+import com.eastflag.nnc.fcm.request.MessageWrapper;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
