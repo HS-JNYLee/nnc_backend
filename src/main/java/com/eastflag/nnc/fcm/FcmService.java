@@ -24,9 +24,8 @@ import static com.eastflag.nnc.exception.errorcode.FcmErrorCode.FCM_USER_ID_NOT_
 @RequiredArgsConstructor
 public class FcmService {
     private final FcmRepository fcmRepository;
-    private final UserRelationService userRelationService;
 
-    public CommonResponse postMessageCareGiver(MessageWrapper message) throws IOException {
+    public CommonResponse postMessage(MessageWrapper message) throws IOException {
         String token = getAccessToken();
         log.info(token);
         token = "Bearer " + token;
@@ -90,5 +89,12 @@ public class FcmService {
         fcmRepository.save(fcm);
 
         return fcm;
+    }
+
+    public String getToken(int anotherUserId) {
+        var fcm = fcmRepository
+                .findByUserId(anotherUserId)
+                .orElseThrow(() -> new ControlledException(FCM_USER_ID_NOT_FOUND));
+        return fcm.getFcmToken();
     }
 }
