@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 @Log4j2
 @RestController
@@ -36,5 +37,11 @@ public class FcmController {
     ) {
         fcmService.updateFcm(request);
         return CommonResponse.builder().code(200).message(request.getUserId()+"(name) token 변경 성공").build();
+    }
+
+    @GetMapping()
+    public CommonResponse getFcm() throws IOException, ExecutionException, InterruptedException {
+        fcmService.postFirestore();
+        return CommonResponse.builder().code(200).message("").build();
     }
 }

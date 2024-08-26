@@ -4,7 +4,9 @@ import com.eastflag.nnc.common.CommonResponse;
 import com.eastflag.nnc.common.ResponseMessage;
 import com.eastflag.nnc.exception.ControlledException;
 import com.eastflag.nnc.user1.userrelation.UserRelationService;
+import com.google.api.core.ApiFuture;
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.firestore.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import okhttp3.ResponseBody;
@@ -15,7 +17,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import static com.eastflag.nnc.exception.errorcode.FcmErrorCode.FCM_USER_ID_NOT_FOUND;
 
@@ -90,5 +95,44 @@ public class FcmService {
         fcmRepository.save(fcm);
 
         return fcm;
+    }
+
+    public void postFirestore() throws IOException, ExecutionException, InterruptedException {
+        // String projectId = System.getenv("FCM_PROJECT_ID");
+        String projectId = "sherpa-72b5a";
+        FirestoreOptions firestoreOptions =
+                FirestoreOptions.getDefaultInstance().toBuilder()
+                        .setProjectId(projectId)
+                        .setCredentials(GoogleCredentials.getApplicationDefault())
+                        .build();
+        Firestore db = firestoreOptions.getService();
+
+        DocumentReference docRef = db.collection("users").document("alovelace");
+        // Add document data  with id "alovelace" using a hashmap
+        Map<String, Object> data = new HashMap<>();
+        data.put("first", "Ada");
+        data.put("last", "Lovelace");
+        data.put("born", 1815);
+        //asynchronously write data
+        ApiFuture<WriteResult> result = docRef.set(data);
+        // ...
+        // result.get() blocks on response
+        System.out.println("Update time : " + result.get().getUpdateTime());
+
+        // asynchronously retrieve all users
+        ApiFuture<QuerySnapshot> query = db.collection("users").get();
+        // ...
+        // query.get() blocks on response
+        QuerySnapshot querySnapshot = query.get();
+        List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
+        for (QueryDocumentSnapshot document : documents) {
+            System.out.println("User: " + document.getId());
+            System.out.println("First: " + document.getString("first"));
+            if (document.contains("middle")) {
+                System.out.println("Middle: " + document.getString("middle"));
+            }
+            System.out.println("Last: " + document.getString("last"));
+            System.out.println("Born: " + document.getLong("born"));
+        }
     }
 }
