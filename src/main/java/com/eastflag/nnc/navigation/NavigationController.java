@@ -3,11 +3,13 @@ package com.eastflag.nnc.navigation;
 import com.eastflag.nnc.common.CommonResponse;
 import com.eastflag.nnc.fcm.FcmService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;
 import retrofit2.http.Path;
 
 import java.io.IOException;
 
+@Log4j2
 @RestController
 @RequestMapping("/api/v1/navigation")
 @RequiredArgsConstructor
@@ -17,6 +19,7 @@ public class NavigationController {
 
     @PostMapping("/create/{caretakerId}")
     public CommonResponse createNavigation(@Path("caretakerId") int caretakerId, @RequestBody String transportRoute) throws IOException {
+        log.info("createNavigation caretakerId: " + caretakerId);
         var navigation = navigationService.create(caretakerId, transportRoute);
         String title = "시작/startNavigation";
         String body = "사용자가 navigation을 시작했습니다.";

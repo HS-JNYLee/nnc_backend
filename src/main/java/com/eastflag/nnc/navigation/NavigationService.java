@@ -3,10 +3,12 @@ package com.eastflag.nnc.navigation;
 import com.eastflag.nnc.exception.ControlledException;
 import com.eastflag.nnc.user1.userrelation.UserRelationService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import static com.eastflag.nnc.exception.errorcode.NavigationException.*;
 
+@Log4j2
 @Service
 @RequiredArgsConstructor
 public class NavigationService {
@@ -14,7 +16,9 @@ public class NavigationService {
     private UserRelationService userRelationService;
 
     public String create(int caretakerId, String transportRoute) {
+        log.info("create caretakerId: " + caretakerId);
         var caregiverId = userRelationService.getAnotherUserId(caretakerId);
+        log.info("create caregiverId: " + caregiverId);
         var navigation = Navigation.builder()
                 .caretakerId(caretakerId)
                 .caregiverId(caregiverId)
