@@ -4,7 +4,11 @@ import com.eastflag.nnc.common.CommonResponse;
 import com.eastflag.nnc.common.ResponseMessage;
 import com.eastflag.nnc.exception.ControlledException;
 import com.eastflag.nnc.fcm.request.FcmRequest;
+import com.eastflag.nnc.fcm.request.Message;
 import com.eastflag.nnc.fcm.request.MessageWrapper;
+import com.eastflag.nnc.fcm.request.Notification;
+import com.eastflag.nnc.user.UserRepository;
+import com.eastflag.nnc.user1.userrelation.UserRelationService;
 import com.google.auth.oauth2.GoogleCredentials;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -25,6 +29,7 @@ import static com.eastflag.nnc.exception.errorcode.FcmErrorCode.FCM_USER_ID_NOT_
 @RequiredArgsConstructor
 public class FcmService {
     private final FcmRepository fcmRepository;
+    private final UserRelationService userRelationService;
 
     public CommonResponse postMessage(MessageWrapper message) throws IOException {
         String token = getAccessToken();
@@ -99,5 +104,25 @@ public class FcmService {
                 .findByUserId(anotherUserId)
                 .orElseThrow(() -> new ControlledException(FCM_USER_ID_NOT_FOUND));
         return fcm.getFcmToken();
+    }
+
+    public void send(int caretakerId, String title, String body) throws IOException {
+        var anotherUserId = userRelationService.getAnotherUserId(caretakerId);
+
+        MessageWrapper message =
+                MessageWrapper.builder()
+                        .message(
+                                Message.builder()
+                                        .token(getToken(anotherUserId))
+                                        .notification(
+                                                Notification.builder()
+                                                        .title(title)
+                                                        .body(body)
+                                                        .build()
+                                        )
+                                        .build()
+                        )
+                        .build();
+        postMessage(message);
     }
 }
