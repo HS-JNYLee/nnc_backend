@@ -16,9 +16,7 @@ public class NavigationService {
     private UserRelationService userRelationService;
 
     public String create(int caretakerId, String transportRoute) {
-        log.info("create caretakerId: " + caretakerId);
         var caregiverId = userRelationService.getAnotherUserId(caretakerId);
-        log.info("create caregiverId: " + caregiverId);
         var navigation = Navigation.builder()
                 .caretakerId(caretakerId)
                 .caregiverId(caregiverId)

@@ -18,8 +18,7 @@ public class NavigationController {
     private final FcmService fcmService;
 
     @PostMapping("/create/{caretakerId}")
-    public CommonResponse createNavigation(@Path("caretakerId") int caretakerId, @RequestBody String transportRoute) throws IOException {
-        log.info("createNavigation caretakerId: " + caretakerId);
+    public CommonResponse createNavigation(@PathVariable("caretakerId") int caretakerId, @RequestBody String transportRoute) throws IOException {
         var navigation = navigationService.create(caretakerId, transportRoute);
         String title = "시작/startNavigation";
         String body = "사용자가 navigation을 시작했습니다.";
@@ -28,13 +27,13 @@ public class NavigationController {
     }
 
     @GetMapping("/transportRoute/{caregiverId}")
-    public CommonResponse getTransportRoute(@Path("caregiverId") int caregiverId) {
+    public CommonResponse getTransportRoute(@PathVariable("caregiverId") int caregiverId) {
         var transportRoute = navigationService.getTransportRoute(caregiverId);
         return CommonResponse.builder().code(200).message("내비게이션 조회 성공").data(transportRoute).build();
     }
 
     @PatchMapping("route/{caretakerId}")
-    public CommonResponse updateRoute(@Path("caretakerId") int caretakerId, @RequestBody String route) throws IOException {
+    public CommonResponse updateRoute(@PathVariable("caretakerId") int caretakerId, @RequestBody String route) throws IOException {
         navigationService.updateRoute(caretakerId, route);
         String title = "재탐색/devateRoute";
         String body = "사용자가 이탈하여 경로를 재탐색했습니다.";
@@ -43,13 +42,13 @@ public class NavigationController {
     }
 
     @GetMapping("/route/{caregiverId}")
-    public CommonResponse getRoute(@Path("caregiverId") int caregiverId) {
+    public CommonResponse getRoute(@PathVariable("caregiverId") int caregiverId) {
         var route = navigationService.getRoute(caregiverId);
         return CommonResponse.builder().code(200).message("경로 조회 성공").data(route).build();
     }
 
     @DeleteMapping("delete/{userId}")
-    public CommonResponse deleteRoute(@Path("userId") int userId) throws IOException {
+    public CommonResponse deleteRoute(@PathVariable("userId") int userId) throws IOException {
         navigationService.deleteNavigation(userId);
         String title = "종료/endNavigation";
         String body = "경로안내를 종료했습니다.";
