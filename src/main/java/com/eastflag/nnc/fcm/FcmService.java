@@ -28,7 +28,9 @@ public class FcmService {
 
     public CommonResponse postMessage(MessageWrapper message) throws IOException {
         String token = getAccessToken();
-        log.info(token);
+        //log.info(token);
+        log.info(message.getMessage().getNotification().getTitle());
+        log.info(message.getMessage().getNotification().getBody());
         token = "Bearer " + token;
         postRetrofit(token, message);
         return CommonResponse.builder()
