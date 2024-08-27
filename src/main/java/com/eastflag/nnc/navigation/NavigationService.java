@@ -12,8 +12,8 @@ import static com.eastflag.nnc.exception.errorcode.NavigationException.*;
 @Service
 @RequiredArgsConstructor
 public class NavigationService {
-    private NavigationRepository navigationRepository;
-    private UserRelationService userRelationService;
+    private final NavigationRepository navigationRepository;
+    private final UserRelationService userRelationService;
 
     public String create(int caretakerId, String transportRoute) {
         var caregiverId = userRelationService.getAnotherUserId(caretakerId);
