@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import retrofit2.http.Body;
 
 @Log4j2
 @RestController
@@ -13,13 +14,19 @@ import org.springframework.web.bind.annotation.*;
 public class ElevatorController {
     private final ElevatorService elevatorService;
 
-    @GetMapping()
-    public ResponseEntity<CommonResponse> getElevators(@RequestParam("stationName") String stationName) {
-        return ResponseEntity.ok(elevatorService.getElevators(stationName));
+    @GetMapping("/{station_name}")
+    public ResponseEntity<CommonResponse> getElevatorLocation(@PathVariable("station_name")String stationName){
+        return ResponseEntity.ok(elevatorService.getElevatorLocation(stationName));
     }
 
     @PostMapping()
-    public ResponseEntity<CommonResponse> addElevator(@RequestBody Elevator elevator) {
-        return ResponseEntity.ok(elevatorService.addElevator(elevator));
+    public ResponseEntity<CommonResponse> addElevatorLocation(@RequestBody Elevator insert){
+        return ResponseEntity.ok(elevatorService.addElevator(insert));
     }
+
+//    @DeleteMapping("{elevator_id}")
+//    public ResponseEntity<CommonResponse> deleteElevator(@PathVariable("elevator_id") int elevId){
+//        return ResponseEntity.ok(elevatorService.deleteElevator(elevId));
+//    }
+
 }

@@ -123,7 +123,7 @@ public class ScheduleDaoService {
         DateTimeFormatter formatting = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         String formattedDateTime = now.format(formatting);
 
-        System.out.println("Schedule System Called!!  :  " + now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        //System.out.println("Schedule System Called!!  :  " + now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 
         List<Schedule> schedules = sdl
                 .findScheduleByDateBegin(formattedDateTime)
