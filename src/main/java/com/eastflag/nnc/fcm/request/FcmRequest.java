@@ -1,4 +1,4 @@
-package com.eastflag.nnc.fcm;
+package com.eastflag.nnc.fcm.request;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -52,6 +52,16 @@ public class EmergencyController {
     public ResponseEntity<CommonResponse> updateEmergency(@RequestBody Emergency emergency) {
         return ResponseEntity.ok(emergencyService.updateEmergency(emergency));
     }
+    
+    /**
+     * 북마크 추가
+     * @param emergencyId
+     * @return
+     */
+    @PatchMapping("{emergency_id}")
+    public ResponseEntity<CommonResponse> updateEmergencyBookmark(@PathVariable("emergency_id") Integer emergencyId) {
+        return ResponseEntity.ok(emergencyService.updateEmergencyByEmergencyId(emergencyId));
+    }
 
     /**
      * 긴급전화 조회 : 사용자 ID, 전회번호
@@ -70,7 +80,11 @@ public class EmergencyController {
      * @return
      */
     @GetMapping("{user_id}/list")
-    public ResponseEntity<CommonResponse> getEmergencyList(@PathVariable("user_id") Integer userId) {
-        return ResponseEntity.ok(emergencyService.getAllEmergency(userId));
+    public ResponseEntity<CommonResponse> getEmergencyList(@PathVariable("user_id") Integer userId, @RequestParam(value = "bookmarkYn", required = false) String bookmarkYn) {
+        if (bookmarkYn != null) {
+            return ResponseEntity.ok(emergencyService.getAllEmergencyByBookmark(userId, bookmarkYn));
+        } else {
+            return ResponseEntity.ok(emergencyService.getAllEmergency(userId));
+        }
     }
 }

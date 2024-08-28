@@ -36,6 +36,7 @@ dependencies {
 	implementation "com.google.code.gson:gson:2.11.0"
 	implementation "com.squareup.retrofit2:retrofit:2.11.0"
 	implementation "com.squareup.retrofit2:converter-gson:2.11.0"
+	implementation "com.talanlabs:avatar-generator:1.1.0"
 
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 	compileOnly 'org.projectlombok:lombok'

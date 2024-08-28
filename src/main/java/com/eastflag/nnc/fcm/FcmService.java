@@ -3,6 +3,11 @@ package com.eastflag.nnc.fcm;
 import com.eastflag.nnc.common.CommonResponse;
 import com.eastflag.nnc.common.ResponseMessage;
 import com.eastflag.nnc.exception.ControlledException;
+import com.eastflag.nnc.fcm.request.FcmRequest;
+import com.eastflag.nnc.fcm.request.Message;
+import com.eastflag.nnc.fcm.request.MessageWrapper;
+import com.eastflag.nnc.fcm.request.Notification;
+import com.eastflag.nnc.user.UserRepository;
 import com.eastflag.nnc.user1.userrelation.UserRelationService;
 import com.google.auth.oauth2.GoogleCredentials;
 import lombok.RequiredArgsConstructor;
@@ -26,9 +31,11 @@ public class FcmService {
     private final FcmRepository fcmRepository;
     private final UserRelationService userRelationService;
 
-    public CommonResponse postMessageCareGiver(MessageWrapper message) throws IOException {
+    public CommonResponse postMessage(MessageWrapper message) throws IOException {
         String token = getAccessToken();
-        log.info(token);
+        //log.info(token);
+        log.info(message.getMessage().getNotification().getTitle());
+        log.info(message.getMessage().getNotification().getBody());
         token = "Bearer " + token;
         postRetrofit(token, message);
         return CommonResponse.builder()
@@ -90,5 +97,32 @@ public class FcmService {
         fcmRepository.save(fcm);
 
         return fcm;
+    }
+
+    public String getToken(int anotherUserId) {
+        var fcm = fcmRepository
+                .findByUserId(anotherUserId)
+                .orElseThrow(() -> new ControlledException(FCM_USER_ID_NOT_FOUND));
+        return fcm.getFcmToken();
+    }
+
+    public void send(int caretakerId, String title, String body) throws IOException {
+        var anotherUserId = userRelationService.getAnotherUserId(caretakerId);
+
+        MessageWrapper message =
+                MessageWrapper.builder()
+                        .message(
+                                Message.builder()
+                                        .token(getToken(anotherUserId))
+                                        .notification(
+                                                Notification.builder()
+                                                        .title(title)
+                                                        .body(body)
+                                                        .build()
+                                        )
+                                        .build()
+                        )
+                        .build();
+        postMessage(message);
     }
 }

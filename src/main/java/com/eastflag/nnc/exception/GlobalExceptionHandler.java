@@ -24,7 +24,7 @@ public class GlobalExceptionHandler {
     private final static Logger LOG = Logger.getGlobal();
 
     @ExceptionHandler(ControlledException.class)
-    protected ResponseEntity handleCustomException(ControlledException ex) {
+    protected ResponseEntity handleControlledException(ControlledException ex) {
         var code = ex.getErrorCode().getStatus();
         var message = ex.getErrorCode().getMessage();
 
