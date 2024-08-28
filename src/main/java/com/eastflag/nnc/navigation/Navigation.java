@@ -16,10 +16,10 @@ public class Navigation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int navigationId;
 
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     private int caretakerId;
 
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     private int caregiverId;
 
     private String transportRoute;
