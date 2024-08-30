@@ -17,11 +17,16 @@ public class NavigationService {
 
     public String create(int caretakerId, String transportRoute) {
         var caregiverId = userRelationService.getAnotherUserId(caretakerId);
-        var navigation = Navigation.builder()
-                .caretakerId(caretakerId)
-                .caregiverId(caregiverId)
-                .transportRoute(transportRoute)
-                .build();
+
+        var navigation = navigationRepository
+                .findByCaretakerId(caretakerId)
+                .orElse(
+                        Navigation.builder()
+                                .caretakerId(caretakerId)
+                                .caregiverId(caregiverId)
+                                .transportRoute(transportRoute)
+                                .build()
+                );
         navigationRepository.save(navigation);
         return transportRoute;
     }
