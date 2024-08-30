@@ -29,4 +29,8 @@ public class Schedule {
 
     @JoinColumn(name = "route_id")
     private int routeId;
+
+    private String address;
+    private Boolean isWholeDay;
+    private String guideDatetime;
 }
