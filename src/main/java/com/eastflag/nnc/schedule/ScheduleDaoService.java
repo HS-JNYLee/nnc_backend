@@ -7,6 +7,7 @@ import com.eastflag.nnc.fcm.request.MessageWrapper;
 import com.eastflag.nnc.fcm.request.Notification;
 import com.eastflag.nnc.fcm.Fcm;
 import com.eastflag.nnc.fcm.FcmRepository;
+import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,6 +55,7 @@ public class ScheduleDaoService {
     private final ScheduleRepository sdl;
     private final FcmRepository fcmRepository;
     private final FcmService fcmService;
+    private Gson gson;
 
     public Schedule saveSchedule(Schedule schedule){
 
@@ -135,6 +137,9 @@ public class ScheduleDaoService {
 
             if(getFcm.isPresent()){
                 String token = getFcm.get().getFcmToken();
+
+                String sendString = "일정/" + res.getTitle();
+
                 fcmService.postMessage(
                     new MessageWrapper(
                         Message
@@ -143,8 +148,8 @@ public class ScheduleDaoService {
                             .notification(
                                 Notification
                                     .builder()
-                                    .title(res.getTitle())
-                                    .body(res.getDescription())
+                                    .title(sendString)
+                                    .body(gson.toJson(res))
                                     .build()
                             ).build()));
             }

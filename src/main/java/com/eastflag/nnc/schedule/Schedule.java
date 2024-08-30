@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.stereotype.Repository;
 
+import java.io.Serializable;
+
 @Repository
 @Entity
 @AllArgsConstructor
