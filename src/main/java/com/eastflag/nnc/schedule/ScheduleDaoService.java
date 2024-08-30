@@ -55,7 +55,7 @@ public class ScheduleDaoService {
     private final ScheduleRepository sdl;
     private final FcmRepository fcmRepository;
     private final FcmService fcmService;
-    private Gson gson;
+    private Gson gson = new Gson();
 
     public Schedule saveSchedule(Schedule schedule){
 
