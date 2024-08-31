@@ -162,7 +162,7 @@ public class ScheduleDaoService {
      * @return dateTime(String)이 DateTime 형식으로 전달되었는지에 대한 참 거짓 
      */
     boolean isValidDateTime(String dateTime) {
-        String pattern = "yyyy-MM-dd HH:mm:ss";
+        String pattern = "yyyy-MM-dd HH:mm";
         
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
