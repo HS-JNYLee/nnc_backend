@@ -34,11 +34,16 @@ public class NavigationService {
     }
 
     public String getTransportRoute(int userId) {
-        var navigation = navigationRepository.findByCaregiverId(userId)
-                .orElse(navigationRepository.findByCaretakerId(userId).orElseThrow(
-                        () -> new ControlledException(CAREGIVER_ID_NOT_FOUND)
-                ));
-        return navigation.getTransportRoute();
+        var navigation = navigationRepository.findByCaregiverId(userId);
+        if(navigation.isPresent()) {
+            return navigation.get().getTransportRoute();
+        } else {
+            var navigation2 = navigationRepository.findByCaretakerId(userId);
+            if(navigation2.isPresent()) {
+                return navigation2.get().getTransportRoute();
+            }
+        }
+        return null;
     }
 
     public void updateRoute(int caretakerId, String route) {
