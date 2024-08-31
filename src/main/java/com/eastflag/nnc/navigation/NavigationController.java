@@ -17,8 +17,8 @@ public class NavigationController {
     private final NavigationService navigationService;
     private final FcmService fcmService;
 
-    @PostMapping("/create/{caretakerId}")
-    public CommonResponse createNavigation(@PathVariable("caretakerId") int caretakerId, @RequestBody String transportRoute) throws IOException {
+    @PostMapping("/create/{userId}")
+    public CommonResponse createNavigation(@PathVariable("userId") int caretakerId, @RequestBody String transportRoute) throws IOException {
         var navigation = navigationService.create(caretakerId, transportRoute);
         String title = "시작/startNavigation";
         String body = "사용자가 navigation을 시작했습니다.";
