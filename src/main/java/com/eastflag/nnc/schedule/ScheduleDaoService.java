@@ -82,6 +82,8 @@ public class ScheduleDaoService {
     public List<Schedule> getScheduleByDateTime(int userID, String dateTime) throws UnsupportedEncodingException {
         dateTime = URLDecoder.decode(dateTime, StandardCharsets.UTF_8);
 
+        dateTime+=":00";
+
         Timestamp check = Timestamp.valueOf(dateTime);
 
         Predicate<Schedule> findDate = sc-> check.getTime() >= Timestamp.valueOf(sc.getDateBegin()).getTime() && check.getTime() <= Timestamp.valueOf(sc.getDateEnd()).getTime();
@@ -90,7 +92,7 @@ public class ScheduleDaoService {
                 .findScheduleByUserId(userID)
                 .orElseThrow(() -> new ControlledException(NO_SCHEDULE));
 
-        target = target.stream().filter(findDate).collect(Collectors.toList());
+        //target = target.stream().filter(findDate).collect(Collectors.toList());
 
         return target;
     }

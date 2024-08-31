@@ -61,7 +61,11 @@ public class ScheduleController {
 
         if(res.isEmpty()) throw new ControlledException(NO_SCHEDULE_IN_DATETIME);
 
-        return CommonResponse.builder().code(200).message("Find Success").data(res).build();
+        return CommonResponse.builder()
+                .code(200)
+                .message("Find Success")
+                .data(res)
+                .build();
     }
 
     @PatchMapping("/modify")
