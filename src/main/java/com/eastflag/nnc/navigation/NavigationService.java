@@ -33,9 +33,11 @@ public class NavigationService {
         return transportRoute;
     }
 
-    public String getTransportRoute(int caregiverId) {
-        var navigation = navigationRepository.findByCaregiverId(caregiverId)
-                .orElseThrow(() -> new ControlledException(CAREGIVER_ID_NOT_FOUND));
+    public String getTransportRoute(int userId) {
+        var navigation = navigationRepository.findByCaregiverId(userId)
+                .orElse(navigationRepository.findByCaretakerId(userId).orElseThrow(
+                        () -> new ControlledException(CAREGIVER_ID_NOT_FOUND)
+                ));
         return navigation.getTransportRoute();
     }
 
