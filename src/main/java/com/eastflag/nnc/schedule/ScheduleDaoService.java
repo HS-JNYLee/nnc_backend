@@ -86,7 +86,7 @@ public class ScheduleDaoService {
 
         Timestamp check = Timestamp.valueOf(dateTime);
 
-        Predicate<Schedule> findDate = sc-> check.getTime() >= Timestamp.valueOf(sc.getDateBegin()).getTime() && check.getTime() <= Timestamp.valueOf(sc.getDateEnd()).getTime();
+        Predicate<Schedule> findDate = sc-> check.getTime() >= Timestamp.valueOf(sc.getDateBegin()+":00").getTime() && check.getTime() <= Timestamp.valueOf(sc.getDateEnd()+":00").getTime();
 
         List<Schedule> target = sdl
                 .findScheduleByUserId(userID)
@@ -127,7 +127,6 @@ public class ScheduleDaoService {
         DateTimeFormatter formatting = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         String formattedDateTime = now.format(formatting);
 
-        //System.out.println("Schedule System Called!!  :  " + now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 
         List<Schedule> schedules = sdl
                 .findScheduleByDateBegin(formattedDateTime)
