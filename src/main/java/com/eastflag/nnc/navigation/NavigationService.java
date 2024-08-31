@@ -26,9 +26,9 @@ public class NavigationService {
                         Navigation.builder()
                                 .caretakerId(caretakerId)
                                 .caregiverId(caregiverId)
-                                .transportRoute(transportRoute)
                                 .build()
                 );
+        navigation.setTransportRoute(transportRoute);
         navigationRepository.save(navigation);
         return transportRoute;
     }

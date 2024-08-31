@@ -18,11 +18,11 @@ public class NavigationController {
     private final FcmService fcmService;
 
     @PostMapping("/create/{userId}")
-    public CommonResponse createNavigation(@PathVariable("userId") int caretakerId, @RequestBody String transportRoute) throws IOException {
-        var navigation = navigationService.create(caretakerId, transportRoute);
+    public CommonResponse createNavigation(@PathVariable("userId") int userId, @RequestBody String transportRoute) throws IOException {
+        var navigation = navigationService.create(userId, transportRoute);
         String title = "시작/startNavigation";
         String body = "사용자가 navigation을 시작했습니다.";
-        fcmService.send(caretakerId, title, body);
+        fcmService.send(userId, title, body);
         return CommonResponse.builder().code(200).message("내비게이션 생성 성공").data(navigation).build();
     }
 
