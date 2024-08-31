@@ -31,6 +31,6 @@ public class Schedule {
     private int routeId;
 
     private String address;
-    private Boolean isWholeDay;
+    private Boolean isWholeday;
     private String guideDatetime;
 }
