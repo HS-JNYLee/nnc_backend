@@ -15,8 +15,10 @@ public class NavigationService {
     private final NavigationRepository navigationRepository;
     private final UserRelationService userRelationService;
 
-    public String create(int caretakerId, String transportRoute) {
-        var caregiverId = userRelationService.getAnotherUserId(caretakerId);
+    public String create(int userId, String transportRoute) {
+        var relation = userRelationService.getUserRelation(userId);
+        var caretakerId= relation.getCaretakerId();
+        var caregiverId = relation.getCaregiverId();
 
         var navigation = navigationRepository
                 .findByCaretakerId(caretakerId)
