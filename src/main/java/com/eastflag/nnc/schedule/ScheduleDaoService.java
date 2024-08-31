@@ -92,7 +92,7 @@ public class ScheduleDaoService {
                 .findScheduleByUserId(userID)
                 .orElseThrow(() -> new ControlledException(NO_SCHEDULE));
 
-        //target = target.stream().filter(findDate).collect(Collectors.toList());
+        target = target.stream().filter(findDate).collect(Collectors.toList());
 
         return target;
     }
