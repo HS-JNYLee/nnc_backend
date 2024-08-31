@@ -82,10 +82,6 @@ public class ScheduleDaoService {
     public List<Schedule> getScheduleByDateTime(int userID, String dateTime) throws UnsupportedEncodingException {
         dateTime = URLDecoder.decode(dateTime, StandardCharsets.UTF_8);
 
-        if(dateTime.contains("+")){
-            throw new UnsupportedEncodingException();
-        }
-
         Timestamp check = Timestamp.valueOf(dateTime);
 
         Predicate<Schedule> findDate = sc-> check.getTime() >= Timestamp.valueOf(sc.getDateBegin()).getTime() && check.getTime() <= Timestamp.valueOf(sc.getDateEnd()).getTime();
