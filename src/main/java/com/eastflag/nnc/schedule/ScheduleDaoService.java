@@ -82,6 +82,10 @@ public class ScheduleDaoService {
     public List<Schedule> getScheduleByDateTime(int userID, String dateTime) throws UnsupportedEncodingException {
         dateTime = URLDecoder.decode(dateTime, StandardCharsets.UTF_8);
 
+        if(!isValidDateTime(dateTime)){
+            throw new UnsupportedEncodingException();
+        }
+
         Timestamp check = Timestamp.valueOf(dateTime);
 
         Predicate<Schedule> findDate = sc-> check.getTime() >= Timestamp.valueOf(sc.getDateBegin()).getTime() && check.getTime() <= Timestamp.valueOf(sc.getDateEnd()).getTime();
@@ -162,7 +166,7 @@ public class ScheduleDaoService {
      * @return dateTime(String)이 DateTime 형식으로 전달되었는지에 대한 참 거짓 
      */
     boolean isValidDateTime(String dateTime) {
-        String pattern = "yyyy-MM-dd HH:mm:ss";
+        String pattern = "yyyy-MM-dd HH:mm";
         
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
