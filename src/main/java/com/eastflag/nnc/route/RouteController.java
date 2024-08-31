@@ -29,4 +29,9 @@ public class RouteController {
     public ResponseEntity<CommonResponse> updateRoute(@PathVariable("route_id") Integer routeId, @RequestBody Route route) {
         return ResponseEntity.ok(routeService.updateRouteById(routeId, route));
     }
+
+    @PostMapping("/delete")
+    public ResponseEntity<CommonResponse> deleteRoute(@RequestBody Route route) {
+        return ResponseEntity.ok(routeService.deleteRoute(route));
+    }
 }

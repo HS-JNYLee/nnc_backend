@@ -55,6 +55,15 @@ public class RouteService {
                 .build();
     }
 
+    public CommonResponse deleteRoute(Route route){
+        routeRepository.delete(route);
+        return CommonResponse.builder()
+                .code(200)
+                .message(ResponseMessage.SUCCESS)
+                .data(route)
+                .build();
+    }
+
     public CommonResponse updateRouteById(Integer route_id, Route route){
         Optional<Route> routeOptional = routeRepository.findByRouteId(route_id);
         if(routeOptional.isPresent())
