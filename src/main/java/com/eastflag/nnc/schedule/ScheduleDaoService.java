@@ -82,7 +82,7 @@ public class ScheduleDaoService {
     public List<Schedule> getScheduleByDateTime(int userID, String dateTime) throws UnsupportedEncodingException {
         dateTime = URLDecoder.decode(dateTime, StandardCharsets.UTF_8);
 
-        if(!isValidDateTime(dateTime)){
+        if(dateTime.contains("+")){
             throw new UnsupportedEncodingException();
         }
 
