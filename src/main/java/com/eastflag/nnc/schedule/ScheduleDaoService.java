@@ -7,6 +7,9 @@ import com.eastflag.nnc.fcm.request.MessageWrapper;
 import com.eastflag.nnc.fcm.request.Notification;
 import com.eastflag.nnc.fcm.Fcm;
 import com.eastflag.nnc.fcm.FcmRepository;
+import com.eastflag.nnc.user.User;
+import com.eastflag.nnc.user1.userrelation.UserRelation;
+import com.eastflag.nnc.user1.userrelation.UserRelationService;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -57,6 +60,7 @@ public class ScheduleDaoService {
     private final FcmRepository fcmRepository;
     private final FcmService fcmService;
     private Gson gson = new Gson();
+    private final UserRelationService userRelationService;
 
     public Schedule saveSchedule(Schedule schedule){
         System.out.println("schedule : " + schedule.getIsWholeday().toString());
@@ -145,10 +149,17 @@ public class ScheduleDaoService {
 
         for(Schedule res:schedules){
             log.info("userID : " + res.getUserId() + ", Title : " +  res.getTitle());
-            Optional<Fcm> getFcm = fcmRepository.findByUserId(res.getUserId());
+            // Optional<Fcm> getFcm = fcmRepository.findByUserId(res.getUserId());
+            var userRelation = userRelationService.getUserRelation(res.getUserId());
 
-            if(getFcm.isPresent()){
-                String token = getFcm.get().getFcmToken();
+            var careGiver = userRelation.getCaregiverId();
+            var careTaker = userRelation.getCaretakerId();
+
+            Optional<Fcm> getCareGiverFcm = fcmRepository.findByUserId(careGiver);
+            Optional<Fcm> getCareTakerFcm = fcmRepository.findByUserId(careTaker);
+
+            if(getCareGiverFcm.isPresent()){
+                String token = getCareGiverFcm.get().getFcmToken();
 
                 String sendString = "일정/" + res.getTitle();
 
@@ -165,6 +176,26 @@ public class ScheduleDaoService {
                                     .build()
                             ).build()));
             }
+
+            if(getCareTakerFcm.isPresent()){
+                String token = getCareTakerFcm.get().getFcmToken();
+
+                String sendString = "일정/" + res.getTitle();
+
+                fcmService.postMessage(
+                    new MessageWrapper(
+                        Message
+                            .builder()
+                            .token(token)
+                            .notification(
+                                Notification
+                                    .builder()
+                                    .title(sendString)
+                                        .body(gson.toJson(res))
+                                        .build()
+                                ).build()));
+            }
+
         }
     }
 
