@@ -59,7 +59,7 @@ public class ScheduleDaoService {
     private Gson gson = new Gson();
 
     public Schedule saveSchedule(Schedule schedule){
-        System.out.println("schedule : " + schedule.toString());
+        System.out.println("schedule : " + schedule.getWholeday().toString());
 
         sdl.save(schedule);
 
