@@ -42,16 +42,10 @@ public class RouteService {
     }
 
     public CommonResponse deleteRouteById(Integer route_id){
-        Optional<Route> route = routeRepository.deleteByRouteId(route_id);
-        String message = "";
-        if (route.isPresent())
-            message = ResponseMessage.SUCCESS;
-        else
-            message = "Route : " + route_id + " - does not exist";
+        routeRepository.deleteByRouteId(route_id);
         return CommonResponse.builder()
                 .code(200)
-                .message(message)
-                .data(route)
+                .message(ResponseMessage.SUCCESS)
                 .build();
     }
 
