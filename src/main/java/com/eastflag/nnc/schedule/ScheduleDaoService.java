@@ -121,7 +121,7 @@ public class ScheduleDaoService {
         target.setDateEnd(schedule.getDateEnd());
         target.setRouteId(schedule.getRouteId());
         target.setAddress(schedule.getAddress());
-        target.setWholeday(schedule.isWholeday());
+        target.setWholeday(schedule.getWholeday());
         target.setGuideDatetime(schedule.getGuideDatetime());
 
         sdl.save(target);
