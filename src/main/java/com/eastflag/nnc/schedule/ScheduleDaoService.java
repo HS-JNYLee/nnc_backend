@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 import java.sql.Timestamp ;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -82,11 +83,15 @@ public class ScheduleDaoService {
     public List<Schedule> getScheduleByDateTime(int userID, String dateTime) throws UnsupportedEncodingException {
         dateTime = URLDecoder.decode(dateTime, StandardCharsets.UTF_8);
 
-        dateTime+=":00";
+        //dateTime+=":00";
 
-        Timestamp check = Timestamp.valueOf(dateTime);
+        LocalDate checkDate = LocalDate.parse(dateTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 
-        Predicate<Schedule> findDate = sc-> check.getTime() >= Timestamp.valueOf(sc.getDateBegin()+":00").getTime() && check.getTime() <= Timestamp.valueOf(sc.getDateEnd()+":00").getTime();
+        Predicate<Schedule> findDate = sc-> {
+            LocalDate targetDate = LocalDate.parse(sc.getDateBegin(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+
+            return targetDate.getYear()==checkDate.getYear() && targetDate.getMonth()==checkDate.getMonth() && targetDate.getDayOfMonth()==checkDate.getDayOfMonth();
+        };
 
         List<Schedule> target = sdl
                 .findScheduleByUserId(userID)
