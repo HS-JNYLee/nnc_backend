@@ -2,6 +2,7 @@ package com.eastflag.nnc.schedule;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.type.descriptor.jdbc.TinyIntJdbcType;
 import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
@@ -31,6 +32,6 @@ public class Schedule {
     private int routeId;
 
     private String address;
-    private Boolean isWholeday;
+    private Integer isWholeday;
     private String guideDatetime;
 }
