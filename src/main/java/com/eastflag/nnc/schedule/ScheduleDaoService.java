@@ -7,6 +7,8 @@ import com.eastflag.nnc.fcm.request.MessageWrapper;
 import com.eastflag.nnc.fcm.request.Notification;
 import com.eastflag.nnc.fcm.Fcm;
 import com.eastflag.nnc.fcm.FcmRepository;
+import com.eastflag.nnc.route.Route;
+import com.eastflag.nnc.route.RouteRepository;
 import com.eastflag.nnc.user.User;
 import com.eastflag.nnc.user1.userrelation.UserRelation;
 import com.eastflag.nnc.user1.userrelation.UserRelationService;
@@ -61,6 +63,7 @@ public class ScheduleDaoService {
     private final FcmService fcmService;
     private Gson gson = new Gson();
     private final UserRelationService userRelationService;
+    private final RouteRepository routeRepository;
 
     public Schedule saveSchedule(Schedule schedule){
         System.out.println("schedule : " + schedule.getIsWholeday().toString());
@@ -162,6 +165,26 @@ public class ScheduleDaoService {
                 String token = getCareGiverFcm.get().getFcmToken();
 
                 String sendString = "일정/" + res.getTitle();
+
+                // 현재의 경우 사용자 한테만 경로 안내가 시작됨
+                if(res.getRouteId()!=0){
+                    var route = routeRepository.findByRouteId(res.getRouteId());
+                    sendString = "예약경로/" + res.getTitle();
+
+                    fcmService.postMessage(
+                        new MessageWrapper(
+                            Message
+                                .builder()
+                                .token(token)
+                                .notification(
+                                    Notification
+                                        .builder()
+                                        .title(sendString)
+                                        .body("" + route.get().getLocation().getLatitude()+ ","+ route.get().getLocation().getLongitude())
+                                        .build()
+                                ).build()));
+                    continue;
+                }
 
                 fcmService.postMessage(
                     new MessageWrapper(
