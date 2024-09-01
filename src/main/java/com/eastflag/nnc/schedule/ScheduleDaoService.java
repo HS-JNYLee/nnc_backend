@@ -59,7 +59,7 @@ public class ScheduleDaoService {
     private Gson gson = new Gson();
 
     public Schedule saveSchedule(Schedule schedule){
-        System.out.println("schedule : " + schedule.getWholeday().toString());
+        System.out.println("schedule : " + schedule.getIsWholeday().toString());
 
         sdl.save(schedule);
 
@@ -114,7 +114,7 @@ public class ScheduleDaoService {
 
     //schedule 수정
     public Schedule modify(Schedule schedule) {
-        System.out.println("schedule : " + schedule.toString());
+        System.out.println("schedule : " + schedule.getIsWholeday().toString());
         var target = findScheduleByScheduleID(schedule.getScheduleId());
 
         target.setTitle(schedule.getTitle());
@@ -123,7 +123,7 @@ public class ScheduleDaoService {
         target.setDateEnd(schedule.getDateEnd());
         target.setRouteId(schedule.getRouteId());
         target.setAddress(schedule.getAddress());
-        target.setWholeday(schedule.getWholeday());
+        target.setIsWholeday(schedule.getIsWholeday());
         target.setGuideDatetime(schedule.getGuideDatetime());
 
         sdl.save(target);
