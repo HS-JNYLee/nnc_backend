@@ -2,6 +2,7 @@ package com.eastflag.nnc.route;
 
 import com.eastflag.nnc.common.CommonResponse;
 import com.eastflag.nnc.common.ResponseMessage;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +42,7 @@ public class RouteService {
                 .build();
     }
 
+    @Transactional
     public CommonResponse deleteRouteById(Integer route_id){
         routeRepository.deleteByRouteId(route_id);
         return CommonResponse.builder()
