@@ -65,10 +65,12 @@ public class RouteService {
     }
 
     public CommonResponse updateRouteById(Integer route_id, Route route){
-        Optional<Route> routeOptional = routeRepository.findByRouteId(route_id);
-        if(routeOptional.isPresent())
-            routeRepository.deleteByRouteId(route_id);
-        routeRepository.save(route);
+        Optional<Route> originalRoute = routeRepository.findByRouteId(route_id);
+        if(originalRoute.isPresent()){
+            originalRoute.get().setLocation(route.getLocation());
+            originalRoute.get().setCron(route.getCron());
+            routeRepository.save(route);
+        }
         return CommonResponse.builder()
                 .code(200)
                 .message(ResponseMessage.SUCCESS)
