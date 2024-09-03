@@ -21,9 +21,9 @@ docker compose down
 2-2. Docker Container 지우기
      많이 만들면, 용량 없어서 주기적으로 지워야 된다.
 
-     ~~~command
-     docker system prune -a
-     ~~~
+~~~command
+docker system prune -a
+~~~
 
 3. 프로젝트 빌드
 
