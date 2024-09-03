@@ -18,7 +18,7 @@ EC2 코드 적용 방법
 docker compose down
 ~~~
 
-* 2. Docker Image 지우기
+2-2. Docker Container 지우기
      많이 만들면, 용량 없어서 주기적으로 지워야 된다.
 
      ~~~command
