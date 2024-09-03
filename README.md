@@ -24,7 +24,6 @@ docker compose down
    
  ~~~command
  sh gradlew clean build
- docker build -t nnc_backend .
  ~~~
 
 4. Docker Container 올리기
@@ -32,7 +31,7 @@ docker compose down
 * Docker Container를 올린다.
 
 ~~~command
-docker compose up --build
+docker compose up --build -d
 ~~~
 
 5. Docker Container 및 Swagger 정상 작동 여부 확인
