@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.List;
 
-import static com.eastflag.nnc.exception.errorcode.ElevatorException.*;
+import static com.eastflag.nnc.exception.errorcode.ElevatorErrorCode.*;
 
 @Service
 public class ElevatorService {

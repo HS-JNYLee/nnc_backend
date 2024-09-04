@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import static com.eastflag.nnc.exception.errorcode.BasicErrorCode.NOT_DATETIME;
-import static com.eastflag.nnc.exception.errorcode.ScheduleException.*;
+import static com.eastflag.nnc.exception.errorcode.ScheduleErrorCode.*;
 
 @RestController
 @RequestMapping("/api/v1/schedules")
