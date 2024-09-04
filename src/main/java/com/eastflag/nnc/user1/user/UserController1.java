@@ -28,7 +28,7 @@ public class UserController1 {
     /**
      * User1 생성
      *
-     * @param request 생성할 유저의 정보
+     * @param request 생성할 이용자의 정보
      * @return 성공: 200
      */
     @PostMapping("/createUser")

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
@@ -28,20 +29,6 @@ public class GlobalExceptionHandler {
         var code = ex.getErrorCode().getStatus();
         var message = ex.getErrorCode().getMessage();
 
-        log.error("error code: " + code + " message: " + message);
-        log.error("explain: " + ex.getMessage());
-
-        LOG.info("error code: " + code + " message: " + message);
-        LOG.info("explain: " + ex.getMessage());
-        return ResponseEntity.ok(CommonResponse.builder().code(code).message(message).build());
-    }
-
-    @ExceptionHandler(Exception.class)
-    protected ResponseEntity handleServerException(Exception ex) {
-        var code = INTERNAL_SERVER_ERROR.getStatus();
-        var message = INTERNAL_SERVER_ERROR.getMessage();
-
-        log.error("----- 예기치 못한 오류 -----");
         log.error("error code: " + code + " message: " + message);
         log.error("explain: " + ex.getMessage());
 
@@ -98,5 +85,19 @@ public class GlobalExceptionHandler {
         LOG.info("SQLIntegrityConstraintViolationException: " + ex.getMessage());
 
         return ResponseEntity.ok(CommonResponse.builder().code(500).message(ex.getMessage()).build());
+    }
+
+    @ExceptionHandler(Exception.class)
+    protected ResponseEntity handleServerException(Exception ex) {
+        var code = INTERNAL_SERVER_ERROR.getStatus();
+        var message = INTERNAL_SERVER_ERROR.getMessage();
+
+        log.error("----- 예기치 못한 오류 -----");
+        log.error("error code: " + code + " message: " + message);
+        log.error("explain: " + ex.getMessage());
+
+        LOG.info("error code: " + code + " message: " + message);
+        LOG.info("explain: " + ex.getMessage());
+        return ResponseEntity.ok(CommonResponse.builder().code(code).message(message).build());
     }
 }
