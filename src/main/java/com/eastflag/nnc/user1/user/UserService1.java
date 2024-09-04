@@ -30,7 +30,7 @@ public class UserService1 {
     private final FcmService fcmService;
 
     /**
-     * 유저 Entity를 DataBase에서 생성하는 함수
+     * 유저 Entity를 DataBase에 생성하는 함수
      *
      * @param request UserController1.createUser API에서 가져온 유저 생성 정보
      * @return 생성된 유저 Entity

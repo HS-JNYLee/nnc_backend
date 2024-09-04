@@ -8,5 +8,4 @@ public interface BasicErrorCode {
     ErrorMessage INTERNAL_SERVER_ERROR = new ErrorMessage(500, "서버 에러");
     ErrorMessage UNSUPPORTED_ENCODING = new ErrorMessage(415, "잘못된 형식으로 인코딩이 되었습니다.");
     ErrorMessage NOT_DATETIME = new ErrorMessage(1001, "DateTime 형식이 아닙니다.");
-    ErrorMessage FCM_IO_EXCEPTION = new ErrorMessage(502, "메세지를 FCM에 전달하지 못함");
 }

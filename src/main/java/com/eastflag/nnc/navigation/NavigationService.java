@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 
 import static com.eastflag.nnc.exception.errorcode.NavigationException.*;
 
+/**
+ * 경로 안내 관리 Service 클래스
+ *
+ */
 @Log4j2
 @Service
 @RequiredArgsConstructor
@@ -15,6 +19,15 @@ public class NavigationService {
     private final NavigationRepository navigationRepository;
     private final UserRelationService userRelationService;
 
+    /**
+     * Navigation Entity를 DataBase에 생성하는 함수
+     * ※ 이미 경로가 존재한다면, 해당 navigation 레코드를 수정하고, 경로가 없다면 새로 생성한다.
+     *
+     * @param userId 생성할 이용자의 정보
+     * @param transportRoute 경로에 대한 정보가 표시되는 객체 Json
+     *
+     * @return 생성된 navigation Entity
+     */
     public String create(int userId, String transportRoute) {
         var relation = userRelationService.getUserRelation(userId);
         var caretakerId= relation.getCaretakerId();
@@ -34,16 +47,11 @@ public class NavigationService {
     }
 
     public String getTransportRoute(int userId) {
-        var navigation = navigationRepository.findByCaregiverId(userId);
-        if(navigation.isPresent()) {
-            return navigation.get().getTransportRoute();
-        } else {
-            var navigation2 = navigationRepository.findByCaretakerId(userId);
-            if(navigation2.isPresent()) {
-                return navigation2.get().getTransportRoute();
-            }
-        }
-        return null;
+        var navigation = navigationRepository.findByCaregiverId(userId)
+                .orElseGet(() -> navigationRepository.findByCaretakerId(userId)
+                .orElseThrow(() -> new ControlledException(RELATION_ID_NOT_FOUND)));
+
+        return navigation.getTransportRoute();
     }
 
     public void updateRoute(int caretakerId, String route) {
