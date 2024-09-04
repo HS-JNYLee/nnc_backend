@@ -7,6 +7,11 @@ import com.eastflag.nnc.fcm.request.MessageWrapper;
 import com.eastflag.nnc.fcm.request.Notification;
 import com.eastflag.nnc.fcm.Fcm;
 import com.eastflag.nnc.fcm.FcmRepository;
+import com.eastflag.nnc.route.Route;
+import com.eastflag.nnc.route.RouteRepository;
+import com.eastflag.nnc.user.User;
+import com.eastflag.nnc.user1.userrelation.UserRelation;
+import com.eastflag.nnc.user1.userrelation.UserRelationService;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -19,6 +24,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 import java.sql.Timestamp ;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -56,8 +62,11 @@ public class ScheduleDaoService {
     private final FcmRepository fcmRepository;
     private final FcmService fcmService;
     private Gson gson = new Gson();
+    private final UserRelationService userRelationService;
+    private final RouteRepository routeRepository;
 
     public Schedule saveSchedule(Schedule schedule){
+        System.out.println("schedule : " + schedule.getIsWholeday().toString());
 
         sdl.save(schedule);
 
@@ -82,9 +91,15 @@ public class ScheduleDaoService {
     public List<Schedule> getScheduleByDateTime(int userID, String dateTime) throws UnsupportedEncodingException {
         dateTime = URLDecoder.decode(dateTime, StandardCharsets.UTF_8);
 
-        Timestamp check = Timestamp.valueOf(dateTime);
+        //dateTime+=":00";
 
-        Predicate<Schedule> findDate = sc-> check.getTime() >= Timestamp.valueOf(sc.getDateBegin()).getTime() && check.getTime() <= Timestamp.valueOf(sc.getDateEnd()).getTime();
+        LocalDate checkDate = LocalDate.parse(dateTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+
+        Predicate<Schedule> findDate = sc-> {
+            LocalDate targetDate = LocalDate.parse(sc.getDateBegin(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+
+            return targetDate.getYear()==checkDate.getYear() && targetDate.getMonth()==checkDate.getMonth() && targetDate.getDayOfMonth()==checkDate.getDayOfMonth();
+        };
 
         List<Schedule> target = sdl
                 .findScheduleByUserId(userID)
@@ -106,12 +121,17 @@ public class ScheduleDaoService {
 
     //schedule 수정
     public Schedule modify(Schedule schedule) {
+        System.out.println("schedule : " + schedule.getIsWholeday().toString());
         var target = findScheduleByScheduleID(schedule.getScheduleId());
 
         target.setTitle(schedule.getTitle());
         target.setDescription(schedule.getDescription());
         target.setDateBegin(schedule.getDateBegin());
         target.setDateEnd(schedule.getDateEnd());
+        target.setRouteId(schedule.getRouteId());
+        target.setAddress(schedule.getAddress());
+        target.setIsWholeday(schedule.getIsWholeday());
+        target.setGuideDatetime(schedule.getGuideDatetime());
 
         sdl.save(target);
 
@@ -125,7 +145,6 @@ public class ScheduleDaoService {
         DateTimeFormatter formatting = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         String formattedDateTime = now.format(formatting);
 
-        //System.out.println("Schedule System Called!!  :  " + now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 
         List<Schedule> schedules = sdl
                 .findScheduleByDateBegin(formattedDateTime)
@@ -133,12 +152,39 @@ public class ScheduleDaoService {
 
         for(Schedule res:schedules){
             log.info("userID : " + res.getUserId() + ", Title : " +  res.getTitle());
-            Optional<Fcm> getFcm = fcmRepository.findByUserId(res.getUserId());
+            // Optional<Fcm> getFcm = fcmRepository.findByUserId(res.getUserId());
+            var userRelation = userRelationService.getUserRelation(res.getUserId());
 
-            if(getFcm.isPresent()){
-                String token = getFcm.get().getFcmToken();
+            var careGiver = userRelation.getCaregiverId();
+            var careTaker = userRelation.getCaretakerId();
+
+            Optional<Fcm> getCareGiverFcm = fcmRepository.findByUserId(careGiver);
+            Optional<Fcm> getCareTakerFcm = fcmRepository.findByUserId(careTaker);
+
+            if(getCareGiverFcm.isPresent()){
+                String token = getCareGiverFcm.get().getFcmToken();
 
                 String sendString = "일정/" + res.getTitle();
+
+                // 현재의 경우 사용자 한테만 경로 안내가 시작됨
+                if(res.getRouteId()!=0){
+                    var route = routeRepository.findByRouteId(res.getRouteId());
+                    sendString = "예약경로/" + res.getTitle();
+
+                    fcmService.postMessage(
+                        new MessageWrapper(
+                            Message
+                                .builder()
+                                .token(token)
+                                .notification(
+                                    Notification
+                                        .builder()
+                                        .title(sendString)
+                                        .body("" + route.get().getLocation().getLatitude()+ ","+ route.get().getLocation().getLongitude())
+                                        .build()
+                                ).build()));
+                    continue;
+                }
 
                 fcmService.postMessage(
                     new MessageWrapper(
@@ -153,6 +199,26 @@ public class ScheduleDaoService {
                                     .build()
                             ).build()));
             }
+
+            if(getCareTakerFcm.isPresent()){
+                String token = getCareTakerFcm.get().getFcmToken();
+
+                String sendString = "일정/" + res.getTitle();
+
+                fcmService.postMessage(
+                    new MessageWrapper(
+                        Message
+                            .builder()
+                            .token(token)
+                            .notification(
+                                Notification
+                                    .builder()
+                                    .title(sendString)
+                                        .body(gson.toJson(res))
+                                        .build()
+                                ).build()));
+            }
+
         }
     }
 
@@ -162,7 +228,7 @@ public class ScheduleDaoService {
      * @return dateTime(String)이 DateTime 형식으로 전달되었는지에 대한 참 거짓 
      */
     boolean isValidDateTime(String dateTime) {
-        String pattern = "yyyy-MM-dd HH:mm:ss";
+        String pattern = "yyyy-MM-dd HH:mm";
         
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);

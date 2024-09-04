@@ -18,13 +18,19 @@ EC2 코드 적용 방법
 docker compose down
 ~~~
 
+2-2. Docker Container 지우기
+     많이 만들면, 용량 없어서 주기적으로 지워야 된다.
+
+~~~command
+docker system prune -a
+~~~
+
 3. 프로젝트 빌드
 
  * 프로젝트 jar 파일을 만들어준다.
    
  ~~~command
  sh gradlew clean build
- docker build -t nnc_backend .
  ~~~
 
 4. Docker Container 올리기
@@ -32,7 +38,7 @@ docker compose down
 * Docker Container를 올린다.
 
 ~~~command
-docker compose up --build
+docker compose up --build -d
 ~~~
 
 5. Docker Container 및 Swagger 정상 작동 여부 확인

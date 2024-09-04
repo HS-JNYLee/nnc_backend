@@ -16,9 +16,9 @@ public class NavigationService {
     private final UserRelationService userRelationService;
 
     public String create(int userId, String transportRoute) {
-        var userRelation = userRelationService.getUserRelation(userId);
-        var caregiverId = userRelation.getCaregiverId();
-        var caretakerId = userRelation.getCaretakerId();
+        var relation = userRelationService.getUserRelation(userId);
+        var caretakerId= relation.getCaretakerId();
+        var caregiverId = relation.getCaregiverId();
 
         var navigation = navigationRepository
                 .findByCaretakerId(caretakerId)
@@ -26,19 +26,24 @@ public class NavigationService {
                         Navigation.builder()
                                 .caretakerId(caretakerId)
                                 .caregiverId(caregiverId)
-                                .transportRoute(transportRoute)
                                 .build()
                 );
+        navigation.setTransportRoute(transportRoute);
         navigationRepository.save(navigation);
         return transportRoute;
     }
 
-    public String getTransportRoute(int caregiverId) {
-        var navigation = navigationRepository.findByCaregiverId(caregiverId)
-                .orElse(navigationRepository.findByCaretakerId(caregiverId).orElseThrow(
-                        () -> new ControlledException(CAREGIVER_ID_NOT_FOUND)
-                ));
-        return navigation.getTransportRoute();
+    public String getTransportRoute(int userId) {
+        var navigation = navigationRepository.findByCaregiverId(userId);
+        if(navigation.isPresent()) {
+            return navigation.get().getTransportRoute();
+        } else {
+            var navigation2 = navigationRepository.findByCaretakerId(userId);
+            if(navigation2.isPresent()) {
+                return navigation2.get().getTransportRoute();
+            }
+        }
+        return null;
     }
 
     public void updateRoute(int caretakerId, String route) {

@@ -2,6 +2,7 @@ package com.eastflag.nnc.schedule;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.type.descriptor.jdbc.TinyIntJdbcType;
 import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;

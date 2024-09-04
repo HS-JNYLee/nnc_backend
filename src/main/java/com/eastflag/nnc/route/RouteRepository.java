@@ -9,6 +9,6 @@ import java.util.Optional;
 
 public interface RouteRepository extends JpaRepository<Route, Long> {
     Optional<Route> findByRouteId(@Param("route_id") Integer routeId);
-    Optional<Route> deleteByRouteId(@Param("route_id") Integer routeId);
+    void deleteByRouteId(@Param("route_id") Integer routeId);
     void delete(@NotNull @Body Route route);
 }

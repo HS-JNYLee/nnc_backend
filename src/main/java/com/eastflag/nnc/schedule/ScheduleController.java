@@ -55,12 +55,17 @@ public class ScheduleController {
 
         // TODO: dateTime에 대한 서식 에러처리가 되지 않아서 추가로 핸들링 해야한다.
         if(!scheduleDaoService.isValidDateTime(dateTime)) throw new ControlledException(NOT_DATETIME);
+
         dateTime = URLDecoder.decode(dateTime, StandardCharsets.UTF_8);
         res = this.scheduleDaoService.getScheduleByDateTime(userid, dateTime);
 
         if(res.isEmpty()) throw new ControlledException(NO_SCHEDULE_IN_DATETIME);
 
-        return CommonResponse.builder().code(200).message("Find Success").data(res).build();
+        return CommonResponse.builder()
+                .code(200)
+                .message("Find Success")
+                .data(res)
+                .build();
     }
 
     @PatchMapping("/modify")
