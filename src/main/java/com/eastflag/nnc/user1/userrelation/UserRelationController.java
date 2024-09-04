@@ -20,7 +20,8 @@ public class UserRelationController {
      * UserRelation 정보를 전달한다.
      *
      * @param userId 전달받을 User1 Id
-     * @return 성공: 200
+     * @return 성공: 200 / 실패: 404
+     * # RELATION_USER_ID_NOT_FOUND
      */
     @GetMapping("/getUserRelation/{userId}")
     public CommonResponse getUserRelation(
@@ -35,7 +36,8 @@ public class UserRelationController {
      * ※ 관계를 변경시키는 주체는 무조건 CareTaker이다.
      *
      * @param request 수정할 user_relation 정보
-     * @return 성공: 200
+     * @return 성공: 200 / 실패: 404
+     * # CARETAKER_ID_NOT_FOUND
      */
     @PatchMapping("/updateUserRelation")
     public CommonResponse updateUserRelation(

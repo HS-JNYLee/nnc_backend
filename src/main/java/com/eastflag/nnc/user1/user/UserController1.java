@@ -27,9 +27,9 @@ public class UserController1 {
 
     /**
      * User1 생성
-     *
      * @param request 생성할 이용자의 정보
-     * @return 성공: 200
+     *
+     * @return 성공: 200 / 실패:
      */
     @PostMapping("/createUser")
     public CommonResponse createUser(
@@ -41,9 +41,11 @@ public class UserController1 {
 
     /**
      * User1 삭제
-     *
      * @param userId 삭제할 User1 Id
-     * @return 성공: 200
+     *
+     * @return 성공: 200, 202 / 실패: 404
+     * # CAREGIVER_IS_NOT_DELETE
+     * # USER_ID_NOT_FOUND
      */
     @DeleteMapping("/deleteUser/{userId}")
     public CommonResponse deleteUser(
@@ -55,9 +57,10 @@ public class UserController1 {
 
     /**
      * User1과 UserAccount 정보 업데이트
-     *
      * @param request 수정할 user1, user_account 정보
-     * @return 성공: 200
+     *
+     * @return 성공: 200 / 실패: 404
+     * # USER_ID_NOT_FOUND
      */
     @PatchMapping("/updateUser")
     public CommonResponse updateUser(
@@ -69,9 +72,11 @@ public class UserController1 {
 
     /**
      * UserSetting 정보 업데이트
-     *
      * @param request 수정할 userSetting 정보
-     * @return 성공: 200
+     *
+     * @return 성공: 200 / 실패: 404
+     * # USER_ID_NOT_FOUND
+     * # USER_SETTING_ID_NOT_FOUND
      */
     @PatchMapping("/updateUserSetting")
     public CommonResponse updateUserSetting(
@@ -84,9 +89,10 @@ public class UserController1 {
 
     /**
      * User1 정보 전달
-     *
      * @param userId 전달받을 User1 Id
-     * @return 성공: 200
+     *
+     * @return 성공: 200 / 실패: 404
+     * # USER_ID_NOT_FOUND
      */
     @GetMapping("/getUser/{userId}")
     public CommonResponse getUser(
@@ -98,9 +104,11 @@ public class UserController1 {
 
     /**
      * UserAccount 정보 전달
-     *
      * @param userId 전달받을 User1 Id
-     * @return 성공: 200
+     *
+     * @return 성공: 200 / 실패: 404
+     * # USER_ID_NOT_FOUND
+     * # USER_ACCOUNT_ID_NOT_FOUND
      */
     @GetMapping("/getUserAccount/{userId}")
     public CommonResponse getUserAccount(
@@ -115,7 +123,10 @@ public class UserController1 {
      * UserAccount 정보 전달
      *
      * @param caregiverEmail 인증할 보호자 Id
-     * @return 성공: 200
+     * @return 성공: 200, 201 / 실패: 404, 421
+     * # NOT_CAREGIVER
+     * # USER_ACCOUNT_NOT_FOUND
+     * # USER_ACCOUNT_EMAIL_NOT_FOUND
      */
     @GetMapping("/getLinkPermission/{caregiverEmail}")
     public CommonResponse getLinkPermission(
@@ -137,7 +148,9 @@ public class UserController1 {
      * UserSetting 정보를 전달한다.
      *
      * @param userId 전달받을 User1 Id
-     * @return 성공: 200
+     * @return 성공: 200 / 실패: 404
+     * # USER_ID_NOT_FOUND
+     * # USER_SETTING_ID_NOT_FOUND
      */
     @GetMapping("/getUserSetting/{userId}")
     public CommonResponse getUserSetting(
@@ -153,6 +166,8 @@ public class UserController1 {
      * 
      * @param request 로그인할 User1의 email, password
      * @return 로그인 된 User1 객체 ※ 로그인 실패 시 401 코드와 함께 깡통 객체 전달
+     * 성공: 200 / 실패: 404
+     *  # USER_ACCOUNT_NOT_FOUND
      */
     @PostMapping("/login")
     public CommonResponse login(@RequestBody LoginRequest request) {
@@ -166,7 +181,8 @@ public class UserController1 {
      * 계정 생성 전화번호 인증
      *
      * @param telNum 존재하는지 확인 할 연락처
-     * @return 존재하는 경우 200 존재하지 않는 경우 201
+     * @return 성공: 200(존재), 201(존재X)
+     * # NO_TELNUM
      */
     @GetMapping("/signupTelNum/{telNum}")
     public CommonResponse verificatonTelNum(
@@ -180,7 +196,8 @@ public class UserController1 {
      * 계정 생성 이메일 인증
      *
      * @param email 존재하는지 확인 할 이메일
-     * @return 존재하는 경우 200 존재하지 않는 경우 201
+     * @return 성공: 200(존재), 201(존재X)
+     * # USER_ACCOUNT_EMAIL_NOT_FOUND
      */
     @GetMapping("/signupEmail/{email}")
     public CommonResponse verificatonEmail(
