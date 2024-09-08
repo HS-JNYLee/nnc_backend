@@ -43,8 +43,4 @@ public class User1 {
     @OneToOne
     @JoinColumn(name = "user_account_id")
     private UserAccount userAccount;
-
-    public CustomUserDetails getPrincipalDetails() {
-        return new CustomUserDetails(this);
-    }
 }
