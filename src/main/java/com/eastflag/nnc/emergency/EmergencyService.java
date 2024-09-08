@@ -23,7 +23,7 @@ public class EmergencyService {
     public EmergencyService(EmergencyRepository emergencyRepository) {
         this.emergencyRepository = emergencyRepository;
     }
-
+    
     public CommonResponse getEmergencyByEmergencyId(int emergencyId) {
         Emergency emergency = emergencyRepository
                 .findByEmergencyId(emergencyId)
@@ -36,6 +36,9 @@ public class EmergencyService {
     }
 
     public CommonResponse addEmergency(Emergency emergency) {
+        /**
+         *  깃헙 프로필 아이콘 아바타 만들기
+         */
         Avatar avatar = GitHubAvatar.newAvatarBuilder().build();
         Random random = new Random();
         long randomLong = random.nextLong();
@@ -70,10 +73,11 @@ public class EmergencyService {
                 .build();
     }
 
+    // 북마크 등록하는 로직
     public CommonResponse updateEmergencyByEmergencyId(int emergencyId) {
         Emergency emergency = emergencyRepository.findByEmergencyId(emergencyId)
                 .orElseThrow(() -> new ControlledException(EMERGENCY_ID_NOT_FOUND));
-        emergency.setBookmarkYn("Y");
+        emergency.setBookmarkYn("Y"); // 북마크
         emergencyRepository.save(emergency);
         return CommonResponse.builder()
                 .code(200)

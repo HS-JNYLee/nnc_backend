@@ -32,11 +32,10 @@ public class FcmService {
 
     public CommonResponse postMessage(MessageWrapper message) throws IOException {
         String token = getAccessToken();
-        //log.info(token);
         log.info(message.getMessage().getNotification().getTitle());
         log.info(message.getMessage().getNotification().getBody());
-        token = "Bearer " + token;
-        postRetrofit(token, message);
+        token = "Bearer " + token; // Bearer Token 만들기
+        postRetrofit(token, message); // 알림 전송
         return CommonResponse.builder()
                 .code(200)
                 .message(ResponseMessage.SUCCESS)
@@ -44,17 +43,18 @@ public class FcmService {
                 .build();
     }
 
-
+    // OAUTH 2.0 인증 토큰을 받아오는 함수 
     private static String getAccessToken() throws IOException {
         // Firebase 프로젝트 -> 서비스 계정 -> 새 비공개 키 생성
         String privateKeyFileName = "service-account.json";
         GoogleCredentials googleCredentials = GoogleCredentials
                 .fromStream(new FileInputStream(privateKeyFileName))
-                .createScoped(List.of("https://www.googleapis.com/auth/firebase.messaging"));
-        googleCredentials.refresh();
-        return googleCredentials.getAccessToken().getTokenValue();
+                .createScoped(List.of("https://www.googleapis.com/auth/firebase.messaging")); // 설정 초기화
+        googleCredentials.refresh(); // 요청 갱신
+        return googleCredentials.getAccessToken().getTokenValue(); // 토큰 골라오기
     }
 
+    // FCM으로 알림을 전송하는 함수
     private void postRetrofit(String token, MessageWrapper message) throws IOException {
         Response<ResponseBody> retrofit = new Retrofit.Builder()
                 .baseUrl("https://fcm.googleapis.com/v1/projects/")
