@@ -1,37 +1,38 @@
 package com.eastflag.nnc.auth;
 
-import com.eastflag.nnc.user.Role;
-import com.eastflag.nnc.user.User;
-import java.util.Collection;
+import com.eastflag.nnc.user1.user.Role1;
+import com.eastflag.nnc.user1.user.User1;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
+
 @Getter
 @Setter
 @RequiredArgsConstructor
 public class CustomUserDetails implements UserDetails {
 
-    private final User user;
+    private final User1 user;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         //user객체에 유저 역활 뺴오기
-        Role role = user.getRole();
+        Role1 role = user.getRole1();
 
         return role.getAuthorities();
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return user.getTelNum();
     }
 
     @Override
     public String getUsername() {
-        return user.getEmail();
+        return user.getName();
     }
 
     @Override

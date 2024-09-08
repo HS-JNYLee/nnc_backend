@@ -1,6 +1,6 @@
 package com.eastflag.nnc.token;
 
-import com.eastflag.nnc.user.User;
+import com.eastflag.nnc.user1.user.User1;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,5 +28,5 @@ public class Token {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id")
-  public User user;
+  public User1 user;
 }

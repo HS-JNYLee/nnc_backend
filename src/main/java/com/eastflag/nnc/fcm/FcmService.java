@@ -7,7 +7,6 @@ import com.eastflag.nnc.fcm.request.FcmRequest;
 import com.eastflag.nnc.fcm.request.Message;
 import com.eastflag.nnc.fcm.request.MessageWrapper;
 import com.eastflag.nnc.fcm.request.Notification;
-import com.eastflag.nnc.user.UserRepository;
 import com.eastflag.nnc.user1.userrelation.UserRelationService;
 import com.google.auth.oauth2.GoogleCredentials;
 import lombok.RequiredArgsConstructor;

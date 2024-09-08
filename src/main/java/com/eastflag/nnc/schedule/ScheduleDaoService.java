@@ -1,16 +1,13 @@
 package com.eastflag.nnc.schedule;
 
 import com.eastflag.nnc.exception.ControlledException;
+import com.eastflag.nnc.fcm.Fcm;
+import com.eastflag.nnc.fcm.FcmRepository;
 import com.eastflag.nnc.fcm.FcmService;
 import com.eastflag.nnc.fcm.request.Message;
 import com.eastflag.nnc.fcm.request.MessageWrapper;
 import com.eastflag.nnc.fcm.request.Notification;
-import com.eastflag.nnc.fcm.Fcm;
-import com.eastflag.nnc.fcm.FcmRepository;
-import com.eastflag.nnc.route.Route;
 import com.eastflag.nnc.route.RouteRepository;
-import com.eastflag.nnc.user.User;
-import com.eastflag.nnc.user1.userrelation.UserRelation;
 import com.eastflag.nnc.user1.userrelation.UserRelationService;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
@@ -20,12 +17,12 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
-import java.sql.Timestamp ;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -44,19 +41,6 @@ import static com.eastflag.nnc.exception.errorcode.ScheduleErrorCode.*;
 @RequiredArgsConstructor
 public class ScheduleDaoService {
 
-    // 여기서 DB 연결 작업
-    //private static List<Schedule> sdl = new ArrayList<>(); //Sche Dule List
-//    private static int user_id = 0;
-//    private static int schedule_id =0;
-//    private static int route_id = 0;
-//
-//    static {
-//        sdl.add(new Schedule(++schedule_id,++user_id,"Apple", new Timestamp (System.currentTimeMillis()).toString(), new Timestamp(System.currentTimeMillis()).toString(), "과일사기", ++route_id));
-//        sdl.add(new Schedule(++schedule_id,user_id,"Apple11", new Timestamp (System.currentTimeMillis()).toString(), new Timestamp(System.currentTimeMillis()).toString(), "과일사기11", ++route_id));
-//        sdl.add(new Schedule(++schedule_id,user_id,"Apple22", new Timestamp (System.currentTimeMillis()).toString(), new Timestamp(System.currentTimeMillis()).toString(), "과일사기22", ++route_id));
-//        sdl.add(new Schedule(++schedule_id,++user_id,"Banana", new Timestamp (System.currentTimeMillis()).toString(), new Timestamp(System.currentTimeMillis()).toString(), "과일사기", ++route_id));
-//        sdl.add(new Schedule(++schedule_id,++user_id,"Orange", new Timestamp (System.currentTimeMillis()).toString(), new Timestamp(System.currentTimeMillis()).toString(), "과일사기", ++route_id));
-//    }
     private final Logger log = LoggerFactory.getLogger(this.getClass().getSimpleName());
     private final ScheduleRepository sdl;
     private final FcmRepository fcmRepository;

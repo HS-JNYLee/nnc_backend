@@ -1,5 +1,6 @@
 package com.eastflag.nnc.user1.user;
 
+import com.eastflag.nnc.auth.CustomUserDetails;
 import com.eastflag.nnc.user1.useraccount.UserAccount;
 import com.eastflag.nnc.user1.usersetting.UserSetting;
 import jakarta.persistence.*;
@@ -42,4 +43,8 @@ public class User1 {
     @OneToOne
     @JoinColumn(name = "user_account_id")
     private UserAccount userAccount;
+
+    public CustomUserDetails getPrincipalDetails() {
+        return new CustomUserDetails(this);
+    }
 }
