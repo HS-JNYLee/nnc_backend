@@ -13,6 +13,11 @@ public class AccidentProneAreaController {
         this.accidentProneAreaService = accidentProneAreaService;
     }
 
+    /**
+     * 위험지역 조회
+     * @param query
+     * @return
+     */
     @PostMapping("/")
     public ResponseEntity<CommonResponse> findAll(@RequestBody String query) {
         return ResponseEntity.ok(accidentProneAreaService.findAll(query));

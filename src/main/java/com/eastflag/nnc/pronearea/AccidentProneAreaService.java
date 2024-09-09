@@ -20,19 +20,29 @@ public class AccidentProneAreaService {
         this.accidentProneAreaRepository = accidentProneAreaRepository;
     }
 
+    /**
+     *
+     * @param query
+     * @return
+     */
     public CommonResponse findAll(String query) {
         ArrayList<AccidentProneArea> result = new ArrayList<>();
         try {
+            // 위험 지역 전부 가져옴
             List<AccidentProneArea> accidentProneAreas = accidentProneAreaRepository.findAll();
             Type coordinatesType = new TypeToken<Coordinates>() {}.getType();
             Coordinates coordinates = gson.fromJson(query, coordinatesType);
 
+            // 받아온 경로에 대해
             for(Coordinate coordinate : coordinates.getCoordinates()) {
+                // 모든 위험 지역 좌표에 대해
                 for(AccidentProneArea accidentProneArea : accidentProneAreas) {
+                    // 거리 계산
                     double distance = DistanceCalculator.calculate(coordinate.getLongitude(),coordinate.getLatitude(),
                             accidentProneArea.getLongitude(), accidentProneArea.getLatitude()) * 1000;
-
+                    //30미터 보다 작으면서 리스트에 없는 경우
                     if(distance < 30 && !result.contains(accidentProneArea)){
+                        // 추가
                         result.add(accidentProneArea);
                     }
                 }

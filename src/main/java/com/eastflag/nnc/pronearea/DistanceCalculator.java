@@ -1,5 +1,9 @@
 package com.eastflag.nnc.pronearea;
 
+/**
+ * 좌표계 상의 두 점사이 거리 구하는 클래스
+ */
+
 public class DistanceCalculator {
     public static double calculate(double x1, double y1, double x2, double y2) {
         double distance;
