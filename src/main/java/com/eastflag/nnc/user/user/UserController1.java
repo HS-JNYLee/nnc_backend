@@ -1,13 +1,13 @@
-package com.eastflag.nnc.user1.user;
+package com.eastflag.nnc.user.user;
 
 import com.eastflag.nnc.common.CommonResponse;
 import com.eastflag.nnc.exception.ControlledException;
-import com.eastflag.nnc.user1.request.CreateUserRequest;
-import com.eastflag.nnc.user1.request.LoginRequest;
-import com.eastflag.nnc.user1.request.UpdateUserRequest;
-import com.eastflag.nnc.user1.request.UpdateUserSettingRequest;
-import com.eastflag.nnc.user1.useraccount.UserAccountService;
-import com.eastflag.nnc.user1.usersetting.UserSettingService;
+import com.eastflag.nnc.user.request.CreateUserRequest;
+import com.eastflag.nnc.user.request.LoginRequest;
+import com.eastflag.nnc.user.request.UpdateUserRequest;
+import com.eastflag.nnc.user.request.UpdateUserSettingRequest;
+import com.eastflag.nnc.user.useraccount.UserAccountService;
+import com.eastflag.nnc.user.usersetting.UserSettingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

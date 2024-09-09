@@ -1,14 +1,14 @@
-package com.eastflag.nnc.user1.user;
+package com.eastflag.nnc.user.user;
 
 import com.eastflag.nnc.fcm.FcmService;
 import com.eastflag.nnc.exception.ControlledException;
-import com.eastflag.nnc.user1.userrelation.UserRelationService;
-import com.eastflag.nnc.user1.request.CreateUserRequest;
-import com.eastflag.nnc.user1.request.UpdateUserRequest;
-import com.eastflag.nnc.user1.useraccount.UserAccount;
-import com.eastflag.nnc.user1.useraccount.UserAccountService;
-import com.eastflag.nnc.user1.usersetting.UserSetting;
-import com.eastflag.nnc.user1.usersetting.UserSettingService;
+import com.eastflag.nnc.user.userrelation.UserRelationService;
+import com.eastflag.nnc.user.request.CreateUserRequest;
+import com.eastflag.nnc.user.request.UpdateUserRequest;
+import com.eastflag.nnc.user.useraccount.UserAccount;
+import com.eastflag.nnc.user.useraccount.UserAccountService;
+import com.eastflag.nnc.user.usersetting.UserSetting;
+import com.eastflag.nnc.user.usersetting.UserSettingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,7 @@
-package com.eastflag.nnc.user1.usersetting;
+package com.eastflag.nnc.user.usersetting;
 
 import com.eastflag.nnc.exception.ControlledException;
-import com.eastflag.nnc.user1.request.UpdateUserSettingRequest;
+import com.eastflag.nnc.user.request.UpdateUserSettingRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package com.eastflag.nnc.user1.useraccount;
+package com.eastflag.nnc.user.useraccount;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

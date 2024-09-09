@@ -1,6 +1,5 @@
-package com.eastflag.nnc.user1.user;
+package com.eastflag.nnc.user.user;
 
-import com.eastflag.nnc.user.Permission;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

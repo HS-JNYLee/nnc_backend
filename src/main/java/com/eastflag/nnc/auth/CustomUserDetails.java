@@ -1,7 +1,7 @@
 package com.eastflag.nnc.auth;
 
-import com.eastflag.nnc.user1.user.Role1;
-import com.eastflag.nnc.user1.user.User1;
+import com.eastflag.nnc.user.user.Role1;
+import com.eastflag.nnc.user.user.User1;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;

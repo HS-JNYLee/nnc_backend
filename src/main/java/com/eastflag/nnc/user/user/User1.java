@@ -1,8 +1,7 @@
-package com.eastflag.nnc.user1.user;
+package com.eastflag.nnc.user.user;
 
-import com.eastflag.nnc.auth.CustomUserDetails;
-import com.eastflag.nnc.user1.useraccount.UserAccount;
-import com.eastflag.nnc.user1.usersetting.UserSetting;
+import com.eastflag.nnc.user.useraccount.UserAccount;
+import com.eastflag.nnc.user.usersetting.UserSetting;
 import jakarta.persistence.*;
 import lombok.*;
 

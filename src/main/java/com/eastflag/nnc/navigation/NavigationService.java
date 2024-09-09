@@ -1,7 +1,7 @@
 package com.eastflag.nnc.navigation;
 
 import com.eastflag.nnc.exception.ControlledException;
-import com.eastflag.nnc.user1.userrelation.UserRelationService;
+import com.eastflag.nnc.user.userrelation.UserRelationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;

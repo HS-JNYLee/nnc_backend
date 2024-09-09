@@ -1,6 +1,6 @@
 package com.eastflag.nnc.token;
 
-import com.eastflag.nnc.user1.user.User1;
+import com.eastflag.nnc.user.user.User1;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

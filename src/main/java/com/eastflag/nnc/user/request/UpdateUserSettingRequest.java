@@ -1,4 +1,4 @@
-package com.eastflag.nnc.user1.request;
+package com.eastflag.nnc.user.request;
 
 import lombok.Builder;
 import lombok.Getter;
