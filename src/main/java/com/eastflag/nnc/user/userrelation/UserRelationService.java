@@ -2,6 +2,7 @@ package com.eastflag.nnc.user.userrelation;
 
 import com.eastflag.nnc.exception.ControlledException;
 import com.eastflag.nnc.user.request.UpdateUserRelationRequest;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +44,7 @@ public class UserRelationService {
      *
      * @param request UserRelationController.updateUserRelation에서 가져온 정보
      */
+    @Transactional
     public UserRelation updateUserRelation(UpdateUserRelationRequest request) {
         var userRelation = userRelationRepository
                 .findByCaretakerId(request.getCaretakerId())

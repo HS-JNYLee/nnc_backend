@@ -2,6 +2,7 @@ package com.eastflag.nnc.user.user;
 
 import com.eastflag.nnc.common.CommonResponse;
 import com.eastflag.nnc.exception.ControlledException;
+import com.eastflag.nnc.fcm.FcmService;
 import com.eastflag.nnc.user.request.CreateUserRequest;
 import com.eastflag.nnc.user.request.LoginRequest;
 import com.eastflag.nnc.user.request.UpdateUserRequest;
@@ -11,6 +12,7 @@ import com.eastflag.nnc.user.usersetting.UserSettingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 import static com.eastflag.nnc.exception.errorcode.User1ErrorCode.NOT_CAREGIVER;
@@ -26,6 +28,7 @@ public class UserController1 {
     private final UserService1 userService;
     private final UserAccountService userAccountService;
     private final UserSettingService userSettingService;
+    private final FcmService fcmService;
 
     /**
      * User1 생성
@@ -130,17 +133,19 @@ public class UserController1 {
      * # USER_ACCOUNT_NOT_FOUND
      * # USER_ACCOUNT_EMAIL_NOT_FOUND
      */
-    @GetMapping("/getLinkPermission/{caregiverEmail}")
+    @GetMapping("/getLinkPermission/{caretakerId}/{caregiverEmail}")
     public CommonResponse getLinkPermission(
+            @PathVariable Integer caretakerId,
             @PathVariable String caregiverEmail
-    ){
+    ) throws IOException {
         var userAccount = userAccountService.getUserAccount(caregiverEmail);
         var caregiverUser1 =  userService.getUser(userAccount);
-
+        var caretakerUser1 = userService.getUser(caretakerId);
         // 보호자 계정이 아님
         if(caregiverUser1.getRole1() != Role1.CAREGIVER) throw new ControlledException(NOT_CAREGIVER);
 
         var caregiverUserId = caregiverUser1.getUserId();
+        fcmService.requestPermission(caretakerId, caregiverUserId, caretakerUser1.getUserAccount().getEmail());
         // TODO: 보호자 승인 허가 전송하는 팝업 알림 전송
         // TODO: ※ (2024-08-12) 현재는 다이렉트로 전달 중인데, 완성 후에는 .data(userAccountId)생략할 것
         return CommonResponse.builder().code(200).message(caregiverUserId + ": 허가 요청 알림 전달 성공").data(caregiverUserId).build();

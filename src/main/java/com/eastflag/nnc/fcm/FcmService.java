@@ -124,4 +124,29 @@ public class FcmService {
                         .build();
         postMessage(message);
     }
+
+    /**
+     *  보호자에게 허가 FCM 알림을 보내는 함수
+     * @param userId
+     * @throws IOException
+     */
+    public void requestPermission(int userId, int caregiverId, String email) throws IOException {
+        String title = "요청/사용자 인증";
+        String body = userId+"/"+email;
+        MessageWrapper message =
+                MessageWrapper.builder()
+                        .message(
+                                Message.builder()
+                                        .token(getToken(caregiverId))
+                                        .notification(
+                                                Notification.builder()
+                                                        .title(title)
+                                                        .body(body)
+                                                        .build()
+                                        )
+                                        .build()
+                        )
+                        .build();
+        postMessage(message);
+    }
 }
