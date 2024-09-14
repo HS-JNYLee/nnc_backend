@@ -3,6 +3,7 @@ package com.eastflag.nnc.exception.errorcode;
 import com.eastflag.nnc.exception.ErrorMessage;
 
 public interface User1ErrorCode {
+    ErrorMessage CAREGIVER_USER_ID_NOT_FOUND = new ErrorMessage(404, "보호자 계정을 찾을 수 없습니다.");
     ErrorMessage USER_ID_NOT_FOUND = new ErrorMessage(404, "존재하지 않는 UserId");
     ErrorMessage USER_ACCOUNT_NOT_FOUND = new ErrorMessage(404, "존재하지 않는 UserAccount입니다.");
     ErrorMessage CAREGIVER_IS_NOT_DELETE = new ErrorMessage(202, "사용자와 관계 해제 후 삭제가 가능합니다.");

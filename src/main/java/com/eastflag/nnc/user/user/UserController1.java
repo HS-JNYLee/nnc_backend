@@ -11,6 +11,8 @@ import com.eastflag.nnc.user.usersetting.UserSettingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static com.eastflag.nnc.exception.errorcode.User1ErrorCode.NOT_CAREGIVER;
 
 /**
@@ -205,5 +207,14 @@ public class UserController1 {
     ){
         userAccountService.getUserAccount(email);
         return CommonResponse.builder().code(200).message(email + "은 존재하는 이메일입니다.").build();
+    }
+
+    /**
+     *  보호자 계정만 불러오기
+     */
+    @GetMapping("/caregiver/list")
+    public CommonResponse getCareGiverUsers() {
+        List<User1> caregivers = userService.getCareGiverUsers();
+        return CommonResponse.builder().code(200).message("Success").data(caregivers).build();
     }
 }

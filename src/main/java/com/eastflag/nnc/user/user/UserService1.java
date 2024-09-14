@@ -12,6 +12,9 @@ import com.eastflag.nnc.user.usersetting.UserSettingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 import static com.eastflag.nnc.exception.errorcode.User1ErrorCode.*;
 
 /**
@@ -182,5 +185,14 @@ public class UserService1 {
                 .findByUserAccount(userAccount)
                 .orElseThrow(() -> new ControlledException(USER_ACCOUNT_NOT_FOUND));
         return user;
+    }
+
+    /**
+     * 보호자 계정 리스트을 조회
+     * @return
+     */
+    public List<User1> getCareGiverUsers() {
+        Optional<List<User1>> caregivers = userRepository.findByRole1(Role1.CAREGIVER);
+        return caregivers.orElseThrow(() -> new ControlledException(CAREGIVER_USER_ID_NOT_FOUND));
     }
 }
