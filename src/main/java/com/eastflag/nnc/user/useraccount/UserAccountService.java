@@ -4,6 +4,7 @@ import com.eastflag.nnc.exception.ControlledException;
 import com.eastflag.nnc.user.request.CreateUserRequest;
 import com.eastflag.nnc.user.request.UpdateUserRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import static com.eastflag.nnc.exception.errorcode.UserAccountErrorCode.*;
@@ -17,6 +18,8 @@ import static com.eastflag.nnc.exception.errorcode.UserAccountErrorCode.*;
 public class UserAccountService {
     private final UserAccountRepository userAccountRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
     /**
      * 유저 계정 Entity를 DataBase에 생성하는 함수
      *
@@ -24,10 +27,13 @@ public class UserAccountService {
      * @return 생성된 유저 계정 Entity
      */
     public UserAccount createUserAccount(CreateUserRequest request){
+        var password = request.getPassword();
+
+
         var userAccount = UserAccount.builder()
                 .email(request.getEmail())
-                .password(request.getPassword())
-                .passwordSalt("temp") // 모름
+                .password("security password")
+                .passwordSalt(getEncodedPwd(password)) // 모름
                 .hashAlgorithmId("temp") // 모름
                 .createdAt(request.getCreatedAt())
                 .updatedAt(request.getUpdatedAt())
@@ -109,8 +115,15 @@ public class UserAccountService {
      */
     public UserAccount getLoginUserAccount(String email, String password) {
         var userAccount = userAccountRepository
-                .findByEmailAndPassword(email, password)
-                .orElse(null);
+                .findByEmail(email)
+                .orElseThrow(() -> new ControlledException(USER_ACCOUNT_EMAIL_NOT_FOUND));
+
+        if(!passwordEncoder.matches(password, userAccount.getPasswordSalt())) throw new ControlledException(USER_ACCOUNT_EMAIL_AND_PASSWORD_NOT_FOUND);
+
         return userAccount;
+    }
+
+    public String getEncodedPwd(String password) {
+        return passwordEncoder.encode(password);
     }
 }
